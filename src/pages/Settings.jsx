@@ -83,7 +83,7 @@ export default function Settings() {
                 className={`flex items-center justify-center gap-2 px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 rounded-xl transition-all duration-300 border shrink-0 ${
                   isActive 
                   ? "bg-red-600 text-white border-red-600" 
-                  : "bg-white/[0.02] border-white/5 text-white/30 hover:text-white hover:bg-white/[0.05]"
+                  : "bg-white/[0.02] border-white/15 text-white/30 hover:text-white hover:bg-white/[0.05]"
                 }`}
               >
                 <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className="shrink-0 w-[18px] h-[18px] md:w-4 md:h-4" />
@@ -97,12 +97,12 @@ export default function Settings() {
 
         {/* Settings Form */}
         <div className="max-w-[700px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
-          <form onSubmit={handleSubmit} className="bg-[#111] border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
+          <form onSubmit={handleSubmit} className="bg-[#111] border border-white/15 rounded-2xl overflow-hidden shadow-2xl">
             
             <div className="p-5 md:p-10 space-y-8 md:space-y-12">
               
               {/* 1. Sync Section - Mobile Optimized */}
-              <div className="flex flex-col md:flex-row items-center justify-between gap-5 pb-8 md:pb-10 border-b border-white/5">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-5 pb-8 md:pb-10 border-b border-white/15">
                 <div className="flex items-center gap-4 w-full md:w-auto">
                   <div className="w-10 h-10 md:w-12 md:h-12 bg-white/5 rounded-xl flex items-center justify-center shrink-0">
                     <img 
@@ -146,7 +146,7 @@ export default function Settings() {
                   <h3 className="text-[14px] font-bold text-white">Title Language</h3>
                   <p className="text-[11px] text-white/30">Anime name display preference.</p>
                 </div>
-                <div className="flex bg-white/5 p-1 rounded-xl border border-white/5 w-full md:w-auto">
+                <div className="flex bg-white/5 p-1 rounded-xl border border-white/15 w-full md:w-auto">
                   {['EN', 'JP'].map((lang) => (
                     <button
                       key={lang}
@@ -214,7 +214,7 @@ export default function Settings() {
             className="absolute inset-0 bg-black/60 backdrop-blur-[2px] transition-opacity"
             onClick={() => setShowConfirmModal(false)}
           />
-          <div className="relative bg-[#111] border border-white/5 rounded-2xl p-6 max-w-[320px] w-full shadow-2xl">
+          <div className="relative bg-[#111] border border-white/15 rounded-2xl p-6 max-w-[320px] w-full shadow-2xl">
             <h3 className="text-[16px] font-bold text-white mb-2">Disconnect AniList?</h3>
             <p className="text-white/40 text-[12px] mb-6 leading-relaxed">
               Your watch progress will no longer be synced to your AniList profile.

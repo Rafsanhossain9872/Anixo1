@@ -156,7 +156,7 @@ export default function PublicProfile() {
 
         {/* Profile Info */}
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 relative -mt-12 sm:-mt-16 md:-mt-20 z-10">
-          <div className="flex flex-col items-center md:flex-row md:items-end gap-3 sm:gap-5 pb-4 sm:pb-6 border-b border-white/5">
+          <div className="flex flex-col items-center md:flex-row md:items-end gap-3 sm:gap-5 pb-4 sm:pb-6 border-b border-white/15">
             {/* Avatar */}
             <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-full border-[3px] sm:border-4 border-[#0a0a0a] overflow-hidden bg-neutral-800 shrink-0 shadow-2xl ring-2 ring-white/10">
               <img 
@@ -285,7 +285,7 @@ export default function PublicProfile() {
                 {recentProgress.length > 0 ? (
                   <div className="space-y-2 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-3">
                     {recentProgress.slice(0, 6).map(p => (
-                      <Link key={p._id} to={`/watch/${p.animeId}?ep=${p.episode}`} className="flex items-center gap-3 p-2.5 sm:p-3 bg-white/[0.02] hover:bg-white/[0.05] active:bg-white/[0.07] border border-white/5 rounded-lg transition-colors">
+                      <Link key={p._id} to={`/watch/${p.animeId}?ep=${p.episode}`} className="flex items-center gap-3 p-2.5 sm:p-3 bg-white/[0.02] hover:bg-white/[0.05] active:bg-white/[0.07] border border-white/15 rounded-lg transition-colors">
                         <div className="w-10 h-14 sm:w-12 sm:h-16 rounded overflow-hidden bg-white/5 shrink-0">
                           {p.anime?.coverImage?.large ? (
                             <img src={p.anime.coverImage.large} alt="" className="w-full h-full object-cover" />

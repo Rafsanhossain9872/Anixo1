@@ -89,7 +89,7 @@ export default function NotificationDropdown({ isOpen, onClose }) {
       ref={dropdownRef}
       className="absolute top-[48px] right-0 bg-[#141414]/95 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] w-[320px] z-[200] animate-in fade-in slide-in-from-top-2 duration-200 border-t-[3px] border-red-600 rounded-b-xl overflow-hidden"
     >
-      <div className="p-4 border-b border-white/5 flex items-center justify-between">
+      <div className="p-4 border-b border-white/15 flex items-center justify-between">
         <h3 className="text-sm font-black text-white uppercase tracking-tight">Notifications</h3>
         <div className="flex items-center gap-3">
           {globalNotifications.some(n => !n.isRead) && (
@@ -109,7 +109,7 @@ export default function NotificationDropdown({ isOpen, onClose }) {
                 key={notif._id}
                 to={notif.targetUrl || (notif.animeId ? `/watch/${notif.animeId}` : '#')}
                 onClick={() => { if (!notif.isRead) handleMarkRead(notif._id); onClose(); }}
-                className={`p-3 border-b border-white/5 last:border-0 hover:bg-white/5 transition-all flex gap-3 relative group cursor-pointer ${!notif.isRead ? 'bg-white/[0.02]' : 'opacity-50 hover:opacity-100'}`}
+                className={`p-3 border-b border-white/15 last:border-0 hover:bg-white/5 transition-all flex gap-3 relative group cursor-pointer ${!notif.isRead ? 'bg-white/[0.02]' : 'opacity-50 hover:opacity-100'}`}
               >
                 {!notif.isRead && <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-red-600" />}
                 

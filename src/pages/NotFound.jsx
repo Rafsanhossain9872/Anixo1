@@ -19,7 +19,7 @@ export default function NotFound() {
               onContextMenu={(e) => e.preventDefault()}
             >
               {/* The GIF */}
-              <div className="w-full h-full overflow-hidden rounded-2xl border border-white/5">
+              <div className="w-full h-full overflow-hidden rounded-2xl border border-white/15">
                 <img 
                   src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzQ5aWRscm5iZWF0NDZrOHo1aDJrbGt3dHBobzlnOWpnN3p3azYwMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/K6yQhY3Y0VpnrYrada/giphy.gif" 
                   alt="404 Anime"

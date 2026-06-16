@@ -25,7 +25,7 @@ export default function Character() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-white/40 font-bold uppercase tracking-widest text-[10px]">{t('character.loading')}</p>
+          <p className="text-white/60 font-bold uppercase tracking-widest text-[10px]">{t('character.loading')}</p>
         </div>
       </div>
     );
@@ -64,9 +64,9 @@ export default function Character() {
           {/* Back Button */}
           <button 
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-white/40 hover:text-white transition-colors group mb-6"
+            className="flex items-center gap-2 text-white/60 hover:text-white transition-colors group mb-6"
           >
-            <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/5">
+            <div className="w-8 h-8 rounded-full border border-white/15 flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/5">
               <ChevronLeft size={18} />
             </div>
             <span className="text-[11px] font-bold uppercase tracking-widest">{t('character.return')}</span>
@@ -75,7 +75,7 @@ export default function Character() {
           {/* Mobile: Stacked center layout | Desktop: Side-by-side */}
           <div className="flex flex-col items-center text-center sm:flex-row sm:items-end sm:text-left gap-5 sm:gap-8">
             {/* Character Image */}
-            <div className="w-[140px] sm:w-[180px] md:w-[220px] shrink-0 rounded-lg overflow-hidden border border-white/10 shadow-2xl relative">
+            <div className="w-[140px] sm:w-[180px] md:w-[220px] shrink-0 rounded-lg overflow-hidden border border-white/15 shadow-2xl relative">
               <img 
                 src={char.image?.large} 
                 alt={char.name?.full} 
@@ -107,7 +107,7 @@ export default function Character() {
                 </p>
               )}
               
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-5 gap-y-1 text-[11px] sm:text-[12px] font-bold uppercase tracking-wider text-white/40">
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-5 gap-y-1 text-[11px] sm:text-[12px] font-bold uppercase tracking-wider text-white/60">
                 {char.age && <div>{t('character.age')}<span className="text-white">{char.age}</span></div>}
                 {char.bloodType && <div>{t('character.bloodType')}<span className="text-white">{char.bloodType}</span></div>}
                 <div>{t('character.favourites')}<span className="text-white">{char.favourites?.toLocaleString()}</span></div>
@@ -147,15 +147,15 @@ export default function Character() {
                   <img 
                     src={va.image?.large} 
                     alt={va.name?.full} 
-                    className="w-20 h-20 mx-auto object-cover rounded-full border-2 border-white/10 group-hover:border-red-500 transition-colors shadow-lg"
+                    className="w-20 h-20 mx-auto object-cover rounded-full border-2 border-white/15 group-hover:border-red-500 transition-colors shadow-lg"
                     loading="lazy"
                   />
                   <p className="text-[11px] font-semibold text-white/70 mt-2 truncate">{va.name?.full}</p>
-                  <p className="text-[9px] text-white/25 uppercase tracking-wider">{t('character.japanese')}</p>
+                  <p className="text-[9px] text-white/40 uppercase tracking-wider">{t('character.japanese')}</p>
                 </Link>
               )) : (
-                <div className="w-full p-6 text-center bg-white/5 rounded border border-dashed border-white/10">
-                  <p className="text-white/20 text-[11px] font-bold uppercase tracking-widest">{t('character.noVoiceActor')}</p>
+                <div className="w-full p-6 text-center bg-white/5 rounded border border-dashed border-white/15">
+                  <p className="text-white/40 text-[11px] font-bold uppercase tracking-widest">{t('character.noVoiceActor')}</p>
                 </div>
               );
             })()}
@@ -173,7 +173,7 @@ export default function Character() {
                 <h2 className="text-base sm:text-xl font-black text-white uppercase tracking-tight">{t('character.biography')}</h2>
               </div>
               <div 
-                className="prose prose-invert max-w-none text-white/60 leading-relaxed text-[13px] sm:text-[15px]"
+                className="prose prose-invert max-w-none text-white/80 leading-relaxed text-[13px] sm:text-[15px]"
               >
                 {char.description ? parse(DOMPurify.sanitize(char.description)) : t('character.noBiography')}
               </div>
@@ -186,7 +186,7 @@ export default function Character() {
                   <div className="w-[3px] h-5 bg-red-600 rounded-full" />
                   <h2 className="text-base sm:text-xl font-black text-white uppercase tracking-tight">{t('character.appearances')}</h2>
                 </div>
-                <span className="text-[10px] sm:text-[11px] font-bold text-white/20 uppercase tracking-widest">{animeAppearances.length} {t('character.titles')}</span>
+                <span className="text-[10px] sm:text-[11px] font-bold text-white/40 uppercase tracking-widest">{animeAppearances.length} {t('character.titles')}</span>
               </div>
 
               <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-6">
@@ -196,7 +196,7 @@ export default function Character() {
                     to={`/watch/${edge.node.id}`}
                     className="group"
                   >
-                    <div className="relative aspect-[2/3] rounded overflow-hidden border border-white/5 mb-1.5 sm:mb-2">
+                    <div className="relative aspect-[2/3] rounded overflow-hidden border border-white/15 mb-1.5 sm:mb-2">
                       <img 
                         src={edge.node.coverImage?.large} 
                         alt={edge.node.title?.romaji}
@@ -247,7 +247,7 @@ export default function Character() {
                     <Link 
                       key={va.id} 
                       to={`/staff/${va.id}`}
-                      className="flex items-center gap-4 bg-white/5 border border-white/5 p-3 rounded-[4px] hover:bg-white/[0.08] hover:border-red-600/30 transition-all group cursor-pointer"
+                      className="flex items-center gap-4 bg-white/5 border border-white/15 p-3 rounded-[4px] hover:bg-white/[0.08] hover:border-red-600/30 transition-all group cursor-pointer"
                     >
                       <img 
                         src={va.image?.large} 
@@ -258,10 +258,10 @@ export default function Character() {
                         <p className="text-[14px] font-black text-white group-hover:text-red-500 transition-colors uppercase leading-tight">
                           {va.name?.full}
                         </p>
-                        <p className="text-[11px] font-bold text-white/30 uppercase tracking-widest mt-1">
+                        <p className="text-[11px] font-bold text-white/50 uppercase tracking-widest mt-1">
                           {va.name?.native}
                         </p>
-                        <div className="mt-2 flex items-center gap-1.5 border-t border-white/5 pt-2">
+                        <div className="mt-2 flex items-center gap-1.5 border-t border-white/15 pt-2">
                            <span className="px-1.5 py-0.5 bg-red-600/10 text-red-500 text-[10px] font-bold uppercase rounded-[2px] flex items-center gap-1">
                             <Activity size={10} />
                             {t('character.japanese')}
@@ -270,8 +270,8 @@ export default function Character() {
                       </div>
                     </Link>
                   )) : (
-                    <div className="p-8 text-center bg-white/5 rounded-[4px] border border-dashed border-white/10">
-                      <p className="text-white/20 text-[12px] font-bold uppercase tracking-widest">{t('character.noVoiceActor')}</p>
+                    <div className="p-8 text-center bg-white/5 rounded-[4px] border border-dashed border-white/15">
+                      <p className="text-white/40 text-[12px] font-bold uppercase tracking-widest">{t('character.noVoiceActor')}</p>
                     </div>
                   );
                 })()}

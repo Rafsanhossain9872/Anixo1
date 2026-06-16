@@ -225,7 +225,7 @@ export default function Navbar() {
               <div ref={searchContainerRef} className="hidden md:relative md:flex md:items-center">
                 <form
                   onSubmit={handleSearchSubmit}
-                  className="flex items-center bg-white/[0.03] border border-white/5 rounded-[6px] px-3 py-1.5 focus-within:border-red-500/50 transition-all w-[240px] xl:w-[320px]"
+                  className="flex items-center bg-white/[0.03] border border-white/15 rounded-[6px] px-3 py-1.5 focus-within:border-red-500/50 transition-all w-[240px] xl:w-[320px]"
                 >
                   <svg className="w-3.5 h-3.5 text-white/20" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -257,7 +257,7 @@ export default function Navbar() {
                   <div className="absolute top-full right-0 w-[400px] mt-2 bg-[#1a1a1a] border border-white/10 rounded-[12px] shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden z-110 animate-in fade-in zoom-in-95 duration-200">
                     {/* Advanced Filters Panel */}
                     {showFilters && (
-                      <div className="p-4 border-b border-white/5 bg-white/[0.02]">
+                      <div className="p-4 border-b border-white/15 bg-white/[0.02]">
                         <div className="flex items-center justify-between mb-3">
                           <div className="flex items-center gap-2">
                             <span className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">Quick Filters</span>
@@ -280,7 +280,7 @@ export default function Navbar() {
                                   ...prev,
                                   format_in: prev.format_in.includes(f) ? prev.format_in.filter(x => x !== f) : [...prev.format_in, f]
                                 }))}
-                                className={`px-2 py-1 rounded-[4px] text-[9px] font-bold border transition-all ${searchFilters.format_in.includes(f) ? 'bg-red-600 border-red-600 text-white' : 'bg-white/5 border-white/5 text-white/40 hover:border-white/20'}`}
+                                className={`px-2 py-1 rounded-[4px] text-[9px] font-bold border transition-all ${searchFilters.format_in.includes(f) ? 'bg-red-600 border-red-600 text-white' : 'bg-white/5 border-white/15 text-white/40 hover:border-white/20'}`}
                               >
                                 {f}
                               </button>
@@ -291,7 +291,7 @@ export default function Navbar() {
                             <select
                               value={searchFilters.status}
                               onChange={(e) => setSearchFilters(prev => ({ ...prev, status: e.target.value }))}
-                              className="bg-white/5 border border-white/5 text-[9px] text-white/60 rounded px-2 py-1 outline-none flex-1"
+                              className="bg-white/5 border border-white/15 text-[9px] text-white/60 rounded px-2 py-1 outline-none flex-1"
                             >
                               <option value="">All Status</option>
                               <option value="RELEASING">Airing</option>
@@ -300,7 +300,7 @@ export default function Navbar() {
                             <select
                               value={searchFilters.season}
                               onChange={(e) => setSearchFilters(prev => ({ ...prev, season: e.target.value }))}
-                              className="bg-white/5 border border-white/5 text-[9px] text-white/60 rounded px-2 py-1 outline-none flex-1"
+                              className="bg-white/5 border border-white/15 text-[9px] text-white/60 rounded px-2 py-1 outline-none flex-1"
                             >
                               <option value="">All Seasons</option>
                               <option value="WINTER">Winter</option>
@@ -317,7 +317,7 @@ export default function Navbar() {
                     ) : (
                       <>
                         {/* Dropdown Header with Quick Filter Toggle */}
-                        <div className="px-4 py-2 border-b border-white/5 flex items-center justify-between bg-white/[0.01]">
+                        <div className="px-4 py-2 border-b border-white/15 flex items-center justify-between bg-white/[0.01]">
                           <span className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Results</span>
                           <button
                             onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowFilters(!showFilters); }}
@@ -340,7 +340,7 @@ export default function Navbar() {
                                     setShowDropdown(false);
                                     setSearchQuery("");
                                   }}
-                                  className="flex items-start gap-4 p-3 hover:bg-white/[0.03] cursor-pointer transition-colors border-b border-white/5 last:border-0 group text-left"
+                                  className="flex items-start gap-4 p-3 hover:bg-white/[0.03] cursor-pointer transition-colors border-b border-white/15 last:border-0 group text-left"
                                 >
                                   <img
                                     src={anime.coverImage?.medium || anime.coverImage?.large}
@@ -482,7 +482,7 @@ export default function Navbar() {
                 <div className="absolute top-full left-0 w-full mt-2 bg-black/90 backdrop-blur-xl border border-white/10 rounded-[12px] shadow-2xl overflow-hidden z-[200]">
                   {/* Mobile Quick Filters Panel */}
                   {showFilters && (
-                    <div className="p-4 border-b border-white/5 bg-white/[0.02]">
+                    <div className="p-4 border-b border-white/15 bg-white/[0.02]">
                       <div className="flex items-center justify-between mb-3">
                         <span className="text-[11px] font-bold text-white/40 uppercase tracking-[0.2em]">Quick Filters</span>
                         <button
@@ -501,7 +501,7 @@ export default function Navbar() {
                                 ...prev,
                                 format_in: prev.format_in.includes(f) ? prev.format_in.filter(x => x !== f) : [...prev.format_in, f]
                               }))}
-                              className={`px-3 py-1.5 rounded-[6px] text-[10px] font-bold border transition-all ${searchFilters.format_in.includes(f) ? 'bg-red-600 border-red-600 text-white' : 'bg-white/5 border-white/5 text-white/40'}`}
+                              className={`px-3 py-1.5 rounded-[6px] text-[10px] font-bold border transition-all ${searchFilters.format_in.includes(f) ? 'bg-red-600 border-red-600 text-white' : 'bg-white/5 border-white/15 text-white/40'}`}
                             >
                               {f}
                             </button>
@@ -511,7 +511,7 @@ export default function Navbar() {
                           <select
                             value={searchFilters.status}
                             onChange={(e) => setSearchFilters(prev => ({ ...prev, status: e.target.value }))}
-                            className="bg-white/5 border border-white/5 text-[11px] text-white/60 rounded-[6px] px-3 py-2 outline-none flex-1"
+                            className="bg-white/5 border border-white/15 text-[11px] text-white/60 rounded-[6px] px-3 py-2 outline-none flex-1"
                           >
                             <option value="">All Status</option>
                             <option value="RELEASING">Airing</option>
@@ -520,7 +520,7 @@ export default function Navbar() {
                           <select
                             value={searchFilters.season}
                             onChange={(e) => setSearchFilters(prev => ({ ...prev, season: e.target.value }))}
-                            className="bg-white/5 border border-white/5 text-[11px] text-white/60 rounded-[6px] px-3 py-2 outline-none flex-1"
+                            className="bg-white/5 border border-white/15 text-[11px] text-white/60 rounded-[6px] px-3 py-2 outline-none flex-1"
                           >
                             <option value="">All Seasons</option>
                             <option value="WINTER">Winter</option>
@@ -537,7 +537,7 @@ export default function Navbar() {
                   ) : (
                     <>
                       {/* Mobile Dropdown Header */}
-                      <div className="px-4 py-3 border-b border-white/5 flex items-center justify-between bg-white/[0.01]">
+                      <div className="px-4 py-3 border-b border-white/15 flex items-center justify-between bg-white/[0.01]">
                         <span className="text-[11px] font-bold text-white/20 uppercase tracking-widest">Results</span>
                         <button
                           onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowFilters(!showFilters); }}
@@ -561,7 +561,7 @@ export default function Navbar() {
                                   setSearchQuery("");
                                   setShowFilters(false);
                                 }}
-                                className="flex items-center gap-4 p-4 hover:bg-white/5 border-b border-white/5 last:border-0"
+                                className="flex items-center gap-4 p-4 hover:bg-white/5 border-b border-white/15 last:border-0"
                               >
                                 <img
                                   src={anime.coverImage?.medium || anime.coverImage?.large}

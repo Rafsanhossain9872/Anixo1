@@ -136,7 +136,7 @@ export default function NavSidebar({ open, onClose, initialTab = "menu" }) {
         </div>
 
         {/* Triple Tab Controls */}
-        <div className="flex border-b border-white/5 mx-4 mt-1">
+        <div className="flex border-b border-white/15 mx-4 mt-1">
           {[
             { id: "menu", label: "Menu", icon: List },
             { id: "genre", label: "Genre", icon: LayoutGrid },
@@ -184,7 +184,7 @@ export default function NavSidebar({ open, onClose, initialTab = "menu" }) {
 
 
 
-              <section className="pt-5 border-t border-white/5 space-y-4">
+              <section className="pt-5 border-t border-white/15 space-y-4">
                 <h3 className="text-[8px] font-medium uppercase tracking-[0.3em] text-white/20 ml-0.5">Quick Navigation</h3>
                 <div className="flex flex-col gap-2.5">
                   {[
@@ -250,7 +250,7 @@ export default function NavSidebar({ open, onClose, initialTab = "menu" }) {
                   return (
                     <div key={key} className="space-y-3">
                       <div className="flex items-center gap-3">
-                        <div className={`p-1.5 rounded-[3px] border ${isToday ? 'bg-red-600 border-red-600' : 'bg-[#111] border-white/5'} flex flex-col items-center min-w-[34px]`}>
+                        <div className={`p-1.5 rounded-[3px] border ${isToday ? 'bg-red-600 border-red-600' : 'bg-[#111] border-white/15'} flex flex-col items-center min-w-[34px]`}>
                           <span className={`text-[12px] font-medium leading-none ${isToday ? 'text-white' : 'text-white/60'}`}>{day}</span>
                           <span className={`text-[7px] font-medium uppercase tracking-tighter ${isToday ? 'text-white/80' : 'text-white/20'}`}>{month.slice(0, 3)}</span>
                         </div>

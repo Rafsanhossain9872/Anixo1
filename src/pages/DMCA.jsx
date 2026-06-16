@@ -116,7 +116,7 @@ export default function DMCA() {
             in accordance with the DMCA. All takedown notices, counter-notifications, and related correspondence
             should be directed to:
           </p>
-          <div className="mt-4 p-5 bg-white/[0.02] border border-white/5 rounded-lg space-y-2">
+          <div className="mt-4 p-5 bg-white/[0.02] border border-white/15 rounded-lg space-y-2">
             <p><span className="text-white/50">Designated Agent:</span> AniXo Copyright Department</p>
             <p><span className="text-white/50">Email:</span> dmca@anixo.online</p>
             <p><span className="text-white/50">Subject Line:</span> DMCA Takedown Notice — [Title of Content]</p>
@@ -262,7 +262,7 @@ export default function DMCA() {
         </div>
 
         {/* Table of Contents */}
-        <div className="mb-12 p-5 bg-white/[0.02] border border-white/5 rounded-xl">
+        <div className="mb-12 p-5 bg-white/[0.02] border border-white/15 rounded-xl">
           <h2 className="text-[11px] font-medium uppercase tracking-widest text-white/40 mb-4">Table of Contents</h2>
           <nav className="space-y-2.5">
             {sections.map((section, i) => (
@@ -289,7 +289,7 @@ export default function DMCA() {
             return (
               <section key={section.id} id={section.id} className="scroll-mt-28">
                 <div className="flex items-center gap-3 mb-5">
-                  <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/5 flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/15 flex items-center justify-center shrink-0">
                     <Icon size={16} className="text-red-500/50" />
                   </div>
                   <h2 className="text-[18px] md:text-[22px] font-medium tracking-tight text-white/80">
@@ -307,7 +307,7 @@ export default function DMCA() {
           {/* Contact Section */}
           <section id="contact" className="scroll-mt-28">
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/5 flex items-center justify-center shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-white/[0.03] border border-white/15 flex items-center justify-center shrink-0">
                 <Mail size={16} className="text-red-500/50" />
               </div>
               <h2 className="text-[18px] md:text-[22px] font-medium tracking-tight text-white/80">
@@ -321,7 +321,7 @@ export default function DMCA() {
                 must be submitted in writing to AniXo's designated copyright agent at the contact details provided below.
               </p>
 
-              <div className="p-6 bg-gradient-to-br from-white/[0.03] to-white/[0.01] border border-white/5 rounded-xl space-y-4">
+              <div className="p-6 bg-gradient-to-br from-white/[0.03] to-white/[0.01] border border-white/15 rounded-xl space-y-4">
                 <div className="flex items-center gap-3">
                   <Mail size={18} className="text-red-500/60" />
                   <div>
@@ -350,7 +350,7 @@ export default function DMCA() {
         </div>
 
         {/* Final Note */}
-        <div className="mt-16 pt-8 border-t border-white/5 text-center">
+        <div className="mt-16 pt-8 border-t border-white/15 text-center">
           <p className="text-[11px] text-white/20 font-normal max-w-[650px] mx-auto leading-relaxed">
             This DMCA Policy applies solely to the AniXo platform and its associated domains.
             AniXo assumes no responsibility for the content, privacy policies, or practices of any third-party websites

@@ -45,7 +45,7 @@ const ShareBanner = () => {
 
   return (
     <div className="w-full max-w-[1500px] mx-auto px-4 md:px-8 mb-10 mt-6">
-      <div className="relative overflow-hidden bg-gradient-to-r from-[#1a1217] via-[#21141e] to-[#271725] border border-white/5 rounded-2xl p-4 md:p-6 lg:px-10 flex flex-col md:flex-row items-center justify-between gap-5 transition-all duration-300 shadow-2xl">
+      <div className="relative overflow-hidden bg-gradient-to-r from-[#1a1217] via-[#21141e] to-[#271725] border border-white/15 rounded-2xl p-4 md:p-6 lg:px-10 flex flex-col md:flex-row items-center justify-between gap-5 transition-all duration-300 shadow-2xl">
 
         {/* Subtle decorative glow */}
         <div className="absolute top-0 left-0 w-64 h-64 bg-red-600/5 rounded-full blur-3xl pointer-events-none -translate-x-1/2 -translate-y-1/2"></div>

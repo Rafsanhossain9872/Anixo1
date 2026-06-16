@@ -152,7 +152,7 @@ export default function Profile() {
                   to={item.path}
                   className={`flex items-center justify-center gap-2 px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 rounded-xl transition-all duration-300 border shrink-0 ${isActive
                       ? "bg-red-600 text-white border-red-600"
-                      : "bg-white/[0.02] border-white/5 text-white/50 hover:text-white hover:bg-white/[0.05]"
+                      : "bg-white/[0.02] border-white/15 text-white/50 hover:text-white hover:bg-white/[0.05]"
                     }`}
                 >
                   <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className="shrink-0 w-[18px] h-[18px] md:w-4 md:h-4" />
@@ -180,7 +180,7 @@ export default function Profile() {
 
           {/* Profile Content - Compact Card */}
           <div className="w-full max-w-xl animate-in fade-in slide-in-from-bottom-2 duration-500">
-            <div className="bg-[#111] border border-white/5 rounded-2xl p-6 md:p-8 shadow-xl flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10">
+            <div className="bg-[#111] border border-white/15 rounded-2xl p-6 md:p-8 shadow-xl flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-10">
 
               {/* Avatar Section - No Glow */}
               <div className="flex flex-col items-center gap-3 shrink-0">
@@ -225,7 +225,7 @@ export default function Profile() {
                       type="text"
                       value={user?.profileId || user?.username || ""}
                       disabled
-                      className="bg-white/[0.02] text-white/60 px-4 py-2.5 rounded-xl border border-white/5 outline-none text-[13px] w-full cursor-not-allowed opacity-80"
+                      className="bg-white/[0.02] text-white/60 px-4 py-2.5 rounded-xl border border-white/15 outline-none text-[13px] w-full cursor-not-allowed opacity-80"
                     />
                     <p className="text-white/30 text-[10px] ml-1 mt-0.5">This is your unique Profile ID used in your public URL.</p>
                   </div>
@@ -237,7 +237,7 @@ export default function Profile() {
                       type="email"
                       value={formData.email}
                       onChange={(e) => { setFormData({ ...formData, email: e.target.value }); if (error) setError(null); }}
-                      className="bg-white/[0.02] text-white px-4 py-2.5 rounded-xl border border-white/5 focus:border-red-600/30 focus:bg-white/[0.04] outline-none text-[13px] w-full transition-all"
+                      className="bg-white/[0.02] text-white px-4 py-2.5 rounded-xl border border-white/15 focus:border-red-600/30 focus:bg-white/[0.04] outline-none text-[13px] w-full transition-all"
                     />
                   </div>
 
@@ -248,7 +248,7 @@ export default function Profile() {
                       type="text"
                       value={formData.displayName}
                       onChange={(e) => { setFormData({ ...formData, displayName: e.target.value }); if (error) setError(null); }}
-                      className="bg-white/[0.02] text-white px-4 py-2.5 rounded-xl border border-white/5 focus:border-red-600/30 focus:bg-white/[0.04] outline-none text-[13px] w-full transition-all"
+                      className="bg-white/[0.02] text-white px-4 py-2.5 rounded-xl border border-white/15 focus:border-red-600/30 focus:bg-white/[0.04] outline-none text-[13px] w-full transition-all"
                     />
                   </div>
                 </div>
@@ -273,7 +273,7 @@ export default function Profile() {
                           placeholder={t('profile.currentPasswordPlaceholder')}
                           value={formData.currentPassword}
                           onChange={(e) => setFormData({ ...formData, currentPassword: e.target.value })}
-                          className={`bg-white/[0.02] text-white px-4 py-2.5 rounded-xl border outline-none text-[13px] w-full transition-all ${error && error.toLowerCase().includes("current password") ? "border-red-500 animate-shake" : "border-white/5 focus:border-red-600/30"}`}
+                          className={`bg-white/[0.02] text-white px-4 py-2.5 rounded-xl border outline-none text-[13px] w-full transition-all ${error && error.toLowerCase().includes("current password") ? "border-red-500 animate-shake" : "border-white/15 focus:border-red-600/30"}`}
                         />
                         <button
                           type="button"
@@ -300,7 +300,7 @@ export default function Profile() {
                             placeholder={t('profile.newPasswordPlaceholder')}
                             value={formData.password}
                             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                            className="bg-white/[0.02] text-white px-4 py-2.5 rounded-xl border border-white/5 focus:border-red-600/30 outline-none text-[13px] w-full"
+                            className="bg-white/[0.02] text-white px-4 py-2.5 rounded-xl border border-white/15 focus:border-red-600/30 outline-none text-[13px] w-full"
                           />
                         </div>
 
@@ -311,7 +311,7 @@ export default function Profile() {
                             placeholder={t('profile.confirmPasswordPlaceholder')}
                             value={formData.confirmPassword}
                             onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                            className={`bg-white/[0.02] text-white px-4 py-2.5 rounded-xl border outline-none text-[13px] w-full transition-all ${error && error.toLowerCase().includes("match") ? "border-red-500 animate-shake" : "border-white/5 focus:border-red-600/30"}`}
+                            className={`bg-white/[0.02] text-white px-4 py-2.5 rounded-xl border outline-none text-[13px] w-full transition-all ${error && error.toLowerCase().includes("match") ? "border-red-500 animate-shake" : "border-white/15 focus:border-red-600/30"}`}
                           />
                         </div>
                       </div>

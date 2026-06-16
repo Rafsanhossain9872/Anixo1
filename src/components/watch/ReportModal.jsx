@@ -5,7 +5,7 @@ export default function ReportModal({ activeEpisode, reportDetails, setReportDet
   const { t } = useTranslation();
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-      <div className="bg-[#121418] w-full max-w-[480px] rounded-[4px] shadow-2xl border border-white/5 overflow-hidden animate-in zoom-in-95 duration-200">
+      <div className="bg-[#121418] w-full max-w-[480px] rounded-[4px] shadow-2xl border border-white/15 overflow-hidden animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="p-6 pb-4 flex items-center justify-between">
           <div>

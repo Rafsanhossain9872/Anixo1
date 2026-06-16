@@ -37,7 +37,7 @@ export default function AvatarDropdown() {
         <div
           className="absolute top-[48px] right-0 bg-[#141414]/95 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] w-[240px] z-[200] animate-in fade-in slide-in-from-top-2 duration-200 border-t-[3px] border-red-600 rounded-b-xl"
         >
-          <div className="p-4 border-b border-white/5">
+          <div className="p-4 border-b border-white/15">
             <p className="text-sm font-medium text-white truncate">{user.displayName || user.username}</p>
             {user.role === 'admin' ? (
               <p className="text-[10px] text-purple-500 font-bold flex items-center gap-1 uppercase tracking-widest mt-1">
@@ -94,7 +94,7 @@ export default function AvatarDropdown() {
             </Link>
           </div>
 
-          <div className="p-2 border-t border-white/5">
+          <div className="p-2 border-t border-white/15">
             <button
               onClick={() => {
                 logoutAuth();

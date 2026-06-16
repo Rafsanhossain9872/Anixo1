@@ -165,7 +165,7 @@ export default function AnimeDetails() {
           
           {/* Left Column: Poster & Actions */}
           <div className="w-[180px] md:w-[240px] shrink-0 mx-auto md:mx-0">
-            <div className="rounded-[4px] overflow-hidden shadow-2xl border border-white/5 bg-[#222]">
+            <div className="rounded-[4px] overflow-hidden shadow-2xl border border-white/15 bg-[#222]">
               <img
                 src={anime.coverImage?.extraLarge || anime.coverImage?.large}
                 alt={getTitle(anime.title)}
@@ -193,7 +193,7 @@ export default function AnimeDetails() {
                   </button>
                 </div>
               ) : (
-                <div className="bg-[#1a1a1a] rounded-[4px] border border-white/5 p-3 flex flex-col gap-3 animate-in fade-in zoom-in-95 duration-200">
+                <div className="bg-[#1a1a1a] rounded-[4px] border border-white/15 p-3 flex flex-col gap-3 animate-in fade-in zoom-in-95 duration-200">
                   <select
                     value={watchlist.find(i => i.animeId === String(id))?.status || selectStatus}
                     onChange={(e) => handleUpdateStatus(e.target.value)}
@@ -256,7 +256,7 @@ export default function AnimeDetails() {
               <span className="text-[12px] font-bold text-[#888] bg-white/[0.05] px-2 py-0.5 rounded-[3px]">
                 {anime.seasonYear || "TBA"}
               </span>
-              <span className="text-[12px] font-bold text-[#888] bg-white/[0.05] border border-white/5 px-2 py-0.5 rounded-[3px]">
+              <span className="text-[12px] font-bold text-[#888] bg-white/[0.05] border border-white/15 px-2 py-0.5 rounded-[3px]">
                 {anime.episodes ? `${anime.episodes} Episodes` : "Airing"}
               </span>
               <span className="text-[12px] font-bold text-[#888] flex items-center gap-1">

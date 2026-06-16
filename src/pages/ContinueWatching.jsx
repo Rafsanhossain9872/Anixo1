@@ -124,7 +124,7 @@ export default function ContinueWatching() {
                 className={`flex items-center justify-center gap-2 px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 rounded-xl transition-all duration-300 border shrink-0 ${
                   isActive 
                   ? "bg-red-600 text-white border-red-600" 
-                  : "bg-white/[0.02] border-white/5 text-white/30 hover:text-white hover:bg-white/[0.05]"
+                  : "bg-white/[0.02] border-white/15 text-white/30 hover:text-white hover:bg-white/[0.05]"
                 }`}
               >
                 <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className="shrink-0 w-[18px] h-[18px] md:w-4 md:h-4" />
@@ -140,7 +140,7 @@ export default function ContinueWatching() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 px-2">
           <div className="flex items-center gap-3">
             <h2 className="text-lg md:text-xl font-black tracking-tight uppercase">{t('continueWatching.title')}</h2>
-            <span className="text-[10px] md:text-[11px] font-black bg-white/5 border border-white/5 px-2.5 py-0.5 rounded-full text-white/40">{progressCards.length}</span>
+            <span className="text-[10px] md:text-[11px] font-black bg-white/5 border border-white/15 px-2.5 py-0.5 rounded-full text-white/40">{progressCards.length}</span>
           </div>
           
           {user?.anilist?.username && (
@@ -202,7 +202,7 @@ export default function ContinueWatching() {
             )}
           </>
         ) : (
-          <div className="flex flex-col items-center justify-center py-24 bg-[#111] border border-white/5 rounded-2xl shadow-xl relative overflow-hidden max-w-3xl mx-auto">
+          <div className="flex flex-col items-center justify-center py-24 bg-[#111] border border-white/15 rounded-2xl shadow-xl relative overflow-hidden max-w-3xl mx-auto">
             <div className="relative w-20 h-20 mb-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
               <Clock size={32} className="text-white/20" strokeWidth={1.5} />
             </div>

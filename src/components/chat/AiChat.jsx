@@ -259,7 +259,7 @@ const AiChat = () => {
           }
         `}>
           {/* Header */}
-          <div className="p-3 sm:p-4 border-b border-white/5 bg-[#0d0d0f] flex items-center justify-between relative z-20">
+          <div className="p-3 sm:p-4 border-b border-white/15 bg-[#0d0d0f] flex items-center justify-between relative z-20">
             <div className="flex items-center gap-3 relative z-10">
               <div className="relative">
                 <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#1a1a1c] border border-white/10 flex items-center justify-center text-red-500 shadow-sm">
@@ -350,7 +350,7 @@ const AiChat = () => {
               <div key={idx} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
                   <div className={`max-w-[85%] rounded-2xl p-3 ${msg.role === 'user'
                     ? 'bg-red-600 text-white rounded-br-none'
-                    : 'bg-white/5 text-gray-200 rounded-bl-none border border-white/5'
+                    : 'bg-white/5 text-gray-200 rounded-bl-none border border-white/15'
                     }`}>
                     {msg.role === 'assistant' ? (
                       msg.isTyping ? (
@@ -384,7 +384,7 @@ const AiChat = () => {
                         <div key={anime.id} className="flex flex-col gap-1">
                           <Link
                             to={`/watch/${anime.id}`}
-                            className="flex gap-3 p-2 rounded-xl bg-black/40 border border-white/5 hover:border-red-500/30 hover:bg-white/5 transition-all group shadow-sm"
+                            className="flex gap-3 p-2 rounded-xl bg-black/40 border border-white/15 hover:border-red-500/30 hover:bg-white/5 transition-all group shadow-sm"
                           >
                             {/* Thumbnail */}
                             <div className="w-[70px] h-[100px] rounded-lg overflow-hidden shrink-0 relative shadow-inner">
@@ -423,7 +423,7 @@ const AiChat = () => {
                               {/* Genres */}
                               <div className="flex flex-wrap gap-1 mt-2">
                                 {anime.genres?.slice(0, 3).map(g => (
-                                  <span key={g} className="px-2 py-0.5 rounded-md bg-white/10 text-[9px] font-medium text-gray-300 border border-white/5">
+                                  <span key={g} className="px-2 py-0.5 rounded-md bg-white/10 text-[9px] font-medium text-gray-300 border border-white/15">
                                     {g}
                                   </span>
                                 ))}
@@ -466,7 +466,7 @@ const AiChat = () => {
             ))}
             {isLoading && (
               <div className="flex items-start">
-                <div className="bg-white/5 text-gray-200 rounded-2xl rounded-bl-none px-4 py-3 flex items-center gap-1.5 border border-white/5 w-fit">
+                <div className="bg-white/5 text-gray-200 rounded-2xl rounded-bl-none px-4 py-3 flex items-center gap-1.5 border border-white/15 w-fit">
                   <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
                   <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
                   <div className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>

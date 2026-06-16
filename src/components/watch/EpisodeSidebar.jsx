@@ -34,11 +34,11 @@ export default function EpisodeSidebar({
   return (
     <aside className="lg:col-span-1 space-y-4 pt-4 lg:pt-0 animate-in fade-in slide-in-from-right duration-500 flex flex-col">
       <div
-        className="bg-[#0d0d0d] border border-white/5 overflow-hidden flex flex-col h-full lg:max-h-[600px] xl:max-h-[650px]"
+        className="bg-[#0d0d0d] border border-white/15 overflow-hidden flex flex-col h-full lg:max-h-[600px] xl:max-h-[650px]"
         style={{ clipPath: 'polygon(15px 0%, 100% 0%, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0% 100%, 0% 15px)' }}
       >
         {/* Header */}
-        <header className="p-4 border-b border-white/10 flex items-center justify-between bg-[#111] min-h-[60px]">
+        <header className="p-4 border-b border-white/15 flex items-center justify-between bg-[#111] min-h-[60px]">
           {isEpisodeSearchOpen ? (
             <div className="flex items-center gap-3 w-full animate-in fade-in slide-in-from-right-2 duration-300">
               <Search size={14} className="text-red-500 shrink-0" />
@@ -85,8 +85,8 @@ export default function EpisodeSidebar({
 
         {/* Range Selector */}
         {filteredEpisodes.length > 0 && (
-          <div className="p-4 bg-[#0a0a0a] border-b border-white/5">
-            <div className="flex items-center justify-between bg-[#161616] px-3 py-2 rounded-sm border border-white/5">
+          <div className="p-4 bg-[#0a0a0a] border-b border-white/15">
+            <div className="flex items-center justify-between bg-[#161616] px-3 py-2 rounded-sm border border-white/15">
               <button disabled={episodePage === 0} onClick={() => setEpisodePage(p => p - 1)} className={`transition-colors ${episodePage > 0 ? 'text-white hover:text-red-500' : 'text-white/5'}`}>
                 <ChevronLeft size={18} />
               </button>
@@ -118,7 +118,7 @@ export default function EpisodeSidebar({
                   onClick={() => setActiveEpisode(ep)}
                   className={`w-full text-left flex flex-col gap-1 px-4 py-3 text-[12px] font-medium transition-all rounded-[2px] border ${activeEpisode === ep
                     ? "bg-red-600/10 text-red-500 border-red-500 shadow-lg"
-                    : "bg-[#161616] text-white/70 border-white/5 hover:bg-[#202020] hover:text-white"
+                    : "bg-[#161616] text-white/70 border-white/15 hover:bg-[#202020] hover:text-white"
                     }`}
                 >
                   <div className="flex items-start gap-3 w-full">

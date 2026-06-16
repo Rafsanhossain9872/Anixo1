@@ -120,10 +120,10 @@ export default function AvatarModal({ isOpen, onClose, onSave, currentAvatar }) 
       />
 
       {/* Premium Modal Content */}
-      <div className="relative w-[92%] md:w-full max-w-[500px] h-[80vh] md:h-[90vh] max-h-[850px] bg-[#1d1f24] border border-white/5 rounded-[24px] flex flex-col overflow-hidden shadow-[0_32px_64px_rgba(0,0,0,0.8)] animate-in fade-in zoom-in duration-300">
+      <div className="relative w-[92%] md:w-full max-w-[500px] h-[80vh] md:h-[90vh] max-h-[850px] bg-[#1d1f24] border border-white/15 rounded-[24px] flex flex-col overflow-hidden shadow-[0_32px_64px_rgba(0,0,0,0.8)] animate-in fade-in zoom-in duration-300">
 
         {/* Header */}
-        <div className="flex items-center justify-between px-8 py-7 border-b border-white/5">
+        <div className="flex items-center justify-between px-8 py-7 border-b border-white/15">
           <div>
             <h2 className="text-xl font-bold text-white tracking-tight">
               Avatar Collection
@@ -168,7 +168,7 @@ export default function AvatarModal({ isOpen, onClose, onSave, currentAvatar }) 
                 >
                   <div className={`aspect-square rounded-full overflow-hidden border-2 transition-all duration-500 ${selectedAvatar === url
                     ? 'border-red-600 ring-4 ring-red-600/20 scale-105'
-                    : 'border-white/5 group-hover:border-white/20 group-hover:scale-105'
+                    : 'border-white/15 group-hover:border-white/20 group-hover:scale-105'
                     }`}>
                     <img
                       src={url}
@@ -194,7 +194,7 @@ export default function AvatarModal({ isOpen, onClose, onSave, currentAvatar }) 
         </div>
 
         {/* Action Footer */}
-        <div className="px-8 py-7 bg-white/[0.01] border-t border-white/5">
+        <div className="px-8 py-7 bg-white/[0.01] border-t border-white/15">
           <button
             onClick={() => onSave(selectedAvatar)}
             disabled={!selectedAvatar}

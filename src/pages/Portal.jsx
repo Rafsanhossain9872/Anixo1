@@ -51,7 +51,7 @@ export default function Portal() {
             }}
           >
             {/* Section: Interactive (First on Mobile) */}
-            <div className="flex-1 p-5 md:p-10 md:pl-16 bg-black/40 backdrop-blur-md flex flex-col justify-center items-center lg:items-start border-b lg:border-b-0 lg:border-r border-white/5 relative overflow-hidden group">
+            <div className="flex-1 p-5 md:p-10 md:pl-16 bg-black/40 backdrop-blur-md flex flex-col justify-center items-center lg:items-start border-b lg:border-b-0 lg:border-r border-white/15 relative overflow-hidden group">
               {/* Subtle top cut indicator */}
               <div className="absolute top-0 left-[20px] md:left-[40px] right-0 h-[2px] bg-gradient-to-r from-red-600/30 to-transparent" />
 
@@ -94,7 +94,7 @@ export default function Portal() {
                     <Link
                       key={s}
                       to={`/browse?search=${s}`}
-                      className="text-[9px] md:text-[11px] font-medium text-white/40 hover:text-red-500 whitespace-nowrap bg-white/5 border border-white/5 px-2 md:px-2.5 py-0.5 md:py-1 rounded-[4px] transition-colors"
+                      className="text-[9px] md:text-[11px] font-medium text-white/40 hover:text-red-500 whitespace-nowrap bg-white/5 border border-white/15 px-2 md:px-2.5 py-0.5 md:py-1 rounded-[4px] transition-colors"
                     >
                       {s}
                     </Link>
@@ -152,7 +152,7 @@ export default function Portal() {
                   </p>
                 </div>
 
-                <div className="mt-auto pt-4 md:pt-6 border-t border-white/5 flex items-center justify-between">
+                <div className="mt-auto pt-4 md:pt-6 border-t border-white/15 flex items-center justify-between">
                   <div className="flex items-center gap-3 md:gap-4">
                     <div className="text-center">
                       <span className="block text-[14px] md:text-[16px] font-black text-white">80k+</span>
@@ -178,7 +178,7 @@ export default function Portal() {
         </div>
 
         {/* Alphabet navigation */}
-        <div className="mt-6 md:mt-12 backdrop-blur-sm bg-white/[0.01] rounded-xl md:rounded-2xl border border-white/5 overflow-hidden py-3 md:py-4">
+        <div className="mt-6 md:mt-12 backdrop-blur-sm bg-white/[0.01] rounded-xl md:rounded-2xl border border-white/15 overflow-hidden py-3 md:py-4">
           <AlphabetNav />
         </div>
       </main>

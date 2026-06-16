@@ -116,10 +116,10 @@ export default function EstimatedSchedule() {
 
   return (
     <section className="max-w-[1720px] mx-auto px-2 md:px-4 mt-6 mb-6">
-      <div className="bg-[#111111] rounded-[6px] border border-white/5 overflow-hidden">
+      <div className="bg-[#111111] rounded-[6px] border border-white/15 overflow-hidden">
 
         {/* Header Area */}
-        <div className="p-3 md:p-4 border-b border-white/5">
+        <div className="p-3 md:p-4 border-b border-white/15">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 md:mb-4 gap-3 sm:gap-0">
             <div className="flex items-center gap-3">
               <div className="w-[3px] h-4 bg-red-600" />
@@ -151,7 +151,7 @@ export default function EstimatedSchedule() {
               <div className="relative z-50 shrink-0">
                 <button
                   onClick={() => setFilterShow(!filterShow)}
-                  className={`flex items-center gap-1.5 px-3 md:px-4 py-1.5 md:h-[32px] bg-[#1a1a1a] border border-white/5 rounded-[4px] hover:text-white transition-colors text-[10px] md:text-[12px] font-bold ${filterShow || filters.format !== 'ALL' || filters.status !== 'ALL' ? 'text-white' : 'text-[#888]'}`}
+                  className={`flex items-center gap-1.5 px-3 md:px-4 py-1.5 md:h-[32px] bg-[#1a1a1a] border border-white/15 rounded-[4px] hover:text-white transition-colors text-[10px] md:text-[12px] font-bold ${filterShow || filters.format !== 'ALL' || filters.status !== 'ALL' ? 'text-white' : 'text-[#888]'}`}
                 >
                   <Filter size={14} className={filters.format !== 'ALL' || filters.status !== 'ALL' ? 'text-[#ff4d2e]' : ''} /> Filter
                 </button>
@@ -212,7 +212,7 @@ export default function EstimatedSchedule() {
           <div className="flex items-center">
             <button
               onClick={scrollLeft}
-              className="hidden md:flex w-8 h-12 rounded-[4px] bg-[#1a1a1a] border border-white/5 items-center justify-center text-[#777] hover:text-white transition-all shrink-0 mr-2"
+              className="hidden md:flex w-8 h-12 rounded-[4px] bg-[#1a1a1a] border border-white/15 items-center justify-center text-[#777] hover:text-white transition-all shrink-0 mr-2"
             >
               <ChevronLeft size={16} />
             </button>
@@ -228,7 +228,7 @@ export default function EstimatedSchedule() {
                   onClick={() => setSelectedDate(date)}
                   className={`flex flex-col items-center justify-center min-w-[65px] md:min-w-[70px] h-[52px] md:h-[56px] rounded-[4px] transition-all duration-200 shrink-0 snap-start ${isSelected(date)
                       ? "bg-[#ff4d2e] shadow-[0_0_15px_rgba(255,77,46,0.3)] border border-[#ff4d2e]"
-                      : "bg-[#1a1a1a] border border-white/5 hover:bg-[#222]"
+                      : "bg-[#1a1a1a] border border-white/15 hover:bg-[#222]"
                     }`}
                 >
                   <span className={`text-[8px] md:text-[9px] font-bold tracking-widest uppercase mb-[2px] ${isSelected(date) ? "text-white" : "text-[#777]"}`}>
@@ -246,7 +246,7 @@ export default function EstimatedSchedule() {
 
             <button
               onClick={scrollRight}
-              className="hidden md:flex w-8 h-12 rounded-[4px] bg-[#1a1a1a] border border-white/5 items-center justify-center text-[#777] hover:text-white transition-all shrink-0 ml-2"
+              className="hidden md:flex w-8 h-12 rounded-[4px] bg-[#1a1a1a] border border-white/15 items-center justify-center text-[#777] hover:text-white transition-all shrink-0 ml-2"
             >
               <ChevronRight size={16} />
             </button>
@@ -277,7 +277,7 @@ export default function EstimatedSchedule() {
                     <div
                       key={item.id}
                       onClick={() => navigate(`/watch/${item.media?.id}`)}
-                      className={`relative flex items-center justify-between py-2.5 px-4 cursor-pointer group border-b border-white/5 ${isEven ? 'bg-[#141519]' : 'bg-transparent'} hover:bg-white/[0.02] transition-colors`}
+                      className={`relative flex items-center justify-between py-2.5 px-4 cursor-pointer group border-b border-white/15 ${isEven ? 'bg-[#141519]' : 'bg-transparent'} hover:bg-white/[0.02] transition-colors`}
                     >
                       {/* Left Colored Border */}
                       {!isPast && (
@@ -357,7 +357,7 @@ export default function EstimatedSchedule() {
         </div>
 
         {/* Footer Note */}
-        <div className="py-3 text-center border-t border-white/5">
+        <div className="py-3 text-center border-t border-white/15">
           <p className="text-[10px] font-medium text-[#555]">
             All times are in {tzName} ({offsetStr})
           </p>

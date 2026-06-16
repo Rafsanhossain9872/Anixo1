@@ -135,7 +135,7 @@ const EditInputBox = ({ editText, setEditText, onSubmit, onCancel }) => {
     return (
         <div className="mt-2 mb-3 animate-in fade-in duration-200">
             <div className="bg-[#1A1D24] border border-white/10 rounded-lg overflow-hidden flex flex-col focus-within:border-indigo-500/50 transition-colors">
-                <div className="flex items-center gap-1.5 px-3 py-2 border-b border-white/5 bg-[#12151C]">
+                <div className="flex items-center gap-1.5 px-3 py-2 border-b border-white/15 bg-[#12151C]">
                     <button onClick={() => insertMarkdownEdit('**', '**', 'bold text')} className="w-7 h-7 flex items-center justify-center rounded-md text-white/40 hover:text-white hover:bg-white/10 active:scale-95 font-bold transition-all cursor-pointer text-xs">B</button>
                     <button onClick={() => insertMarkdownEdit('*', '*', 'italic text')} className="w-7 h-7 flex items-center justify-center rounded-md text-white/40 hover:text-white hover:bg-white/10 active:scale-95 italic transition-all cursor-pointer text-xs font-serif">I</button>
                     <button onClick={() => insertMarkdownEdit('~~', '~~', 'strikethrough text')} className="w-7 h-7 flex items-center justify-center rounded-md text-white/40 hover:text-white hover:bg-white/10 active:scale-95 line-through transition-all cursor-pointer text-xs">S</button>
@@ -206,7 +206,7 @@ const ReplyInputBox = ({ user, replyText, setReplyText, onSubmit, onCancel, plac
         </div>
         <div className="flex-1">
             <div className="bg-[#1A1D24] border border-white/10 rounded-lg overflow-hidden flex flex-col focus-within:border-indigo-500/50 transition-colors">
-                <div className="flex items-center gap-1.5 px-3 py-2 border-b border-white/5 bg-[#12151C]">
+                <div className="flex items-center gap-1.5 px-3 py-2 border-b border-white/15 bg-[#12151C]">
                     <button onClick={() => insertMarkdownReply('**', '**', 'bold text')} className="w-7 h-7 flex items-center justify-center rounded-md text-white/40 hover:text-white hover:bg-white/10 active:scale-95 font-bold transition-all cursor-pointer text-xs">B</button>
                     <button onClick={() => insertMarkdownReply('*', '*', 'italic text')} className="w-7 h-7 flex items-center justify-center rounded-md text-white/40 hover:text-white hover:bg-white/10 active:scale-95 italic transition-all cursor-pointer text-xs font-serif">I</button>
                     <button onClick={() => insertMarkdownReply('~~', '~~', 'strikethrough text')} className="w-7 h-7 flex items-center justify-center rounded-md text-white/40 hover:text-white hover:bg-white/10 active:scale-95 line-through transition-all cursor-pointer text-xs">S</button>
@@ -798,7 +798,7 @@ export default function CommentSection({ animeId, episode }) {
                                                         {user?.username !== reply.user.username && (
                                                             <button 
                                                                 onClick={() => { setReportModalOpen({ type: 'reply', id: reply._id, commentId: commentId }); setOpenDropdownId(null); }}
-                                                                className="w-full text-left px-3 py-2 text-xs text-red-400 hover:text-red-300 hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer border-t border-white/5 mt-1 pt-2"
+                                                                className="w-full text-left px-3 py-2 text-xs text-red-400 hover:text-red-300 hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer border-t border-white/15 mt-1 pt-2"
                                                             >
                                                                 <Flag size={12} /> Report
                                                             </button>
@@ -806,14 +806,14 @@ export default function CommentSection({ animeId, episode }) {
                                                         {(user?.role === 'admin' || user?.role === 'moderator') && reply.user.username !== user.username && reply.user.role !== 'admin' && reply.user.role !== 'moderator' && (
                                                             <button 
                                                                 onClick={() => { setBanModalOpen({ username: reply.user.username, commentId: commentId, replyId: reply._id }); setOpenDropdownId(null); }}
-                                                                className="w-full text-left px-3 py-2 text-xs text-red-500 hover:text-red-400 hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer border-t border-white/5 mt-1 pt-2"
+                                                                className="w-full text-left px-3 py-2 text-xs text-red-500 hover:text-red-400 hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer border-t border-white/15 mt-1 pt-2"
                                                             >
                                                                 <Ban size={12} /> Ban User
                                                             </button>
                                                         )}
                                                         <button 
                                                             onClick={() => { handleCopyLink(reply._id); setOpenDropdownId(null); }}
-                                                            className="w-full text-left px-3 py-2 text-xs text-white/70 hover:text-white hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer border-t border-white/5 mt-1 pt-2"
+                                                            className="w-full text-left px-3 py-2 text-xs text-white/70 hover:text-white hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer border-t border-white/15 mt-1 pt-2"
                                                         >
                                                             <LinkIcon size={12} /> Copy Link
                                                         </button>
@@ -869,7 +869,7 @@ export default function CommentSection({ animeId, episode }) {
     return (
         <div className="mt-6 sm:mt-10 lg:mt-16 bg-[#0B0E14] rounded-xl sm:rounded-sm p-3 sm:p-6 lg:p-8 border border-white/[0.05] shadow-2xl">
             {/* Header */}
-            <div className="flex items-center justify-between mb-6 sm:mb-8 border-b border-white/5 pb-4">
+            <div className="flex items-center justify-between mb-6 sm:mb-8 border-b border-white/15 pb-4">
                 <div className="flex items-center gap-4 sm:gap-6">
                     <button className="bg-[#1A1D24] border border-white/10 text-white font-medium px-4 py-1.5 sm:py-2 rounded-full flex items-center gap-2 text-sm hover:bg-white/5 transition-colors">
                         Episode {episode} <ChevronDown size={14} className="text-white/50" />
@@ -890,7 +890,7 @@ export default function CommentSection({ animeId, episode }) {
                     {showSortDropdown && (
                         <>
                             <div className="fixed inset-0 z-40" onClick={() => setShowSortDropdown(false)}></div>
-                            <div className="absolute right-0 mt-2 w-40 bg-[#161923] border border-white/5 rounded-xl shadow-2xl py-2 z-50 overflow-hidden">
+                            <div className="absolute right-0 mt-2 w-40 bg-[#161923] border border-white/15 rounded-xl shadow-2xl py-2 z-50 overflow-hidden">
                                 {['Top', 'Newest', 'Oldest'].map(option => (
                                     <button
                                         key={option}
@@ -929,7 +929,7 @@ export default function CommentSection({ animeId, episode }) {
                     <div className="bg-[#1A1D24] border border-white/10 rounded-lg overflow-hidden flex flex-col focus-within:border-[#00B4D8]/50 transition-colors">
                         {/* Toolbar */}
                         {isInputExpanded && (
-                            <div className="flex items-center gap-2 px-4 py-2 border-b border-white/5 bg-[#12151C] animate-in slide-in-from-top-2 duration-200">
+                            <div className="flex items-center gap-2 px-4 py-2 border-b border-white/15 bg-[#12151C] animate-in slide-in-from-top-2 duration-200">
                                 <button onClick={() => insertMarkdown('**', '**', 'bold text')} className="w-8 h-8 flex items-center justify-center rounded-md text-white/40 hover:text-white hover:bg-white/10 active:scale-95 font-bold transition-all cursor-pointer text-sm">B</button>
                                 <button onClick={() => insertMarkdown('*', '*', 'italic text')} className="w-8 h-8 flex items-center justify-center rounded-md text-white/40 hover:text-white hover:bg-white/10 active:scale-95 italic transition-all cursor-pointer text-sm font-serif">I</button>
                                 <button onClick={() => insertMarkdown('~~', '~~', 'strikethrough text')} className="w-8 h-8 flex items-center justify-center rounded-md text-white/40 hover:text-white hover:bg-white/10 active:scale-95 line-through transition-all cursor-pointer text-sm">S</button>
@@ -1126,7 +1126,7 @@ export default function CommentSection({ animeId, episode }) {
                                                         {user?.username !== comment.user.username && (
                                                             <button 
                                                                 onClick={() => { setReportModalOpen({ type: 'comment', id: comment._id }); setOpenDropdownId(null); }}
-                                                                className="w-full text-left px-3 py-2 text-xs text-red-400 hover:text-red-300 hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer border-t border-white/5 mt-1 pt-2"
+                                                                className="w-full text-left px-3 py-2 text-xs text-red-400 hover:text-red-300 hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer border-t border-white/15 mt-1 pt-2"
                                                             >
                                                                 <Flag size={12} /> Report
                                                             </button>
@@ -1135,14 +1135,14 @@ export default function CommentSection({ animeId, episode }) {
                                                             <>
                                                                 <button 
                                                                     onClick={() => { handlePinComment(comment._id); setOpenDropdownId(null); }}
-                                                                    className={`w-full text-left px-3 py-2 text-xs ${user?.role === 'admin' ? 'text-purple-400 hover:text-purple-300' : 'text-red-400 hover:text-red-300'} hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer border-t border-white/5 mt-1 pt-2`}
+                                                                    className={`w-full text-left px-3 py-2 text-xs ${user?.role === 'admin' ? 'text-purple-400 hover:text-purple-300' : 'text-red-400 hover:text-red-300'} hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer border-t border-white/15 mt-1 pt-2`}
                                                                 >
                                                                     <Pin size={12} /> {comment.isPinned ? 'Unpin Comment' : 'Pin Comment'}
                                                                 </button>
                                                                 {comment.user.username !== user.username && comment.user.role !== 'admin' && comment.user.role !== 'moderator' && (
                                                                     <button 
                                                                         onClick={() => { setBanModalOpen({ username: comment.user.username, commentId: comment._id }); setOpenDropdownId(null); }}
-                                                                        className="w-full text-left px-3 py-2 text-xs text-red-500 hover:text-red-400 hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer border-t border-white/5 mt-1 pt-2"
+                                                                        className="w-full text-left px-3 py-2 text-xs text-red-500 hover:text-red-400 hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer border-t border-white/15 mt-1 pt-2"
                                                                     >
                                                                         <Ban size={12} /> Ban User
                                                                     </button>
@@ -1151,7 +1151,7 @@ export default function CommentSection({ animeId, episode }) {
                                                         )}
                                                         <button 
                                                             onClick={() => { handleCopyLink(comment._id); setOpenDropdownId(null); }}
-                                                            className="w-full text-left px-3 py-2 text-xs text-white/70 hover:text-white hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer border-t border-white/5 mt-1 pt-2"
+                                                            className="w-full text-left px-3 py-2 text-xs text-white/70 hover:text-white hover:bg-white/5 transition-colors flex items-center gap-2 cursor-pointer border-t border-white/15 mt-1 pt-2"
                                                         >
                                                             <LinkIcon size={12} /> Copy Link
                                                         </button>

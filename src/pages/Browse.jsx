@@ -251,7 +251,7 @@ export default function Browse() {
         <div className="mb-6">
           <div className="hidden md:flex flex-col gap-6">
             <div className="flex h-[52px] bg-[#0d0d0d] border border-white/10 rounded-xl overflow-visible shadow-2xl relative">
-              <div className="flex-[2.5] relative flex items-center border-r border-white/5">
+              <div className="flex-[2.5] relative flex items-center border-r border-white/15">
                 <Search className="absolute left-6 w-4 h-4 text-white/40" />
                 <input
                   type="text"
@@ -273,7 +273,7 @@ export default function Browse() {
                 { label: t('browse.status'), key: "status", options: [{ label: t('browse.statusOptions.any'), value: "" }, { label: t('browse.statusOptions.releasing'), value: "RELEASING" }, { label: t('browse.statusOptions.finished'), value: "FINISHED" }, { label: t('browse.statusOptions.upcoming'), value: "NOT_YET_RELEASED" }] },
                 { label: t('browse.advanced'), key: "advanced", active: filters.year || filters.season || filters.rating }
               ].map(dd => (
-                <div key={dd.key} className="flex-1 relative flex items-center border-r border-white/5 group">
+                <div key={dd.key} className="flex-1 relative flex items-center border-r border-white/15 group">
                   <button
                     onClick={() => setOpenDropdown(openDropdown === dd.key ? null : dd.key)}
                     className={`w-full h-full flex items-center justify-between px-6 transition-all hover:bg-white/2 ${openDropdown === dd.key ? 'bg-white/3' : ''}`}
@@ -341,7 +341,7 @@ export default function Browse() {
                                 );
                               })}
                             </div>
-                            <div className="pt-2 border-t border-white/5 flex items-center justify-end gap-2 text-[9px]">
+                            <div className="pt-2 border-t border-white/15 flex items-center justify-end gap-2 text-[9px]">
                               <button onClick={handleReset} className="px-4 py-1.5 uppercase tracking-widest text-white/20 hover:text-white transition-colors">{t('browse.reset')}</button>
                               <button onClick={() => setOpenDropdown(null)} className="px-5 py-1.5 bg-white/5 border border-white/10 text-white uppercase tracking-[0.2em] rounded-lg hover:bg-white/10 transition-all">{t('browse.close')}</button>
                             </div>
@@ -358,7 +358,7 @@ export default function Browse() {
                                     <select
                                       value={filters[key]}
                                       onChange={(e) => setSingleFilter(key, e.target.value)}
-                                      className="w-full h-7 bg-white/3 border border-white/5 rounded-md px-2 pr-6 text-[10px] text-white/80 outline-none hover:bg-white/6 transition-all cursor-pointer appearance-none"
+                                      className="w-full h-7 bg-white/3 border border-white/15 rounded-md px-2 pr-6 text-[10px] text-white/80 outline-none hover:bg-white/6 transition-all cursor-pointer appearance-none"
                                     >
                                       <option value="" className="bg-[#0d0d0d]">{key === 'season' ? t('browse.advancedOptions.season') : t('browse.advancedOptions.year')}</option>
                                       {key === 'season'
@@ -412,7 +412,7 @@ export default function Browse() {
                               </div>
                             </div>
 
-                            <div className="pt-2 border-t border-white/5 flex items-center justify-between">
+                            <div className="pt-2 border-t border-white/15 flex items-center justify-between">
                               <button
                                 onClick={() => setSingleFilter("onList", filters.excludeMyList ? "" : "false")}
                                 className="flex items-center gap-1.5 group py-1"
@@ -437,7 +437,7 @@ export default function Browse() {
 
               <button
                 onClick={handleShuffleSort}
-                className="w-16 h-full flex items-center justify-center transition-all hover:bg-white/4 text-white/20 hover:text-red-500 border-r border-white/5"
+                className="w-16 h-full flex items-center justify-center transition-all hover:bg-white/4 text-white/20 hover:text-red-500 border-r border-white/15"
               >
                 <RefreshCw size={16} className={isFetching ? 'animate-spin' : ''} />
               </button>
@@ -455,7 +455,7 @@ export default function Browse() {
 
           <div className="md:hidden flex flex-col gap-3">
             <div className="bg-[#0d0d0d] border border-white/10 rounded-xl shadow-2xl p-3 space-y-3">
-              <div className="relative h-10 flex items-center border border-white/5 rounded-lg">
+              <div className="relative h-10 flex items-center border border-white/15 rounded-lg">
                 <Search className="absolute left-3 w-4 h-4 text-white/20" />
                 <input
                   type="text"
@@ -557,7 +557,7 @@ export default function Browse() {
                                   );
                                 })}
                               </div>
-                              <div className="pt-2 border-t border-white/5 flex items-center justify-end gap-2 text-[9px]">
+                              <div className="pt-2 border-t border-white/15 flex items-center justify-end gap-2 text-[9px]">
                                 <button
                                   onClick={handleReset}
                                   className="px-4 py-1.5 uppercase tracking-widest text-white/20 hover:text-white transition-colors"
@@ -586,7 +586,7 @@ export default function Browse() {
                                       <select
                                         value={filters[key]}
                                         onChange={e => setSingleFilter(key, e.target.value)}
-                                        className="w-full h-7 bg-white/3 border border-white/5 rounded-md px-2 pr-6 text-[10px] text-white/80 outline-none hover:bg-white/6 transition-all cursor-pointer appearance-none"
+                                        className="w-full h-7 bg-white/3 border border-white/15 rounded-md px-2 pr-6 text-[10px] text-white/80 outline-none hover:bg-white/6 transition-all cursor-pointer appearance-none"
                                       >
                                         <option value="" className="bg-[#0d0d0d]">
                                           {key === "season" ? t('browse.advancedOptions.season') : t('browse.advancedOptions.year')}
@@ -680,7 +680,7 @@ export default function Browse() {
                                 </div>
                               </div>
 
-                              <div className="pt-2 border-t border-white/5 flex items-center justify-between">
+                              <div className="pt-2 border-t border-white/15 flex items-center justify-between">
                                 <button
                                   onClick={() => setSingleFilter("onList", filters.excludeMyList ? "" : "false")}
                                   className="flex items-center gap-1.5 group py-1"

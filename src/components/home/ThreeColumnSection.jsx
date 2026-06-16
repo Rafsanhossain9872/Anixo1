@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 /* ── Skeleton Loaders ── */
 function SkeletonListItem() {
   return (
-    <div className="flex items-center gap-4 py-2.5 px-2 -mx-2 border-b border-white/5 last:border-0">
+    <div className="flex items-center gap-4 py-2.5 px-2 -mx-2 border-b border-white/15 last:border-0">
       <div className="w-[60px] h-[84px] rounded-[6px] bg-[#1a1a1a] animate-pulse shrink-0" />
       <div className="flex-1 space-y-3">
         <div className="h-3.5 bg-[#1a1a1a] rounded animate-pulse w-full" />
@@ -27,7 +27,7 @@ function SkeletonRankedItem({ featured }) {
     );
   }
   return (
-    <div className="flex items-center gap-4 py-2.5 px-2 -mx-2 border-b border-white/5 last:border-0">
+    <div className="flex items-center gap-4 py-2.5 px-2 -mx-2 border-b border-white/15 last:border-0">
       <div className="w-8 h-8 bg-[#1a1a1a] rounded-full animate-pulse shrink-0" />
       <div className="w-[60px] h-[84px] rounded-[6px] bg-[#1a1a1a] animate-pulse shrink-0" />
       <div className="flex-1 space-y-3">
@@ -48,7 +48,7 @@ function ListItem({ anime }) {
   const navigate = useNavigate();
   return (
     <div
-      className="flex items-center gap-4 py-2.5 px-2 -mx-2 cursor-pointer group border-b border-white/5 last:border-0 hover:bg-white/[0.03] rounded-xl transition-all duration-300"
+      className="flex items-center gap-4 py-2.5 px-2 -mx-2 cursor-pointer group border-b border-white/15 last:border-0 hover:bg-white/[0.03] rounded-xl transition-all duration-300"
       onClick={() => navigate(`/watch/${anime.id}`)}
     >
       <div className="relative overflow-hidden rounded-[6px] shrink-0 shadow-md ring-1 ring-white/5 group-hover:ring-white/20 transition-all duration-300">
@@ -136,7 +136,7 @@ function RankedItem({ anime, rank, featured }) {
 
   return (
     <div
-      className="flex items-center gap-4 py-2.5 px-2 -mx-2 cursor-pointer group border-b border-white/5 last:border-0 hover:bg-white/[0.03] rounded-xl transition-all duration-300"
+      className="flex items-center gap-4 py-2.5 px-2 -mx-2 cursor-pointer group border-b border-white/15 last:border-0 hover:bg-white/[0.03] rounded-xl transition-all duration-300"
       onClick={() => navigate(`/watch/${anime.id}`)}
     >
       <span className="text-[32px] font-black italic text-white/10 group-hover:text-red-500 transition-all duration-300 w-8 text-center select-none group-hover:-translate-y-1 drop-shadow-sm">

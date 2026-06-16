@@ -243,7 +243,7 @@ export default function Home() {
             className="absolute inset-0 bg-black/80 backdrop-blur-md animate-in fade-in duration-500"
             onClick={closeAnnouncement}
           />
-          <div className="relative bg-[#0d0d0d] border border-white/5 rounded-3xl p-8 max-w-[360px] w-full shadow-2xl text-center">
+          <div className="relative bg-[#0d0d0d] border border-white/15 rounded-3xl p-8 max-w-[360px] w-full shadow-2xl text-center">
             {/* AniList Logo Icon */}
             <div className="w-16 h-16 bg-[#02A9FF]/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-[#02A9FF]/20">
               <img 

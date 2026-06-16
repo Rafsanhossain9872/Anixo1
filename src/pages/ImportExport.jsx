@@ -390,7 +390,7 @@ export default function ImportExport() {
                 className={`flex items-center justify-center gap-2 px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 rounded-xl transition-all duration-300 border shrink-0 ${
                   isActive 
                   ? "bg-red-600 text-white border-red-600" 
-                  : "bg-white/[0.02] border-white/5 text-white/30 hover:text-white hover:bg-white/[0.05]"
+                  : "bg-white/[0.02] border-white/15 text-white/30 hover:text-white hover:bg-white/[0.05]"
                 }`}
               >
                 <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className="shrink-0 w-[18px] h-[18px] md:w-4 md:h-4" />
@@ -404,10 +404,10 @@ export default function ImportExport() {
 
         {/* Import/Export Card */}
         <div className="max-w-[700px] mx-auto animate-in fade-in slide-in-from-bottom-4 duration-700">
-          <div className="bg-[#111] border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
+          <div className="bg-[#111] border border-white/15 rounded-2xl overflow-hidden shadow-2xl">
 
             {/* Import / Export Tabs - Mobile Optimized */}
-            <div className="flex p-1.5 bg-white/5 m-4 md:m-6 mb-0 rounded-2xl border border-white/5">
+            <div className="flex p-1.5 bg-white/5 m-4 md:m-6 mb-0 rounded-2xl border border-white/15">
               <button
                 onClick={() => { setActiveTab("import"); setImportResult(null); }}
                 className={`flex-1 flex items-center justify-center gap-2 py-2.5 text-[10px] md:text-[11px] font-bold uppercase tracking-wider transition-all rounded-xl ${
@@ -432,7 +432,7 @@ export default function ImportExport() {
             {activeTab === "import" && (
               <form onSubmit={handleImport} className="p-5 md:p-10 space-y-8 md:space-y-10">
                 {/* Notice - Compact */}
-                <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5">
+                <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/15">
                   <div className="space-y-0.5 text-[10px] font-medium text-white/20 uppercase tracking-widest text-center md:text-left">
                     <p>• Your lists must be public</p>
                     <p>• Only matching titles will sync</p>
@@ -446,7 +446,7 @@ export default function ImportExport() {
                     <h3 className="text-[14px] font-bold text-white">Source Platform</h3>
                     <p className="text-[11px] text-white/30">Import source preference.</p>
                   </div>
-                  <div className="flex bg-white/5 p-1 rounded-xl border border-white/5 w-full md:w-auto">
+                  <div className="flex bg-white/5 p-1 rounded-xl border border-white/15 w-full md:w-auto">
                     {['MAL', 'File'].map((p) => (
                       <button
                         key={p}
@@ -469,7 +469,7 @@ export default function ImportExport() {
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
                       placeholder="AniList Username"
-                      className="w-full bg-white/5 border border-white/5 rounded-xl px-5 py-3.5 text-[13px] text-white placeholder-white/10 outline-none focus:border-red-600/30 transition-all"
+                      className="w-full bg-white/5 border border-white/15 rounded-xl px-5 py-3.5 text-[13px] text-white placeholder-white/10 outline-none focus:border-red-600/30 transition-all"
                     />
                   </div>
                 )}
@@ -479,7 +479,7 @@ export default function ImportExport() {
                   <div className="space-y-3">
                     <h3 className="text-[14px] font-bold text-white">Select File</h3>
                     <label className="flex items-center cursor-pointer group">
-                      <div className="flex-1 bg-white/5 border border-white/5 rounded-xl px-5 py-3.5 flex items-center justify-between group-hover:bg-white/[0.08] transition-all">
+                      <div className="flex-1 bg-white/5 border border-white/15 rounded-xl px-5 py-3.5 flex items-center justify-between group-hover:bg-white/[0.08] transition-all">
                         <span className={`text-[13px] ${importFile ? 'text-white' : 'text-white/20'}`}>
                           {importFile ? importFile.name : "Choose file..."}
                         </span>
@@ -500,7 +500,7 @@ export default function ImportExport() {
                     <h3 className="text-[14px] font-bold text-white">Import Mode</h3>
                     <p className="text-[11px] text-white/30">How to handle existing items.</p>
                   </div>
-                  <div className="flex bg-white/5 p-1 rounded-xl border border-white/5">
+                  <div className="flex bg-white/5 p-1 rounded-xl border border-white/15">
                     {['Merge', 'Replace'].map((m) => (
                       <button
                         key={m}
@@ -551,7 +551,7 @@ export default function ImportExport() {
 
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                   <h3 className="text-[14px] font-bold text-white">Format</h3>
-                  <div className="flex bg-white/5 p-1 rounded-xl border border-white/5">
+                  <div className="flex bg-white/5 p-1 rounded-xl border border-white/15">
                     {['TEXT', 'JSON', 'MAL XML'].map((f) => (
                       <button
                         key={f}

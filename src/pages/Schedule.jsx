@@ -81,15 +81,15 @@ export default function Schedule() {
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[...Array(7)].map((_, i) => (
-              <div key={i} className="animate-pulse bg-[#121212] rounded-xl h-[400px] border border-white/5" />
+              <div key={i} className="animate-pulse bg-[#121212] rounded-xl h-[400px] border border-white/15" />
             ))}
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-start">
             {grouped.map(({ date, items }, idx) => (
-              <div key={idx} className="bg-[#121212] rounded-xl border border-white/5 overflow-hidden flex flex-col shadow-lg transition-transform hover:scale-[1.01]">
+              <div key={idx} className="bg-[#121212] rounded-xl border border-white/15 overflow-hidden flex flex-col shadow-lg transition-transform hover:scale-[1.01]">
                 {/* Day Header */}
-                <div className={`p-4 flex items-center justify-between border-b border-white/5 ${new Date().toDateString() === date.toDateString() ? "bg-red-600/5 group" : "bg-white/[0.01]"
+                <div className={`p-4 flex items-center justify-between border-b border-white/15 ${new Date().toDateString() === date.toDateString() ? "bg-red-600/5 group" : "bg-white/[0.01]"
                   }`}>
                   <div className="flex flex-col">
                     <span className={`text-[11px] font-black tracking-widest uppercase ${new Date().toDateString() === date.toDateString() ? "text-red-500" : "text-white/30"

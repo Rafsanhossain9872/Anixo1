@@ -122,7 +122,7 @@ export default function ChatRoom() {
       
       <main className="flex-grow pt-16 md:pt-24 pb-0 md:pb-12 px-0 md:px-8 max-w-5xl mx-auto w-full flex flex-col">
         
-        <div className="flex-grow flex flex-col bg-[#121212]/60 backdrop-blur-2xl md:border border-white/5 rounded-none md:rounded-3xl overflow-hidden shadow-none md:shadow-[0_0_40px_rgba(0,0,0,0.5)] relative">
+        <div className="flex-grow flex flex-col bg-[#121212]/60 backdrop-blur-2xl md:border border-white/15 rounded-none md:rounded-3xl overflow-hidden shadow-none md:shadow-[0_0_40px_rgba(0,0,0,0.5)] relative">
           
           {/* Header */}
           <div className="bg-[#1a1a1a]/60 backdrop-blur-md border-b border-white/10 p-3 px-4 md:p-5 md:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 z-10 relative">
@@ -152,7 +152,7 @@ export default function ChatRoom() {
           <div className="flex-grow flex flex-col h-[calc(100dvh-280px)] md:h-[65vh] overflow-hidden bg-gradient-to-b from-transparent to-black/20">
             <div ref={chatContainerRef} className="flex-grow overflow-y-auto p-3 md:p-8 flex flex-col gap-4 md:gap-6 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
               {messages.length === 0 ? (
-                <div className="m-auto text-white/20 text-center flex flex-col items-center justify-center p-8 bg-white/5 rounded-3xl border border-white/5 backdrop-blur-sm">
+                <div className="m-auto text-white/20 text-center flex flex-col items-center justify-center p-8 bg-white/5 rounded-3xl border border-white/15 backdrop-blur-sm">
                   <MessageCircle size={48} className="mb-4 opacity-50 text-white/40" />
                   <p className="font-semibold text-lg text-white/60">No active messages</p>
                   <p className="text-sm mt-1">Be the first to say hi!</p>

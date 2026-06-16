@@ -79,7 +79,7 @@ const StatCard = ({ icon, label, value, sub, color = "red" }) => {
   const textCls = colorMap[color] || colorMap.red;
 
   return (
-    <div className="flex flex-col p-4 md:p-6 border border-white/5 rounded-xl bg-[#0a0a0a] hover:bg-[#111] transition-all relative overflow-hidden group">
+    <div className="flex flex-col p-4 md:p-6 border border-white/15 rounded-xl bg-[#0a0a0a] hover:bg-[#111] transition-all relative overflow-hidden group">
       <div className={`absolute top-0 left-0 w-full h-[2px] opacity-0 group-hover:opacity-100 transition-opacity bg-current ${textCls}`} />
       <div className="flex items-center justify-between mb-4 md:mb-6">
         <p className="text-[10px] md:text-[11px] font-bold text-white/50 uppercase tracking-[0.15em]">{label}</p>
@@ -338,7 +338,7 @@ export default function Stats() {
                 className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 border ${
                   isActive
                   ? "bg-red-600 text-white border-red-600"
-                  : "bg-white/[0.02] border-white/5 text-white/30 hover:text-white hover:bg-white/[0.05]"
+                  : "bg-white/[0.02] border-white/15 text-white/30 hover:text-white hover:bg-white/[0.05]"
                 }`}
               >
                 <Icon size={16} strokeWidth={isActive ? 2.5 : 2} className="shrink-0" />
@@ -351,7 +351,7 @@ export default function Stats() {
         {/* Header */}
         <div className="flex items-center gap-2 md:gap-3 mb-5 md:mb-8 px-1 md:px-2">
           <h2 className="text-base md:text-xl font-black tracking-tight uppercase">Watch Statistics</h2>
-          <span className="text-[8px] md:text-[10px] font-black bg-white/5 text-white/30 px-2 md:px-3 py-0.5 md:py-1 rounded-full border border-white/5 uppercase tracking-widest">Lifetime</span>
+          <span className="text-[8px] md:text-[10px] font-black bg-white/5 text-white/30 px-2 md:px-3 py-0.5 md:py-1 rounded-full border border-white/15 uppercase tracking-widest">Lifetime</span>
         </div>
 
         {loading ? (
@@ -360,7 +360,7 @@ export default function Stats() {
             <p className="text-white/30 text-sm font-bold uppercase tracking-widest animate-pulse">Crunching your data...</p>
           </div>
         ) : totalInLibrary === 0 ? (
-          <div className="flex flex-col items-center justify-center py-24 bg-white/[0.02] border border-white/5 rounded-2xl max-w-lg mx-auto">
+          <div className="flex flex-col items-center justify-center py-24 bg-white/[0.02] border border-white/15 rounded-2xl max-w-lg mx-auto">
             <BarChart2 size={40} className="text-white/10 mb-4" />
             <h3 className="text-lg font-black text-white/80 mb-2">No Data Yet</h3>
             <p className="text-white/30 text-sm text-center max-w-xs">Start watching and bookmarking anime to see your stats here!</p>
@@ -405,7 +405,7 @@ export default function Stats() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
 
               {/* Library Status Donut */}
-              <div className="border border-white/5 rounded-xl bg-[#0a0a0a] p-5 md:p-8">
+              <div className="border border-white/15 rounded-xl bg-[#0a0a0a] p-5 md:p-8">
                 <div className="flex items-center gap-2 mb-3 md:mb-5">
                   <Tv size={13} className="text-red-500 md:!w-[15px] md:!h-[15px]" />
                   <h3 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] text-white/60">Library Status</h3>
@@ -433,7 +433,7 @@ export default function Stats() {
               </div>
 
               {/* Format Breakdown */}
-              <div className="border border-white/5 rounded-xl bg-[#0a0a0a] p-5 md:p-8">
+              <div className="border border-white/15 rounded-xl bg-[#0a0a0a] p-5 md:p-8">
                 <div className="flex items-center gap-2 mb-3 md:mb-5">
                   <Film size={13} className="text-purple-400 md:!w-[15px] md:!h-[15px]" />
                   <h3 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] text-white/60">Format Breakdown</h3>
@@ -447,7 +447,7 @@ export default function Stats() {
             </div>
 
             {/* Genre Section */}
-            <div className="border border-white/5 rounded-xl bg-[#0a0a0a] p-5 md:p-8">
+            <div className="border border-white/15 rounded-xl bg-[#0a0a0a] p-5 md:p-8">
               <div className="flex items-center gap-2 mb-3 md:mb-5">
                 <Zap size={13} className="text-yellow-400 md:!w-[15px] md:!h-[15px]" />
                 <h3 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] text-white/60">Top Genres</h3>
@@ -479,7 +479,7 @@ export default function Stats() {
             </div>
 
             {/* Top Studios */}
-            <div className="border border-white/5 rounded-xl bg-[#0a0a0a] p-5 md:p-8">
+            <div className="border border-white/15 rounded-xl bg-[#0a0a0a] p-5 md:p-8">
               <div className="flex items-center gap-2 mb-3 md:mb-5">
                 <Trophy size={13} className="text-green-400 md:!w-[15px] md:!h-[15px]" />
                 <h3 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] text-white/60">Top Studios</h3>
@@ -489,7 +489,7 @@ export default function Stats() {
                   {topStudios.map(([name, count], i) => (
                     <div
                       key={i}
-                      className="flex items-center gap-3 md:gap-4 p-2 md:p-3 hover:bg-[#111] border border-transparent hover:border-white/5 rounded-lg transition-all"
+                      className="flex items-center gap-3 md:gap-4 p-2 md:p-3 hover:bg-[#111] border border-transparent hover:border-white/15 rounded-lg transition-all"
                     >
                       <span className="text-[11px] md:text-[13px] font-black text-white/20 w-4 md:w-5 text-right shrink-0">{i + 1}</span>
                       <div className="flex-1 min-w-0">

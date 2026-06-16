@@ -92,7 +92,7 @@ export default function AnimeCard({ anime }) {
         )}
 
         {/* Poster Container */}
-        <div className="relative w-full aspect-[2/3] overflow-hidden rounded-2xl bg-[#181818] border border-white/5 shadow-lg group-hover:shadow-2xl transition-[transform,shadow] duration-500 group-hover:-translate-y-1" style={{ transform: 'translateZ(0)' }}>
+        <div className="relative w-full aspect-[2/3] overflow-hidden rounded-2xl bg-[#181818] border border-white/15 shadow-lg group-hover:shadow-2xl transition-[transform,shadow] duration-500 group-hover:-translate-y-1" style={{ transform: 'translateZ(0)' }}>
           {isVisible && !imgError ? (
             <img
               src={anime.coverImage?.extraLarge || anime.coverImage?.large}
@@ -117,7 +117,7 @@ export default function AnimeCard({ anime }) {
           {anime.isProgress && (
             <>
                {/* Tiny Timestamp (Fixed positioning) */}
-               <div className="absolute top-2 left-2 bg-black/60 backdrop-blur-md px-1.5 py-0.5 rounded-md border border-white/5 z-50">
+               <div className="absolute top-2 left-2 bg-black/60 backdrop-blur-md px-1.5 py-0.5 rounded-md border border-white/15 z-50">
                  <span className="text-[8.5px] font-bold text-white/90 whitespace-nowrap tracking-tighter">
                    {Math.floor(anime.currentTime / 60)}:{String(Math.floor(anime.currentTime % 60)).padStart(2, '0')} / {anime.duration ? Math.floor(anime.duration / 60) : '24'}:00
                  </span>

@@ -113,7 +113,7 @@ export default function ResetPassword() {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           placeholder="••••••••"
-                          className="w-full bg-white/[0.03] border border-white/5 focus:border-red-600/30 focus:bg-white/[0.05] rounded-2xl py-4 pl-12 pr-12 outline-none text-[15px] transition-all placeholder:text-white/10"
+                          className="w-full bg-white/[0.03] border border-white/15 focus:border-red-600/30 focus:bg-white/[0.05] rounded-2xl py-4 pl-12 pr-12 outline-none text-[15px] transition-all placeholder:text-white/10"
                         />
                         <button
                           type="button"
@@ -137,7 +137,7 @@ export default function ResetPassword() {
                           value={confirmPassword}
                           onChange={(e) => setConfirmPassword(e.target.value)}
                           placeholder="••••••••"
-                          className="w-full bg-white/[0.03] border border-white/5 focus:border-red-600/30 focus:bg-white/[0.05] rounded-2xl py-4 pl-12 pr-4 outline-none text-[15px] transition-all placeholder:text-white/10"
+                          className="w-full bg-white/[0.03] border border-white/15 focus:border-red-600/30 focus:bg-white/[0.05] rounded-2xl py-4 pl-12 pr-4 outline-none text-[15px] transition-all placeholder:text-white/10"
                         />
                       </div>
                     </div>

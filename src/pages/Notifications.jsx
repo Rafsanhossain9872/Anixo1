@@ -118,7 +118,7 @@ export default function Notifications() {
                 className={`flex items-center justify-center gap-2 px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 rounded-xl transition-all duration-300 border shrink-0 ${
                   isActive 
                   ? "bg-red-600 text-white border-red-600" 
-                  : "bg-white/[0.02] border-white/5 text-white/30 hover:text-white hover:bg-white/[0.05]"
+                  : "bg-white/[0.02] border-white/15 text-white/30 hover:text-white hover:bg-white/[0.05]"
                 }`}
               >
                 <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className="shrink-0 w-[18px] h-[18px] md:w-4 md:h-4" />
@@ -171,7 +171,7 @@ export default function Notifications() {
                 className={`p-2.5 md:p-3.5 rounded-xl md:rounded-2xl border transition-all duration-300 flex gap-3 md:gap-4 relative overflow-hidden group cursor-pointer hover:bg-white/[0.03] ${
                   !notif.isRead 
                   ? "bg-white/[0.03] border-white/10 shadow-lg" 
-                  : "bg-transparent border-white/5 opacity-50 hover:opacity-100"
+                  : "bg-transparent border-white/15 opacity-50 hover:opacity-100"
                 }`}
               >
                 {!notif.isRead && <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-red-600 rounded-r-full" />}
@@ -245,7 +245,7 @@ export default function Notifications() {
             })}
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-24 bg-[#111] border border-white/5 rounded-2xl shadow-xl relative overflow-hidden max-w-3xl mx-auto">
+          <div className="flex flex-col items-center justify-center py-24 bg-[#111] border border-white/15 rounded-2xl shadow-xl relative overflow-hidden max-w-3xl mx-auto">
             <div className="relative w-20 h-20 mb-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
               <Bell size={32} className="text-white/20" strokeWidth={1.5} />
             </div>

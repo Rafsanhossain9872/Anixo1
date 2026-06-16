@@ -463,7 +463,7 @@ export default function Watch() {
     return (
       <div className="min-h-screen bg-[#111] flex flex-col items-center justify-center text-white p-6 text-center">
         <h1 className="text-2xl font-bold mb-2">{t('watch.animeNotFound')}</h1>
-        <p className="text-white/40 text-sm max-w-md">
+        <p className="text-white/60 text-sm max-w-md">
           We couldn't retrieve the details for this anime (ID: {id}).
           This could be a connectivity issue with the AniList API or an invalid ID.
         </p>
@@ -497,10 +497,10 @@ export default function Watch() {
             {/* Breadcrumbs */}
             {!isFocusMode && (
               <div
-                className="bg-[#121418] border-x border-t border-white/5 px-5 py-3 flex items-center justify-between"
+                className="bg-[#121418] border-x border-t border-white/15 px-5 py-3 flex items-center justify-between"
                 style={{ clipPath: 'polygon(15px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 15px)' }}
               >
-                <nav className="flex items-center gap-2 text-[13px] font-medium text-white/40 overflow-x-auto whitespace-nowrap scrollbar-hide">
+                <nav className="flex items-center gap-2 text-[13px] font-medium text-white/60 overflow-x-auto whitespace-nowrap scrollbar-hide">
                   <Link to="/home" className="hover:text-white transition-colors flex items-center gap-1.5">
                     <HomeIcon size={14} className="mb-0.5" />
                     Home
@@ -508,13 +508,13 @@ export default function Watch() {
                   <span className="text-white/10 font-light">/</span>
                   <Link to={`/browse?format=${(anime.format || "TV").toUpperCase()}`} className="hover:text-white transition-colors uppercase cursor-pointer">{anime.format || "TV"}</Link>
                   <span className="text-white/10 font-light">/</span>
-                  <span className="text-white/60 truncate max-w-[200px] md:max-w-none">{getTitle(anime.title)}</span>
+                  <span className="text-white/70 truncate max-w-[200px] md:max-w-none">{getTitle(anime.title)}</span>
                 </nav>
               </div>
             )}
 
             {/* Video Player Container */}
-            <section className={`relative w-full aspect-video bg-[#000] overflow-hidden border-x border-white/5 shadow-2xl transition-all duration-500 ${isFocusMode ? 'max-w-[90vw] max-h-[85vh] pointer-events-auto ring-1 ring-white/10 rounded-sm' : ''}`}>
+            <section className={`relative w-full aspect-video bg-[#000] overflow-hidden border-x border-white/15 shadow-2xl transition-all duration-500 ${isFocusMode ? 'max-w-[90vw] max-h-[85vh] pointer-events-auto ring-1 ring-white/10 rounded-sm' : ''}`}>
               <VideoPlayerSection
                 anime={anime}
                 activeEpisode={activeEpisode}
@@ -555,7 +555,7 @@ export default function Watch() {
 
             {/* Next Episode Banner */}
             {!isFocusMode && (
-              <div className="border-t border-white/5 bg-[#0d0d0d]/50">
+              <div className="border-t border-white/15 bg-[#0d0d0d]/50">
                 <NextEpisodeBanner anime={anime} />
               </div>
             )}
@@ -593,7 +593,7 @@ export default function Watch() {
 
         {/* Characters + Comments */}
         {!isFocusMode && (
-          <section className="py-16 border-t border-white/5 space-y-20 animate-in fade-in duration-1000">
+          <section className="py-16 border-t border-white/15 space-y-20 animate-in fade-in duration-1000">
             <CharactersSection characters={anime.characters} />
             <CustomCommentSection
               animeId={id}
@@ -608,7 +608,7 @@ export default function Watch() {
             
             {/* Recommendations Section */}
             {recommendations && recommendations.length > 0 && (
-              <div className="mt-16 pt-8 border-t border-white/5">
+              <div className="mt-16 pt-8 border-t border-white/15">
                 <h3 className="text-xl font-black text-white mb-6 tracking-tight flex items-center gap-3">
                   <span className="w-1 h-6 bg-red-600 rounded-full inline-block"></span>
                   {t('watch.recommendations', 'You May Also Like')}
@@ -644,7 +644,7 @@ export default function Watch() {
           </div>
           <div>
             <p className="text-[14px] font-bold text-white leading-tight">{t('watch.thankYou')}</p>
-            <p className="text-[11px] text-white/40 font-medium uppercase tracking-widest mt-1">{t('watch.reportSuccess')}</p>
+            <p className="text-[11px] text-white/50 font-medium uppercase tracking-widest mt-1">{t('watch.reportSuccess')}</p>
           </div>
         </div>
       )}

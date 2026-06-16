@@ -7,7 +7,7 @@ export default function SeasonsSection({ stableSeasons, getTitle }) {
   if (!stableSeasons || stableSeasons.length === 0) return null;
 
   return (
-    <section className="py-8 my-10 bg-[#0d0d0d]/80 border border-white/5 rounded-[4px] animate-in fade-in duration-700">
+    <section className="py-8 my-10 bg-[#0d0d0d]/80 border border-white/15 rounded-[4px] animate-in fade-in duration-700">
       <header className="mb-8 px-6 flex items-center justify-between">
         <h2 className="text-[18px] font-black text-white tracking-wide">
           {t('seasons.title')}
@@ -30,7 +30,7 @@ export default function SeasonsSection({ stableSeasons, getTitle }) {
             onClick={(e) => item.isActive && e.preventDefault()}
             className={`flex-shrink-0 relative group transition-all duration-500 rounded-[8px] overflow-hidden border ${item.isActive
                 ? 'border-red-600/60 shadow-[0_0_25px_rgba(220,38,38,0.2)]'
-                : 'border-white/5 hover:border-white/20'
+                : 'border-white/15 hover:border-white/20'
               }`}
             style={{ width: '200px', height: '110px' }}
           >

@@ -90,7 +90,7 @@ export default function AnimeRow({ title, data, isLoading, limit = 6, tabs = [],
                 className={`w-9 h-9 flex items-center justify-center rounded-full border transition-all duration-200 ${
                   canScrollLeft 
                     ? "border-white/20 bg-white/5 hover:bg-white/15 text-white cursor-pointer" 
-                    : "border-white/5 bg-white/[0.02] text-white/20 cursor-not-allowed"
+                    : "border-white/15 bg-white/[0.02] text-white/20 cursor-not-allowed"
                 }`}
                 aria-label="Scroll left"
               >
@@ -102,7 +102,7 @@ export default function AnimeRow({ title, data, isLoading, limit = 6, tabs = [],
                 className={`w-9 h-9 flex items-center justify-center rounded-full border transition-all duration-200 ${
                   canScrollRight 
                     ? "border-white/20 bg-white/5 hover:bg-white/15 text-white cursor-pointer" 
-                    : "border-white/5 bg-white/[0.02] text-white/20 cursor-not-allowed"
+                    : "border-white/15 bg-white/[0.02] text-white/20 cursor-not-allowed"
                 }`}
                 aria-label="Scroll right"
               >

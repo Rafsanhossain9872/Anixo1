@@ -34,7 +34,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative bg-[#0b0d12] pt-10 md:pt-20 pb-8 md:pb-10 overflow-hidden border-t border-white/5">
+    <footer className="relative bg-[#0b0d12] pt-10 md:pt-20 pb-8 md:pb-10 overflow-hidden border-t border-white/15">
       {/* Top Gradient Line - Truly Full Width */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
 
@@ -48,7 +48,7 @@ export default function Footer() {
       <div className="w-full px-4 md:px-8 lg:px-12 relative z-10">
 
         {/* SEO About Section */}
-        <article className="mb-8 md:mb-14 pb-6 md:pb-10 border-b border-white/5">
+        <article className="mb-8 md:mb-14 pb-6 md:pb-10 border-b border-white/15">
           <h2 className="text-[12px] md:text-[16px] font-medium text-white/80 mb-2 md:mb-4 tracking-wide">
             AniXo – Watch Free Anime Online in HD
           </h2>
@@ -149,7 +149,7 @@ export default function Footer() {
                 <Link
                   key={genre}
                   to={`/browse?genres=${genre}`}
-                  className="text-[10px] font-bold text-white/40 bg-white/[0.03] border border-white/5 px-2.5 md:px-3 py-1 md:py-1.5 rounded-[3px] hover:text-white hover:bg-white/[0.06] hover:border-white/10 transition-all whitespace-nowrap shrink-0 md:shrink"
+                  className="text-[10px] font-bold text-white/40 bg-white/[0.03] border border-white/15 px-2.5 md:px-3 py-1 md:py-1.5 rounded-[3px] hover:text-white hover:bg-white/[0.06] hover:border-white/10 transition-all whitespace-nowrap shrink-0 md:shrink"
                 >
                   {genre}
                 </Link>
@@ -159,7 +159,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-6 md:pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-6">
+        <div className="pt-6 md:pt-8 border-t border-white/15 flex flex-col md:flex-row items-center justify-between gap-3 md:gap-6">
           <div className="flex items-center gap-2 md:gap-4 text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-white/40">
             <span>&copy; {currentYear} AniXo</span>
             <div className="w-1 h-1 bg-white/10 rounded-full" />

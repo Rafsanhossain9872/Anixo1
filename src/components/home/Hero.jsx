@@ -190,7 +190,7 @@ export default function Hero({ data = [], isLoading }) {
                       {/* Dropdown Menu (Opens Upwards) */}
                       {activeDropdown === anime.id && (
                         <div className="absolute right-0 md:left-0 bottom-full mb-4 w-56 bg-[#1a1a1a] border border-white/10 rounded-xl overflow-hidden shadow-[0_10px_40px_rgba(0,0,0,0.5)] z-[100] animate-in fade-in slide-in-from-bottom-2 duration-200">
-                          <div className="p-3 border-b border-white/5 bg-white/[0.02]">
+                          <div className="p-3 border-b border-white/15 bg-white/[0.02]">
                             <p className="text-[10px] font-black uppercase tracking-widest text-white/30">Set Status</p>
                           </div>
                           <div className="p-1">
@@ -213,7 +213,7 @@ export default function Hero({ data = [], isLoading }) {
                                   removeFromList(String(anime.id));
                                   setActiveDropdown(null);
                                 }}
-                                className="w-full flex items-center justify-between px-4 py-2.5 text-[12px] font-medium text-red-500 hover:bg-red-500/10 rounded-lg transition-all mt-1 border-t border-white/5 pt-3"
+                                className="w-full flex items-center justify-between px-4 py-2.5 text-[12px] font-medium text-red-500 hover:bg-red-500/10 rounded-lg transition-all mt-1 border-t border-white/15 pt-3"
                               >
                                 Remove
                                 <Trash2 size={14} />

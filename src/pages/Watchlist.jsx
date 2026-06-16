@@ -321,7 +321,7 @@ export default function Watchlist() {
                 className={`flex items-center justify-center gap-2 px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 rounded-xl transition-all duration-300 border shrink-0 ${
                   isActive 
                   ? "bg-red-600 text-white border-red-600" 
-                  : "bg-white/[0.02] border-white/5 text-white/30 hover:text-white hover:bg-white/[0.05]"
+                  : "bg-white/[0.02] border-white/15 text-white/30 hover:text-white hover:bg-white/[0.05]"
                 }`}
               >
                 <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className="shrink-0 w-[18px] h-[18px] md:w-4 md:h-4" />
@@ -342,7 +342,7 @@ export default function Watchlist() {
               className={`text-[11px] font-bold uppercase tracking-wider px-4 py-2 rounded-md transition-colors ${
                 activeTab === tab 
                 ? "bg-white text-black border border-white" 
-                : "bg-[#161616] text-white/40 border border-white/5 hover:bg-[#1f1f1f] hover:text-white/80"
+                : "bg-[#161616] text-white/40 border border-white/15 hover:bg-[#1f1f1f] hover:text-white/80"
               }`}
             >
               {tab}
@@ -362,7 +362,7 @@ export default function Watchlist() {
         <div className="mb-6 w-full max-w-4xl mx-auto">
           <div className="hidden md:flex flex-col gap-6">
             <div className="flex h-[52px] bg-[#0d0d0d] border border-white/10 rounded-xl overflow-visible shadow-2xl relative">
-              <div className="flex-[2.5] relative flex items-center border-r border-white/5">
+              <div className="flex-[2.5] relative flex items-center border-r border-white/15">
                 <Search className="absolute left-6 w-4 h-4 text-white/40" />
                 <input
                   type="text"
@@ -384,7 +384,7 @@ export default function Watchlist() {
                 { label: "Status", key: "status", options: [{ label: "Any", value: "" }, { label: "Releasing", value: "RELEASING" }, { label: "Finished", value: "FINISHED" }, { label: "Upcoming", value: "NOT_YET_RELEASED" }] },
                 { label: "Advanced", key: "advanced", active: filters.year || filters.season || filters.rating }
               ].map(dd => (
-                <div key={dd.key} className="flex-1 relative flex items-center border-r border-white/5 group">
+                <div key={dd.key} className="flex-1 relative flex items-center border-r border-white/15 group">
                   <button
                     onClick={() => setOpenDropdown(openDropdown === dd.key ? null : dd.key)}
                     className={`w-full h-full flex items-center justify-between px-6 transition-all hover:bg-white/2 ${openDropdown === dd.key ? 'bg-white/3' : ''}`}
@@ -443,7 +443,7 @@ export default function Watchlist() {
                                 </button>
                               ))}
                             </div>
-                            <div className="pt-2 border-t border-white/5 flex items-center justify-end gap-2 text-[9px]">
+                            <div className="pt-2 border-t border-white/15 flex items-center justify-end gap-2 text-[9px]">
                               <button onClick={handleReset} className="px-4 py-1.5 uppercase tracking-widest text-white/20 hover:text-white transition-colors">Reset</button>
                               <button onClick={() => setOpenDropdown(null)} className="px-5 py-1.5 bg-white/5 border border-white/10 text-white uppercase tracking-[0.2em] rounded-lg hover:bg-white/10 transition-all">Close</button>
                             </div>
@@ -459,7 +459,7 @@ export default function Watchlist() {
                                   <select
                                     value={filters.season}
                                     onChange={(e) => setSingleFilter('season', e.target.value)}
-                                    className="w-full h-7 bg-white/3 border border-white/5 rounded-md px-2 pr-6 text-[10px] text-white/80 outline-none hover:bg-white/6 transition-all cursor-pointer appearance-none"
+                                    className="w-full h-7 bg-white/3 border border-white/15 rounded-md px-2 pr-6 text-[10px] text-white/80 outline-none hover:bg-white/6 transition-all cursor-pointer appearance-none"
                                   >
                                     <option value="" className="bg-[#0d0d0d]">Season</option>
                                     {["WINTER", "SPRING", "SUMMER", "FALL"].map(s => <option key={s} value={s} className="bg-[#0d0d0d]">{s}</option>)}
@@ -486,7 +486,7 @@ export default function Watchlist() {
 
 
                             </div>
-                            <div className="pt-2 border-t border-white/5 flex items-center justify-between">
+                            <div className="pt-2 border-t border-white/15 flex items-center justify-between">
                               <button
                                 onClick={() => setSingleFilter("onList", filters.excludeMyList ? "" : "false")}
                                 className="flex items-center gap-1.5 group py-1"
@@ -525,7 +525,7 @@ export default function Watchlist() {
 
           <div className="md:hidden flex flex-col gap-3">
             <div className="bg-[#0d0d0d] border border-white/10 rounded-xl shadow-2xl p-3 space-y-3">
-              <div className="relative h-10 flex items-center border border-white/5 rounded-lg">
+              <div className="relative h-10 flex items-center border border-white/15 rounded-lg">
                 <Search className="absolute left-3 w-4 h-4 text-white/20" />
                 <input
                   type="text"
@@ -619,7 +619,7 @@ export default function Watchlist() {
                                   </button>
                                 ))}
                               </div>
-                              <div className="pt-2 border-t border-white/5 flex items-center justify-end gap-2 text-[9px]">
+                              <div className="pt-2 border-t border-white/15 flex items-center justify-end gap-2 text-[9px]">
                                 <button
                                   onClick={handleReset}
                                   className="px-4 py-1.5 uppercase tracking-widest text-white/20 hover:text-white transition-colors"
@@ -647,7 +647,7 @@ export default function Watchlist() {
                                     <select
                                       value={filters.season}
                                       onChange={e => setSingleFilter("season", e.target.value)}
-                                      className="w-full h-7 bg-white/3 border border-white/5 rounded-md px-2 pr-6 text-[10px] text-white/80 outline-none hover:bg-white/6 transition-all cursor-pointer appearance-none"
+                                      className="w-full h-7 bg-white/3 border border-white/15 rounded-md px-2 pr-6 text-[10px] text-white/80 outline-none hover:bg-white/6 transition-all cursor-pointer appearance-none"
                                     >
                                       <option value="" className="bg-[#0d0d0d]">Season</option>
                                       {["WINTER", "SPRING", "SUMMER", "FALL"].map(s => (
@@ -702,7 +702,7 @@ export default function Watchlist() {
 
                               </div>
 
-                              <div className="pt-2 border-t border-white/5 flex items-center justify-between">
+                              <div className="pt-2 border-t border-white/15 flex items-center justify-between">
                                 <button
                                   onClick={() => setSingleFilter("onList", filters.excludeMyList ? "" : "false")}
                                   className="flex items-center gap-1.5 group py-1"
@@ -802,7 +802,7 @@ export default function Watchlist() {
         </div>
 
         {filteredWatchlist.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-24 bg-[#111] border border-white/5 rounded-2xl shadow-xl relative overflow-hidden max-w-3xl mx-auto">
+          <div className="flex flex-col items-center justify-center py-24 bg-[#111] border border-white/15 rounded-2xl shadow-xl relative overflow-hidden max-w-3xl mx-auto">
             <div className="relative w-20 h-20 mb-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
               <Heart size={32} className="text-white/20" strokeWidth={1.5} />
             </div>
@@ -877,7 +877,7 @@ export default function Watchlist() {
                               </button>
                             ))}
                             {/* Remove Option */}
-                            <div className="border-t border-white/5 mt-1 pt-1">
+                            <div className="border-t border-white/15 mt-1 pt-1">
                               <button
                                 onClick={(e) => { handleRemove(item.animeId, e); setOpenStatusPicker(null); }}
                                 className="w-full text-left px-3 py-2.5 text-[11px] text-red-500 hover:bg-red-500/10 transition-colors"
@@ -917,7 +917,7 @@ export default function Watchlist() {
             className="absolute inset-0 bg-black/60 backdrop-blur-[2px] transition-opacity"
             onClick={() => setSyncError(null)}
           />
-          <div className="relative bg-[#111] border border-white/5 rounded-2xl p-6 max-w-[320px] w-full shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+          <div className="relative bg-[#111] border border-white/15 rounded-2xl p-6 max-w-[320px] w-full shadow-2xl animate-in fade-in zoom-in-95 duration-200">
             <h3 className="text-[16px] font-bold text-white mb-2">
               {syncError.type === 'auth' ? 'Connect AniList' : 'Sync Failed'}
             </h3>

@@ -30,7 +30,7 @@ export default function Staff() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-12 h-12 border-4 border-red-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-white/40 font-bold uppercase tracking-[0.3em] text-[10px]">Loading Profile</p>
+          <p className="text-white/60 font-bold uppercase tracking-[0.3em] text-[10px]">Loading Profile</p>
         </div>
       </div>
     );
@@ -68,7 +68,7 @@ export default function Staff() {
           {/* Back Button */}
           <button 
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-white/40 hover:text-white transition-colors group mb-6"
+            className="flex items-center gap-2 text-white/60 hover:text-white transition-colors group mb-6"
           >
             <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:border-white/30 group-hover:bg-white/5">
               <ChevronLeft size={18} />
@@ -79,7 +79,7 @@ export default function Staff() {
           {/* Mobile: Stacked center layout | Desktop: Side-by-side */}
           <div className="flex flex-col items-center text-center sm:flex-row sm:items-end sm:text-left gap-5 sm:gap-8">
             {/* Staff Image */}
-            <div className="w-[140px] sm:w-[180px] md:w-[220px] shrink-0 rounded-lg overflow-hidden border border-white/10 shadow-2xl relative">
+            <div className="w-[140px] sm:w-[180px] md:w-[220px] shrink-0 rounded-lg overflow-hidden border border-white/15 shadow-2xl relative">
               <img 
                 src={staff.image?.large} 
                 alt={staff.name?.full} 
@@ -106,12 +106,12 @@ export default function Staff() {
                 {staff.name?.full}
               </h1>
               {staff.name?.native && (
-                <p className="text-sm sm:text-lg font-bold text-white/30 mb-4 uppercase tracking-tighter">
+                <p className="text-sm sm:text-lg font-bold text-white/50 mb-4 uppercase tracking-tighter">
                   {staff.name?.native}
                 </p>
               )}
               
-              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-5 gap-y-1 text-[11px] sm:text-[12px] font-bold uppercase tracking-wider text-white/40">
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-5 gap-y-1 text-[11px] sm:text-[12px] font-bold uppercase tracking-wider text-white/60">
                 {staff.primaryOccupations?.[0] && <div><span className="text-white">{staff.primaryOccupations[0]}</span></div>}
                 <div>Favourites: <span className="text-white">{staff.favourites?.toLocaleString()}</span></div>
               </div>
@@ -131,7 +131,7 @@ export default function Staff() {
                 <h2 className="text-base sm:text-xl font-black text-white uppercase tracking-tight">Biography</h2>
               </div>
               <div 
-                className="prose prose-invert max-w-none text-white/60 leading-relaxed text-[13px] sm:text-[15px]"
+                className="prose prose-invert max-w-none text-white/80 leading-relaxed text-[13px] sm:text-[15px]"
                 dangerouslySetInnerHTML={{ __html: staff.description || "No biography available for this voice actor." }}
               />
             </section>
@@ -143,7 +143,7 @@ export default function Staff() {
                   <div className="w-[3px] h-5 bg-red-600 rounded-full" />
                   <h2 className="text-base sm:text-xl font-black text-white uppercase tracking-tight">Characters Voiced</h2>
                 </div>
-                <span className="text-[10px] sm:text-[11px] font-bold text-white/20 uppercase tracking-widest">{staff.characterMedia?.edges?.filter(e => e.node.type === "ANIME").length || 0} ROLES</span>
+                <span className="text-[10px] sm:text-[11px] font-bold text-white/40 uppercase tracking-widest">{staff.characterMedia?.edges?.filter(e => e.node.type === "ANIME").length || 0} ROLES</span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
@@ -155,7 +155,7 @@ export default function Staff() {
                   return (
                     <div 
                       key={i}
-                      className="group flex bg-[#0d0d0d] border border-white/5 rounded-[4px] overflow-hidden hover:border-red-600/30 transition-all duration-300"
+                      className="group flex bg-[#0d0d0d] border border-white/15 rounded-[4px] overflow-hidden hover:border-red-600/30 transition-all duration-300"
                     >
                       {/* Character Side */}
                       <Link to={`/character/${character.id}`} className="flex-1 flex items-center p-3 gap-4 hover:bg-white/[0.02]">
@@ -168,22 +168,22 @@ export default function Staff() {
                           <p className="text-[13px] font-black text-white truncate group-hover:text-red-500 transition-colors uppercase leading-tight">
                             {character.name?.userPreferred}
                           </p>
-                          <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest mt-1">
+                          <p className="text-[10px] font-bold text-white/40 uppercase tracking-widest mt-1">
                             {edge.characterRole}
                           </p>
                         </div>
                       </Link>
 
                       {/* Anime Side (Small Info) */}
-                      <Link to={`/watch/${edge.node.id}`} className="w-[140px] border-l border-white/5 p-3 flex flex-col justify-center gap-1 hover:bg-white/[0.05] transition-colors">
-                        <p className="text-[10px] font-black text-white/40 truncate uppercase">
+                      <Link to={`/watch/${edge.node.id}`} className="w-[140px] border-l border-white/15 p-3 flex flex-col justify-center gap-1 hover:bg-white/[0.05] transition-colors">
+                        <p className="text-[10px] font-black text-white/60 truncate uppercase">
                           {edge.node.title?.romaji || edge.node.title?.english}
                         </p>
                         <div className="flex items-center gap-2">
                           <span className="text-[9px] font-bold text-red-500/80 uppercase">
                             {edge.node.format}
                           </span>
-                          <span className="text-[9px] font-bold text-white/20 uppercase">
+                          <span className="text-[9px] font-bold text-white/40 uppercase">
                             {edge.node.averageScore}%
                           </span>
                         </div>
@@ -215,12 +215,12 @@ export default function Staff() {
                   { label: "Language", value: staff.languageV2, icon: MessageSquare },
                   { label: "Age", value: staff.age, icon: Activity },
                 ].map((item, i) => item.value && (
-                  <div key={i} className="flex flex-col gap-1.5 p-4 bg-white/[0.03] border border-white/5 rounded-[4px]">
-                    <div className="flex items-center gap-2 text-white/20">
+                  <div key={i} className="flex flex-col gap-1.5 p-4 bg-white/[0.03] border border-white/15 rounded-[4px]">
+                    <div className="flex items-center gap-2 text-white/40">
                       <item.icon size={14} />
                       <span className="text-[10px] font-black uppercase tracking-[0.2em]">{item.label}</span>
                     </div>
-                    <p className="text-[14px] font-bold text-white/80">{item.value}</p>
+                    <p className="text-[14px] font-bold text-white/90">{item.value}</p>
                   </div>
                 ))}
               </div>
@@ -231,7 +231,7 @@ export default function Staff() {
               <div className="relative z-10">
                 < Award className="text-red-500 mb-4" size={32} />
                 <h3 className="text-[14px] font-black text-white uppercase tracking-widest mb-2">Professional Seiyuu</h3>
-                <p className="text-[12px] text-white/40 font-medium leading-relaxed">
+                <p className="text-[12px] text-white/60 font-medium leading-relaxed">
                   Highly acclaimed voice talent contributing to the anime industry's greatest masterpieces.
                 </p>
               </div>

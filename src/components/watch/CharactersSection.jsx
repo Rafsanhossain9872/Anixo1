@@ -50,7 +50,7 @@ export default function CharactersSection({ characters }) {
                 <img
                   src={edge.voiceActors[0].image?.large}
                   alt={edge.voiceActors[0].name?.userPreferred}
-                  className="w-5 h-5 rounded-full object-cover border border-white/10"
+                  className="w-5 h-5 rounded-full object-cover border border-white/15"
                   loading="lazy"
                 />
                 <span className="text-[9px] text-white/30 truncate">{edge.voiceActors[0].name?.userPreferred}</span>
@@ -66,7 +66,7 @@ export default function CharactersSection({ characters }) {
           <Link
             key={edge.node.id}
             to={`/character/${edge.node.id}`}
-            className="group flex bg-[#0d0d0d] rounded-sm overflow-hidden border border-white/5 h-[76px] transition-all hover:bg-[#111] hover:border-red-600/30"
+            className="group flex bg-[#0d0d0d] rounded-sm overflow-hidden border border-white/15 h-[76px] transition-all hover:bg-[#111] hover:border-red-600/30"
           >
             {/* Character Side */}
             <div className="relative w-14 h-full overflow-hidden shrink-0">
@@ -84,7 +84,7 @@ export default function CharactersSection({ characters }) {
                   <span className="text-[10px] font-medium text-white/50 truncate">{edge.voiceActors[0].name?.userPreferred}</span>
                   <span className="text-[7px] font-medium text-white/10 uppercase tracking-wider">{t('characters.japanese')}</span>
                 </div>
-                <div className="relative w-14 h-full overflow-hidden shrink-0 border-l border-white/5">
+                <div className="relative w-14 h-full overflow-hidden shrink-0 border-l border-white/15">
                   <img src={edge.voiceActors[0].image?.large} className="w-full h-full object-cover" loading="lazy" />
                 </div>
               </>
