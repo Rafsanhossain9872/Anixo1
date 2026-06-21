@@ -19,6 +19,11 @@ export function AdBanner728x90() {
     iframe.scrolling = 'no';
     container.appendChild(iframe);
 
+    const hostname = window.location.hostname;
+    const isBuzz = hostname.includes('anixo.buzz');
+    const adKey = isBuzz ? '9a7c3e1f939b5adb39ff408aaf45db1e' : '41feeb0d0418514f2c25b35780bc88ed';
+    const adDomain = isBuzz ? 'dependedunmoved.com' : 'www.highperformanceformat.com';
+
     const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
     iframeDoc.open();
     iframeDoc.write(`
@@ -27,14 +32,14 @@ export function AdBanner728x90() {
       <body>
         <script>
           atOptions = {
-            'key' : '41feeb0d0418514f2c25b35780bc88ed',
+            'key' : '${adKey}',
             'format' : 'iframe',
             'height' : 90,
             'width' : 728,
             'params' : {}
           };
         </script>
-        <script src="https://www.highperformanceformat.com/41feeb0d0418514f2c25b35780bc88ed/invoke.js"></script>
+        <script src="https://${adDomain}/${adKey}/invoke.js"></script>
       </body></html>
     `);
     iframeDoc.close();
@@ -70,6 +75,11 @@ export function AdBanner300x250() {
     iframe.scrolling = 'no';
     container.appendChild(iframe);
 
+    const hostname = window.location.hostname;
+    const isBuzz = hostname.includes('anixo.buzz');
+    const adKey = isBuzz ? '2e3ec9b3c3b6d88d98ef03a219c31831' : '2e3d69816973ce46100c1352a0a696f7';
+    const adDomain = isBuzz ? 'dependedunmoved.com' : 'www.highperformanceformat.com';
+
     const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
     iframeDoc.open();
     iframeDoc.write(`
@@ -78,14 +88,14 @@ export function AdBanner300x250() {
       <body>
         <script>
           atOptions = {
-            'key' : '2e3d69816973ce46100c1352a0a696f7',
+            'key' : '${adKey}',
             'format' : 'iframe',
             'height' : 250,
             'width' : 300,
             'params' : {}
           };
         </script>
-        <script src="https://www.highperformanceformat.com/2e3d69816973ce46100c1352a0a696f7/invoke.js"></script>
+        <script src="https://${adDomain}/${adKey}/invoke.js"></script>
       </body></html>
     `);
     iframeDoc.close();
@@ -119,6 +129,9 @@ export function AdNativeBanner() {
     const div = document.createElement('div');
     div.id = containerId;
     containerRef.current.appendChild(div);
+
+    // Only load Native Banner on anixo.online (No tag for anixo.buzz yet)
+    if (window.location.hostname.includes('anixo.buzz')) return;
 
     // Create script
     const script = document.createElement('script');
