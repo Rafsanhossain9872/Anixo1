@@ -168,8 +168,6 @@ export default function Home() {
 
       <ShareBanner />
 
-      <AdNativeBanner />
-
       {/* Continue Watching */}
       {user && globalProgress && globalProgress.length > 0 && (
         <div id="continue-watching" className="pt-8 md:pt-6">
@@ -237,6 +235,7 @@ export default function Home() {
       <div className="py-12 lg:py-20">
         <AlphabetNav />
       </div>
+      <AdNativeBanner />
       <Footer />
       </div>
 
