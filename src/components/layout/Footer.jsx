@@ -1,9 +1,12 @@
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MessageSquare, Heart, Info, Tv } from "lucide-react";
+import ContactModal from "../common/ContactModal";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const location = useLocation();
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   const footerLinks = [
     {
@@ -28,7 +31,7 @@ export default function Footer() {
       links: [
         { name: "Terms of Service", path: "/terms", icon: Tv },
         { name: "DMCA", path: "/dmca", icon: Info },
-        { name: "Contact Us", path: "#" },
+        { name: "Contact Us", onClick: () => setIsContactModalOpen(true) },
       ],
     },
   ];
@@ -100,14 +103,28 @@ export default function Footer() {
                 <ul className="space-y-2 md:space-y-3">
                   {section.links.map((link) => {
                     const Icon = link.icon;
-                    const isExternal = link.path.startsWith("http");
-                    const isActive = location.pathname === link.path;
+                    const isExternal = link.path?.startsWith("http") || link.path?.startsWith("mailto:");
+                    const isActive = link.path && location.pathname === link.path;
 
                     const baseClass =
                       "group flex items-center gap-2 text-[12px] font-bold transition-all duration-300 hover:translate-x-1";
                     const colorClass = isActive
                       ? "text-white"
                       : "text-white/50 hover:text-white";
+
+                    if (link.onClick) {
+                      return (
+                        <li key={link.name}>
+                          <button
+                            onClick={link.onClick}
+                            className={`${baseClass} ${colorClass} text-left w-full outline-none`}
+                          >
+                            {Icon && <Icon className="text-white/10 group-hover:text-red-500 transition" size={12} />}
+                            {link.name}
+                          </button>
+                        </li>
+                      );
+                    }
 
                     if (isExternal) {
                       return (
@@ -180,6 +197,11 @@ export default function Footer() {
           `}</style>
         </div>
       </div>
+
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </footer>
   );
 }
