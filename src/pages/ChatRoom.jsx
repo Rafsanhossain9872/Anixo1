@@ -3,7 +3,6 @@ import { io } from 'socket.io-client';
 import { useAuth } from '../hooks/useAuth';
 import { CHAT_SERVER } from '../services/api';
 import Navbar from '../components/layout/Navbar';
-import Footer from '../components/layout/Footer';
 import { Send, UserCircle, LogIn, AlertCircle, Reply, X, MessageCircle, Users, Shield, Crown, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -117,10 +116,10 @@ export default function ChatRoom() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#09090b] to-[#121212] text-white flex flex-col font-sans selection:bg-red-500/30">
+    <div className="h-dvh bg-gradient-to-b from-[#09090b] to-[#121212] text-white flex flex-col font-sans selection:bg-red-500/30 overflow-hidden">
       <Navbar />
       
-      <main className="flex-grow pt-16 md:pt-24 pb-0 md:pb-12 px-0 md:px-8 max-w-5xl mx-auto w-full flex flex-col min-h-0">
+      <main className="flex-grow pt-16 md:pt-24 pb-0 md:pb-6 px-0 md:px-8 max-w-5xl mx-auto w-full flex flex-col min-h-0">
         
         <div className="flex-grow flex flex-col bg-[#121212]/60 backdrop-blur-2xl md:border border-white/15 rounded-none md:rounded-3xl overflow-hidden shadow-none md:shadow-[0_0_40px_rgba(0,0,0,0.5)] relative min-h-0">
           
@@ -149,7 +148,7 @@ export default function ChatRoom() {
           </div>
 
           {/* Chat Area */}
-          <div className="flex-grow flex flex-col min-h-0 h-[calc(100dvh-280px)] md:h-[65vh] overflow-hidden bg-gradient-to-b from-transparent to-black/20">
+          <div className="flex-grow flex flex-col min-h-0 overflow-hidden bg-gradient-to-b from-transparent to-black/20">
             <div ref={chatContainerRef} style={{ WebkitOverflowScrolling: 'touch' }} className="flex-grow min-h-0 overflow-y-auto overscroll-y-contain touch-pan-y p-3 md:p-8 flex flex-col gap-4 md:gap-6 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
               {messages.length === 0 ? (
                 <div className="m-auto text-white/20 text-center flex flex-col items-center justify-center p-8 bg-white/5 rounded-3xl border border-white/15 backdrop-blur-sm">
@@ -325,7 +324,6 @@ export default function ChatRoom() {
         </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 }
