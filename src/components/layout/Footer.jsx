@@ -39,7 +39,8 @@ export default function Footer() {
 
   return (
     <>
-    {/* Responsive Ad Banner above Footer */}
+    {/* Responsive Ad Banner above Footer - Hidden on Portal page */}
+    {location.pathname !== "/" && (
     <div className="w-full bg-[#0b0d12] border-t border-white/5 pt-2 pb-4">
       <div className="hidden md:flex justify-center w-full">
         <AdBanner728x90 />
@@ -48,6 +49,7 @@ export default function Footer() {
         <AdBanner300x250 />
       </div>
     </div>
+    )}
     <footer className="relative bg-[#0b0d12] pt-10 md:pt-20 pb-8 md:pb-10 overflow-hidden border-t border-white/15">
       {/* Top Gradient Line - Truly Full Width */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />

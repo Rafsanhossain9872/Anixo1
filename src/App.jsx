@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import ScrollToTop from "./components/common/ScrollToTop";
 import PageLoader from "./components/common/PageLoader";
 import AiChat from "./components/chat/AiChat";
+import AdLoader from "./components/common/AdLoader";
 
 // Eagerly loaded pages (critical path — must render instantly)
 import Portal from "./pages/Portal";
@@ -75,6 +76,7 @@ function AppRoutes() {
 
   return (
     <>
+      <AdLoader />
       {!isPortalPage && !isNsfwPage && !isChatPage && <AiChat />}
       <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[location.pathname]}>
         <Suspense fallback={<SuspenseLoader />}>
