@@ -27,6 +27,20 @@ export default function ChatRoom() {
     }, 100);
   };
 
+  // Disable pull-to-refresh on mobile browsers for this page
+  useEffect(() => {
+    const originalBodyOverscroll = document.body.style.overscrollBehaviorY;
+    const originalHtmlOverscroll = document.documentElement.style.overscrollBehaviorY;
+
+    document.body.style.overscrollBehaviorY = 'none';
+    document.documentElement.style.overscrollBehaviorY = 'none';
+
+    return () => {
+      document.body.style.overscrollBehaviorY = originalBodyOverscroll;
+      document.documentElement.style.overscrollBehaviorY = originalHtmlOverscroll;
+    };
+  }, []);
+
   // Connect to socket when component mounts
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -116,7 +130,7 @@ export default function ChatRoom() {
   };
 
   return (
-    <div className="h-dvh bg-gradient-to-b from-[#09090b] to-[#121212] text-white flex flex-col font-sans selection:bg-red-500/30 overflow-hidden">
+    <div className="h-dvh bg-gradient-to-b from-[#09090b] to-[#121212] text-white flex flex-col font-sans selection:bg-red-500/30 overflow-hidden overscroll-y-none">
       <Navbar />
       
       <main className="flex-grow pt-16 md:pt-24 pb-0 md:pb-6 px-0 md:px-8 max-w-5xl mx-auto w-full flex flex-col min-h-0">
