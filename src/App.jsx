@@ -71,10 +71,11 @@ function AppRoutes() {
   const location = useLocation();
   const isPortalPage = location.pathname === "/";
   const isNsfwPage = location.pathname.startsWith("/nsfw");
+  const isChatPage = location.pathname === "/chat";
 
   return (
     <>
-      {!isPortalPage && !isNsfwPage && <AiChat />}
+      {!isPortalPage && !isNsfwPage && !isChatPage && <AiChat />}
       <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[location.pathname]}>
         <Suspense fallback={<SuspenseLoader />}>
           <Routes>
