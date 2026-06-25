@@ -25,10 +25,20 @@ const verifyTurnstile = async (token) => {
 
     const response = await axios.post(
       'https://challenges.cloudflare.com/turnstile/v0/siteverify',
-      params
+      params,
+      { timeout: 5000 }
     );
     return response.data.success;
   } catch (err) {
+    // Graceful degradation: if we can't reach Cloudflare's verification API
+    // (e.g. HuggingFace Spaces blocking outbound TLS), allow the request through
+    // rather than locking out all users.
+    const isNetworkError = err.code === 'ECONNRESET' || err.code === 'ECONNREFUSED' ||
+      err.code === 'ETIMEDOUT' || err.code === 'ERR_NETWORK' || !err.response;
+    if (isNetworkError) {
+      console.warn('Turnstile verification skipped (network error):', err.code || err.message);
+      return true;
+    }
     console.error('Turnstile verification error:', err);
     return false;
   }
