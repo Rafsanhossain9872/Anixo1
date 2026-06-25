@@ -3,46 +3,12 @@ import mongoose from 'mongoose';
 import Progress from '../models/Progress.js';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
+
 import crypto from 'crypto';
 import process from 'node:process';
 import sendEmail from '../utils/sendEmail.js';
 
-// Cloudflare Turnstile Verification
-const verifyTurnstile = async (token) => {
-  // 1. Bypass for local development
-  // We check for a specific dummy token we set in the frontend for localhost
-  if (token === "local-dev-token" || process.env.NODE_ENV !== 'production') {
-    console.log("Turnstile Bypass: Local environment detected.");
-    return true;
-  }
 
-  if (!token) return false;
-
-  try {
-    const params = new URLSearchParams();
-    params.append('secret', process.env.TURNSTILE_SECRET_KEY || '0x4AAAAAADGQxcZgLa0ZRtaJbL3mxiKj4RA');
-    params.append('response', token);
-
-    const response = await axios.post(
-      'https://challenges.cloudflare.com/turnstile/v0/siteverify',
-      params,
-      { timeout: 5000 }
-    );
-    return response.data.success;
-  } catch (err) {
-    // Graceful degradation: if we can't reach Cloudflare's verification API
-    // (e.g. HuggingFace Spaces blocking outbound TLS), allow the request through
-    // rather than locking out all users.
-    const isNetworkError = err.code === 'ECONNRESET' || err.code === 'ECONNREFUSED' ||
-      err.code === 'ETIMEDOUT' || err.code === 'ERR_NETWORK' || !err.response;
-    if (isNetworkError) {
-      console.warn('Turnstile verification skipped (network error):', err.code || err.message);
-      return true;
-    }
-    console.error('Turnstile verification error:', err);
-    return false;
-  }
-};
 
 // Generate JWT Token
 const generateToken = (id) => {
@@ -54,7 +20,7 @@ const generateToken = (id) => {
 // @desc    Register user
 export const register = async (req, res) => {
   try {
-    let { username, email, password, cfToken } = req.body;
+    let { username, email, password } = req.body;
 
     if (username) {
       username = username.trim();
@@ -71,12 +37,7 @@ export const register = async (req, res) => {
       throw new Error('Only @gmail.com accounts are allowed to register.');
     }
 
-    // Verify Turnstile
-    const isHuman = await verifyTurnstile(cfToken);
-    if (!isHuman) {
-      res.status(403);
-      throw new Error('Bot detected or Cloudflare verification failed.');
-    }
+
 
     // Check if email already exists
     let user = await User.findOne({ email });
@@ -122,19 +83,14 @@ export const register = async (req, res) => {
 // @desc    Login user
 export const login = async (req, res) => {
   try {
-    const { email, password, cfToken } = req.body;
+    const { email, password } = req.body;
 
     if (!email || !password) {
       res.status(400);
       throw new Error('Please add email and password');
     }
 
-    // Verify Turnstile
-    const isHuman = await verifyTurnstile(cfToken);
-    if (!isHuman) {
-      res.status(403);
-      throw new Error('Bot detected or Cloudflare verification failed.');
-    }
+
 
     // Check for user email
     const user = await User.findOne({ email });
