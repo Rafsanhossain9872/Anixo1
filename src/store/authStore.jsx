@@ -54,6 +54,8 @@ export const AuthProvider = ({ children }) => {
           localStorage.removeItem("token");
           localStorage.removeItem("cached_user");
           setUser(null);
+          setLoading(false);
+          return; // Don't fetch secondary data with a bad token
         }
       } catch (error) {
         // FIX 1: Only delete token if backend EXPLICITLY returns 401 (token invalid)
@@ -64,6 +66,8 @@ export const AuthProvider = ({ children }) => {
           localStorage.removeItem("token");
           localStorage.removeItem("cached_user");
           setUser(null);
+          setLoading(false);
+          return; // Don't fetch secondary data with an invalid token
         } else {
           // Network error / timeout / cold start — keep user logged in with cached data
           console.warn("Auth check failed (network/timeout), keeping cached session.", error.message);
@@ -71,7 +75,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       // FIX 2: Secondary data fetches in separate try-catch blocks
-      // If any of these fail, user stays logged in
+      // Only runs if user is still authenticated (token was valid or network error kept cache)
       try {
         const wlRes = await getWatchlist();
         if (wlRes?.success) setGlobalWatchlist(wlRes.watchlist);
@@ -81,11 +85,6 @@ export const AuthProvider = ({ children }) => {
         const progRes = await getProgress();
         if (progRes?.success) setGlobalProgress(progRes.continueWatching);
       } catch (e) { console.warn("Progress fetch failed on init:", e.message); }
-
-      try {
-        const settRes = await getSettings();
-        if (settRes?.success) setGlobalSettings(settRes.settings);
-      } catch (e) { console.warn("Settings fetch failed on init:", e.message); }
 
       try {
         const settRes = await getSettings();
@@ -123,11 +122,6 @@ export const AuthProvider = ({ children }) => {
       const progRes = await getProgress();
       if (progRes?.success) setGlobalProgress(progRes.continueWatching);
     } catch (e) { console.warn("Progress fetch failed on login:", e.message); }
-
-    try {
-      const settRes = await getSettings();
-      if (settRes?.success) setGlobalSettings(settRes.settings);
-    } catch (e) { console.warn("Settings fetch failed on login:", e.message); }
 
     try {
       const settRes = await getSettings();
