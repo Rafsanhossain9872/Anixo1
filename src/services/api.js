@@ -166,13 +166,13 @@ export const backendApi = axios.create({
     : (import.meta.env.VITE_BACKEND_API?.replace(/\/$/, "") || ""),
 });
 
-// Auth-specific API instance that ALWAYS routes through Vercel (same-origin) in production.
-// This is critical because HuggingFace Spaces blocks outbound SMTP (port 465),
-// so email-sending endpoints like forgot-password must go through Vercel's serverless functions.
+// Auth-specific API instance.
+// Previously used empty baseURL (same-origin) to rely on Vercel rewrites.
+// Now points directly to the backend API for Cloudflare Pages compatibility.
 export const authApi = axios.create({
   baseURL: (typeof window !== "undefined" && window.location.hostname === "localhost")
     ? "http://localhost:5001"
-    : "",  // Empty string = same-origin = Vercel rewrites /auth/* to api/user.mjs
+    : (import.meta.env.VITE_BACKEND_API?.replace(/\/$/, "") || ""),
 });
 
 backendApi.interceptors.request.use((config) => {
