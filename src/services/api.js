@@ -163,16 +163,14 @@ async function smartRequest(method, path, options = {}) {
 export const backendApi = axios.create({
   baseURL: (typeof window !== "undefined" && window.location.hostname === "localhost")
     ? "http://localhost:5001"
-    : (import.meta.env.VITE_BACKEND_API?.replace(/\/$/, "") || ""),
+    : "",  // Same-origin: Cloudflare Pages Functions proxy to HuggingFace
 });
 
-// Auth-specific API instance.
-// Previously used empty baseURL (same-origin) to rely on Vercel rewrites.
-// Now points directly to the backend API for Cloudflare Pages compatibility.
+// Auth-specific API instance — same-origin, proxied by Cloudflare Pages Functions.
 export const authApi = axios.create({
   baseURL: (typeof window !== "undefined" && window.location.hostname === "localhost")
     ? "http://localhost:5001"
-    : (import.meta.env.VITE_BACKEND_API?.replace(/\/$/, "") || ""),
+    : "",  // Same-origin: Cloudflare Pages Functions proxy to HuggingFace
 });
 
 backendApi.interceptors.request.use((config) => {

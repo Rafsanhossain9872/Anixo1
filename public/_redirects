@@ -1,15 +1,2 @@
-# Cloudflare Pages Redirects
-# Auth & API routes → HuggingFace backend
-/auth/*  https://backend-core-backend-core.hf.space/auth/:splat  200
-/users/*  https://backend-core-backend-core.hf.space/users/:splat  200
-/progress/*  https://backend-core-backend-core.hf.space/progress/:splat  200
-/progress  https://backend-core-backend-core.hf.space/progress  200
-/watchlist/*  https://backend-core-backend-core.hf.space/watchlist/:splat  200
-/watchlist  https://backend-core-backend-core.hf.space/watchlist  200
-/notifications/*  https://backend-core-backend-core.hf.space/notifications/:splat  200
-/notifications  https://backend-core-backend-core.hf.space/notifications  200
-/settings/*  https://backend-core-backend-core.hf.space/settings/:splat  200
-/settings  https://backend-core-backend-core.hf.space/settings  200
-
-# SPA fallback - must be last
+# SPA fallback - serves index.html for all client-side routes
 /*  /index.html  200
