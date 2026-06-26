@@ -18,6 +18,7 @@ import AnimeRow from "../components/home/AnimeRow";
 import { useAuth } from "../hooks/useAuth";
 import ShareBanner from "../components/common/ShareBanner";
 import { AdNativeBanner } from "../components/common/AdBanner";
+import { AdsterraSmartLinkBanner } from "../components/common/AdsterraSmartLink";
 import Pagination from "../components/common/Pagination";
 import ThreeColumnSection from "../components/home/ThreeColumnSection";
 import AlphabetNav from "../components/home/AlphabetNav";
@@ -239,6 +240,7 @@ export default function Home() {
       <div className="py-12 lg:py-20">
         <AlphabetNav />
       </div>
+      <AdsterraSmartLinkBanner />
       <AdNativeBanner />
       <Footer />
       </div>

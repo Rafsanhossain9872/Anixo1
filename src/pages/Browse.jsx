@@ -10,6 +10,7 @@ import SkeletonCard from "../components/common/SkeletonCard";
 import { Search, ChevronDown, Check, X, RefreshCw, Trash2, ArrowRight, AlertTriangle } from "lucide-react";
 import { ALL_GENRES, OFFICIAL_GENRES, GENRE_MAP } from "../constants/genres";
 import Pagination from "../components/common/Pagination";
+import { AdsterraSmartLinkBanner } from "../components/common/AdsterraSmartLink";
 
 export default function Browse() {
   const { t } = useTranslation();
@@ -832,6 +833,7 @@ export default function Browse() {
           </div>
         )}
         </main>
+      <AdsterraSmartLinkBanner />
       <Footer />
     </div>
   );

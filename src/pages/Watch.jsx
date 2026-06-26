@@ -32,6 +32,7 @@ import ShareBanner from "../components/common/ShareBanner";
 import ReportModal from "../components/watch/ReportModal";
 import VideoPlayerSection from "../components/watch/VideoPlayerSection";
 import { AdBanner300x250 } from "../components/common/AdBanner";
+import { useAdsterraSmartLink, AdsterraSmartLinkBanner } from "../components/common/AdsterraSmartLink";
 
 
 export default function Watch() {
@@ -39,6 +40,7 @@ export default function Watch() {
   const { t } = useTranslation();
   const location = useLocation();
   const navigate = useNavigate();
+  const { openSmartLink } = useAdsterraSmartLink();
   const queryParams = new URLSearchParams(location.search);
   const isMal = queryParams.get("mal") === "true";
   const initialEp = parseInt(queryParams.get("ep")) || 1;
@@ -48,6 +50,7 @@ export default function Watch() {
   const { setPageLoading } = useLoading();
 
   const [activeEpisode, setActiveEpisode] = useState(initialEp);
+  const lastOpenedEpisode = useRef(initialEp);
   const [recPage, setRecPage] = useState(1);
 
   // --- Real Watch History Tracking ---
@@ -83,7 +86,14 @@ export default function Watch() {
       search: newParams.toString(),
       replace: true, // Use replace so back button behavior
     });
-  }, [activeEpisode, navigate, location.pathname, location.search]);
+
+    // Optional: Open smart link every 3 episodes
+    if (activeEpisode !== lastOpenedEpisode.current && (activeEpisode - lastOpenedEpisode.current) % 3 === 0) {
+      lastOpenedEpisode.current = activeEpisode;
+      // You can uncomment the line below to enable
+      // openSmartLink();
+    }
+  }, [activeEpisode, navigate, location.pathname, location.search, openSmartLink]);
 
   const [episodeLayout, setEpisodeLayout] = useState("grid"); // "grid" | "list"
   const [playerLang, setPlayerLang] = useState("sub");
@@ -618,10 +628,10 @@ export default function Watch() {
               recommendations={recommendations}
             />
             
-            {/* Share Banner */}
-            <ShareBanner />
-
             {/* Ad Banner */}
+            <div className="flex justify-center py-4">
+              <AdsterraSmartLinkBanner />
+            </div>
             <div className="flex justify-center py-4">
               <AdBanner300x250 />
             </div>
