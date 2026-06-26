@@ -13,29 +13,47 @@ export function AdsterraSmartLinkBanner() {
     const container = containerRef.current;
     container.innerHTML = '';
 
-    // Create a clickable banner
-    const banner = document.createElement('a');
-    banner.href = ADSTERRA_SMART_LINK;
-    banner.target = "_blank";
-    banner.rel = "noopener noreferrer";
-    banner.className = "block w-full";
-    banner.style.textDecoration = "none";
+    // Create Adsterra-style ad unit
+    const adContainer = document.createElement('div');
+    adContainer.style.width = '100%';
+    adContainer.style.display = 'flex';
+    adContainer.style.justifyContent = 'center';
+
+    // Create a direct link button with Adsterra branding
+    const linkButton = document.createElement('a');
+    linkButton.href = ADSTERRA_SMART_LINK;
+    linkButton.target = "_blank";
+    linkButton.rel = "noopener noreferrer sponsored";
+    linkButton.style.textDecoration = 'none';
+    linkButton.style.width = '100%';
+    linkButton.style.maxWidth = '800px';
 
     const bannerContent = document.createElement('div');
-    bannerContent.className = "w-full bg-gradient-to-r from-red-900/20 via-red-800/30 to-red-900/20 border border-red-600/30 rounded-lg p-4 text-center cursor-pointer hover:border-red-500/50 transition-all duration-300";
+    bannerContent.className = "w-full bg-gradient-to-r from-red-900/20 via-red-800/30 to-red-900/20 border border-red-600/30 rounded-lg p-6 text-center cursor-pointer hover:border-red-500/50 transition-all duration-300 hover:scale-[1.02]";
     
+    const sponsoredLabel = document.createElement('div');
+    sponsoredLabel.className = "text-[10px] uppercase tracking-widest text-white/30 mb-2";
+    sponsoredLabel.textContent = "Sponsored";
+
     const title = document.createElement('h3');
-    title.className = "text-lg font-bold text-white mb-1";
-    title.textContent = "🔥 Special Offer - Don't Miss Out! 🔥";
+    title.className = "text-xl font-bold text-white mb-2";
+    title.textContent = "🔥 Exclusive Offer - Limited Time Only! 🔥";
     
     const subtitle = document.createElement('p');
-    subtitle.className = "text-sm text-white/70";
-    subtitle.textContent = "Click here to explore amazing deals!";
+    subtitle.className = "text-sm text-white/70 mb-3";
+    subtitle.textContent = "Click now to discover amazing deals and content!";
 
+    const ctaButton = document.createElement('div');
+    ctaButton.className = "inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-full text-sm transition-all duration-300 active:scale-95";
+    ctaButton.textContent = "Explore Now";
+
+    bannerContent.appendChild(sponsoredLabel);
     bannerContent.appendChild(title);
     bannerContent.appendChild(subtitle);
-    banner.appendChild(bannerContent);
-    container.appendChild(banner);
+    bannerContent.appendChild(ctaButton);
+    linkButton.appendChild(bannerContent);
+    adContainer.appendChild(linkButton);
+    container.appendChild(adContainer);
 
     return () => {
       loadedRef.current = false;
@@ -43,7 +61,7 @@ export function AdsterraSmartLinkBanner() {
   }, []);
 
   return (
-    <div className="w-full flex justify-center py-4 overflow-hidden">
+    <div className="w-full flex justify-center py-6 overflow-hidden">
       <div ref={containerRef} className="w-full max-w-[1400px]" />
     </div>
   );
