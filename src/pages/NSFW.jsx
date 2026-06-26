@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Play, Search, Tags, ArrowLeft, Star, Eye, ThumbsUp, X, Loader2, ChevronLeft, ChevronRight, Download, History, Bookmark, BookmarkCheck, ShieldAlert, ShieldCheck, Menu, ArrowDownAz, ChevronDown, Check, Home } from 'lucide-react';
 import { AdBanner728x90, AdBanner300x250, AdNativeBanner } from '../components/common/AdBanner';
+import { AdsterraSmartLinkBanner } from '../components/common/AdsterraSmartLink';
 
 const API_URL = 'https://allanime-hent.hf.space/api';
 
@@ -688,6 +689,10 @@ function NSFW() {
     <AdBanner728x90 />
   </div>
 
+  <div className="w-full flex justify-center py-4">
+    <AdsterraSmartLinkBanner />
+  </div>
+
  {!selectedVideo ? (
  <>
  {/* Horizontal Scrollable Categories (YouTube Style) */}
@@ -749,6 +754,11 @@ function NSFW() {
  skeletonCount={10}
  onViewAll={() => fetchBrowse(1)}
  />
+
+  <div className="w-full flex justify-center py-4">
+    <AdsterraSmartLinkBanner />
+  </div>
+
   <div className="w-full my-2">
     <AdNativeBanner />
   </div>
@@ -813,6 +823,11 @@ function NSFW() {
  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4 flex-1 content-start">
  {currentVideos.map(video => <VideoCard key={video.id} video={video} onClick={openVideo} />)}
  </div>
+
+  <div className="w-full flex justify-center py-6">
+    <AdsterraSmartLinkBanner />
+  </div>
+
  {renderPagination()}
  </>
  )}
@@ -858,6 +873,10 @@ function NSFW() {
  className="w-full h-full border-0"
  />
  </div>
+
+  <div className="w-full flex justify-center py-6">
+    <AdsterraSmartLinkBanner />
+  </div>
 
  {/* BOTTOM: Info Section */}
  <div className="flex flex-col sm:flex-row gap-6">
