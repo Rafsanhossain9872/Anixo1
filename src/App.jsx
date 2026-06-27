@@ -8,6 +8,7 @@ import AiChat from "./components/chat/AiChat";
 import AdLoader from "./components/common/AdLoader";
 import { PopunderProvider } from "./context/PopunderContext";
 import { ToastProvider } from "./context/ToastContext";
+import { ConfirmationProvider } from "./context/ConfirmationContext";
 
 // Eagerly loaded pages (critical path — must render instantly)
 import Portal from "./pages/Portal";
@@ -116,11 +117,13 @@ export default function App() {
   return (
     <Router>
       <PopunderProvider>
-        <ToastProvider>
-          <ScrollToTop />
-          <PageLoader />
-          <AppRoutes />
-        </ToastProvider>
+        <ConfirmationProvider>
+          <ToastProvider>
+            <ScrollToTop />
+            <PageLoader />
+            <AppRoutes />
+          </ToastProvider>
+        </ConfirmationProvider>
       </PopunderProvider>
     </Router>
   );

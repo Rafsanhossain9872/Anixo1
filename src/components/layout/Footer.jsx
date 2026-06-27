@@ -203,7 +203,7 @@ export default function Footer() {
           
           {/* Online Users & Popunder Control */}
           {location.pathname !== "/" && (
-            <div className="flex items-center gap-2 md:gap-3 flex-wrap justify-center">
+            <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center">
               <PopunderControlButton />
               <OnlineUsers />
             </div>
