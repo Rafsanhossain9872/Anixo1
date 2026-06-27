@@ -87,15 +87,19 @@ export default function NotificationDropdown({ isOpen, onClose }) {
   return (
     <div 
       ref={dropdownRef}
-      className="absolute top-[48px] right-0 bg-[#141414]/95 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] w-[320px] z-[200] animate-in fade-in slide-in-from-top-2 duration-200 border-t-[3px] border-red-600 rounded-b-xl overflow-hidden"
+      className="absolute top-[48px] right-0 bg-[#0f0f0f] border border-[#2a2a2a] rounded-xl shadow-2xl w-[360px] z-[200] overflow-hidden"
     >
-      <div className="p-4 border-b border-white/15 flex items-center justify-between">
-        <h3 className="text-sm font-black text-white uppercase tracking-tight">Notifications</h3>
+      <div className="px-4 py-3 border-b border-[#2a2a2a] flex items-center justify-between bg-[#121212]">
+        <h3 className="text-sm font-medium text-white">Notifications</h3>
         <div className="flex items-center gap-3">
           {globalNotifications.some(n => !n.isRead) && (
-            <button onClick={handleReadAll} className="text-[10px] font-black text-green-500 uppercase tracking-widest hover:underline cursor-pointer">Mark Read</button>
+            <button onClick={handleReadAll} className="text-xs text-gray-400 hover:text-white transition-colors">
+              Mark all read
+            </button>
           )}
-          <Link to="/notifications" onClick={onClose} className="text-[10px] font-black text-red-500 uppercase tracking-widest hover:underline">View All</Link>
+          <Link to="/notifications" onClick={onClose} className="text-xs text-gray-400 hover:text-white transition-colors flex items-center gap-1">
+            View all <ExternalLink size={12} />
+          </Link>
         </div>
       </div>
 
@@ -109,62 +113,60 @@ export default function NotificationDropdown({ isOpen, onClose }) {
                 key={notif._id}
                 to={notif.targetUrl || (notif.animeId ? `/watch/${notif.animeId}` : '#')}
                 onClick={() => { if (!notif.isRead) handleMarkRead(notif._id); onClose(); }}
-                className={`p-3 border-b border-white/15 last:border-0 hover:bg-white/5 transition-all flex gap-3 relative group cursor-pointer ${!notif.isRead ? 'bg-white/[0.02]' : 'opacity-50 hover:opacity-100'}`}
+                className={`px-4 py-3 border-b border-[#1a1a1a] hover:bg-[#181818] transition-colors flex gap-3 cursor-pointer ${!notif.isRead ? 'bg-[#151515]' : 'bg-transparent'}`}
               >
-                {!notif.isRead && <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-red-600" />}
-                
                 {/* Anime Thumbnail or Icon */}
                 {notif.type === 'NEW_EPISODE' && notif.coverImage ? (
                   <div className="relative shrink-0">
-                    <div className="w-[36px] h-[50px] rounded-md overflow-hidden ring-1 ring-white/10 group-hover:ring-white/20 transition-all">
+                    <div className="w-[50px] h-[70px] rounded-md overflow-hidden border border-[#2a2a2a]">
                       <img
                         src={notif.coverImage}
                         alt={title}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                        className="w-full h-full object-cover"
                         loading="lazy"
                       />
                     </div>
                     {notif.episode && (
-                      <div className="absolute -bottom-1 -right-1 bg-red-600 text-white text-[7px] font-black px-1 py-[1px] rounded leading-none ring-1 ring-[#141414]">
+                      <div className="absolute -bottom-1.5 -right-1.5 bg-[#e50914] text-white text-[9px] font-medium px-1.5 py-0.5 rounded-sm shadow-md">
                         {notif.episode}
                       </div>
                     )}
                   </div>
                 ) : notif.type === 'REPLY' ? (
-                  <div className="shrink-0 mt-0.5 w-[36px] h-[36px] rounded-full bg-indigo-500/20 flex items-center justify-center">
-                    <MessageSquare size={16} className="text-indigo-400" />
+                  <div className="shrink-0 mt-1 w-[44px] h-[44px] rounded-full bg-[#1a1a1a] flex items-center justify-center border border-[#2a2a2a]">
+                    <MessageSquare size={20} className="text-[#888]" />
                   </div>
                 ) : (
-                  <div className="shrink-0 mt-1">
+                  <div className="shrink-0 mt-1 w-[44px] h-[44px] rounded-full bg-[#1a1a1a] flex items-center justify-center border border-[#2a2a2a]">
                     {notif.type === 'NEW_EPISODE' ? (
-                      <Calendar size={14} className="text-red-500" />
+                      <Calendar size={20} className="text-[#888]" />
                     ) : notif.type === 'WATCHLIST_UPDATE' ? (
-                      <Info size={14} className="text-blue-500" />
+                      <Info size={20} className="text-[#888]" />
                     ) : (
-                      <AlertCircle size={14} className="text-yellow-500" />
+                      <AlertCircle size={20} className="text-[#888]" />
                     )}
                   </div>
                 )}
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-2">
-                    <p className={`text-[11px] leading-snug truncate ${!notif.isRead ? 'font-bold text-white group-hover:text-red-400' : 'text-white/60'} transition-colors`}>
+                    <p className={`text-sm ${!notif.isRead ? 'font-medium text-white' : 'text-[#aaa]'} line-clamp-2`}>
                       {title}
                     </p>
                     {!notif.isRead && (
-                      <div className="w-1.5 h-1.5 rounded-full bg-red-600 shrink-0 mt-1.5 animate-pulse" />
+                      <div className="w-2 h-2 rounded-full bg-[#e50914] shrink-0 mt-2" />
                     )}
                   </div>
-                  <p className="text-[9px] text-white/30 line-clamp-1 mt-0.5">{message}</p>
+                  <p className="text-xs text-[#777] line-clamp-2 mt-1 leading-relaxed">{message}</p>
                 </div>
               </Link>
               );
             })}
           </div>
         ) : (
-          <div className="p-10 flex flex-col items-center justify-center text-center">
-            <Bell size={24} className="text-white/10 mb-3" />
-            <p className="text-xs text-white/20 font-medium">All caught up!</p>
+          <div className="px-4 py-12 flex flex-col items-center justify-center text-center">
+            <Bell size={36} className="text-[#444] mb-3" />
+            <p className="text-sm text-[#666]">You're all caught up!</p>
           </div>
         )}
       </div>
@@ -173,9 +175,9 @@ export default function NotificationDropdown({ isOpen, onClose }) {
         <Link 
           to="/notifications" 
           onClick={onClose}
-          className="block p-3 text-center text-[11px] font-bold text-white/40 hover:text-white bg-white/5 transition-all"
+          className="block px-4 py-3 text-center text-sm text-[#888] hover:text-white hover:bg-[#181818] transition-all border-t border-[#2a2a2a]"
         >
-          Show more
+          View all {enrichedNotifications.length} notifications
         </Link>
       )}
     </div>
