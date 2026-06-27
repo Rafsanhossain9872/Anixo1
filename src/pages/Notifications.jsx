@@ -100,15 +100,15 @@ export default function Notifications() {
   const unreadCount = enrichedNotifications.filter(n => !n.isRead).length;
 
   return (
-    <div className="min-h-screen text-white flex flex-col font-sans selection:bg-red-500/30">
+    <div className="min-h-screen text-white bg-[#0a0a0a] flex flex-col font-sans selection:bg-red-500/30">
       <Navbar />
 
       <div className="w-full pt-[80px] px-4 md:px-8 pb-12 max-w-[1200px] mx-auto flex-1">
         
         {/* Compact Navigation Tabs */}
-        <div className="flex flex-wrap sm:flex-nowrap justify-center gap-1.5 sm:gap-2 md:gap-3 mb-10 w-full max-w-4xl mx-auto px-1 sm:px-0">
+        <div className="flex flex-wrap sm:flex-nowrap justify-center gap-1.5 sm:gap-2 md:gap-3 mb-8 w-full max-w-4xl mx-auto px-1 sm:px-0">
           {navItems.map((item) => {
-            const isActive = location.pathname === item.path || (item.id === "notifications" && location.pathname === "/notifications");
+            const isActive = location.pathname === item.path;
             const Icon = item.icon;
             
             return (
@@ -129,38 +129,35 @@ export default function Notifications() {
             );
           })}
         </div>
-
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-6 md:mb-8 px-1 sm:px-2">
-          <div className="flex items-center gap-2 md:gap-3">
-            <h2 className="text-[16px] md:text-xl font-black tracking-tight uppercase">Notifications</h2>
+        
+        {/* Simple Page Title */}
+        <div className="mb-8">
+          <div className="flex items-center gap-3 mb-2">
+            <h1 className="text-2xl font-medium">Notifications</h1>
             {unreadCount > 0 && (
-              <span className="text-[9px] md:text-[10px] font-black bg-red-600 text-white px-2 py-0.5 md:px-2.5 rounded-full">{unreadCount} New</span>
+              <span className="text-sm bg-[#e50914] text-white px-2 py-0.5 rounded-full">{unreadCount}</span>
             )}
           </div>
-          <div className="flex items-center gap-4 md:gap-6">
+          <div className="flex items-center gap-4">
             <button 
               onClick={handleReadAll} 
-              className="group flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-white/40 hover:text-white transition-colors"
+              className="text-sm text-[#888] hover:text-white transition-colors"
             >
-              <Check size={14} strokeWidth={2.5} className="text-white/20 group-hover:text-green-500 transition-colors" />
-              <span>Mark All Read</span>
+              Mark all read
             </button>
-            <div className="w-[1px] h-3 bg-white/10 hidden sm:block"></div>
             <button 
               onClick={handleClear} 
-              className="group flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-white/40 hover:text-red-500 transition-colors"
-              title="Clear All Notifications"
+              className="text-sm text-[#888] hover:text-[#e50914] transition-colors"
+              title="Clear all notifications"
             >
-              <Trash2 size={13} strokeWidth={2.5} className="text-white/20 group-hover:text-red-500 transition-colors" />
-              <span className="hidden sm:inline">Clear All</span>
+              Clear all
             </button>
           </div>
         </div>
 
         {/* Notification List */}
         {enrichedNotifications.length > 0 ? (
-          <div className="flex flex-col gap-2 md:gap-2.5">
+          <div className="flex flex-col gap-0">
             {enrichedNotifications.map((notif) => {
               const { title, message } = formatNotificationText(notif);
               return (
@@ -168,93 +165,69 @@ export default function Notifications() {
                 key={notif._id}
                 to={notif.animeId ? `/watch/${notif.animeId}` : '#'}
                 onClick={() => { if (!notif.isRead) handleMarkRead(notif._id); }}
-                className={`p-2.5 md:p-3.5 rounded-xl md:rounded-2xl border transition-all duration-300 flex gap-3 md:gap-4 relative overflow-hidden group cursor-pointer hover:bg-white/[0.03] ${
-                  !notif.isRead 
-                  ? "bg-white/[0.03] border-white/10 shadow-lg" 
-                  : "bg-transparent border-white/15 opacity-50 hover:opacity-100"
-                }`}
+                className={`py-4 border-b border-[#1a1a1a] flex gap-4 cursor-pointer hover:bg-[#111] transition-colors ${!notif.isRead ? 'bg-[#111]' : ''}`}
               >
-                {!notif.isRead && <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-red-600 rounded-r-full" />}
-
-                {/* Anime Cover Image or Fallback Icon */}
+                {/* Anime Cover Image or Icon */}
                 {notif.type === 'NEW_EPISODE' && notif.coverImage ? (
                   <div className="relative shrink-0">
-                    <div className="w-[48px] h-[68px] md:w-[56px] md:h-[78px] rounded-lg overflow-hidden ring-1 ring-white/10 group-hover:ring-white/20 transition-all shadow-lg">
+                    <div className="w-[60px] h-[84px] rounded-md overflow-hidden border border-[#2a2a2a]">
                       <img
                         src={notif.coverImage}
                         alt={title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        className="w-full h-full object-cover"
                         loading="lazy"
                       />
                     </div>
                     {notif.episode && (
-                      <div className="absolute -bottom-1 -right-1 bg-red-600 text-white text-[8px] md:text-[9px] font-black px-1.5 py-0.5 rounded-md shadow-lg ring-2 ring-[#0a0a0a] leading-none">
-                        EP {notif.episode}
+                      <div className="absolute -bottom-1.5 -right-1.5 bg-[#e50914] text-white text-[10px] font-medium px-1.5 py-0.5 rounded-sm shadow-md">
+                        {notif.episode}
                       </div>
                     )}
                   </div>
                 ) : notif.type === 'NEW_EPISODE' ? (
-                  <div className="w-[48px] h-[68px] md:w-[56px] md:h-[78px] rounded-lg bg-red-600/10 flex items-center justify-center text-red-500 border border-red-500/20 shrink-0">
-                    <Calendar size={20} />
+                  <div className="w-[60px] h-[84px] rounded-md bg-[#1a1a1a] flex items-center justify-center border border-[#2a2a2a] shrink-0">
+                    <Calendar size={24} className="text-[#666]" />
                   </div>
                 ) : notif.type === 'WATCHLIST_UPDATE' ? (
-                  <div className="w-[48px] h-[68px] md:w-[56px] md:h-[78px] rounded-lg bg-blue-600/10 flex items-center justify-center text-blue-500 border border-blue-500/20 shrink-0">
-                    <Info size={20} />
+                  <div className="w-[60px] h-[84px] rounded-md bg-[#1a1a1a] flex items-center justify-center border border-[#2a2a2a] shrink-0">
+                    <Info size={24} className="text-[#666]" />
                   </div>
                 ) : (
-                  <div className="w-[48px] h-[68px] md:w-[56px] md:h-[78px] rounded-lg bg-yellow-600/10 flex items-center justify-center text-yellow-500 border border-yellow-500/20 shrink-0">
-                    <AlertCircle size={20} />
+                  <div className="w-[60px] h-[84px] rounded-md bg-[#1a1a1a] flex items-center justify-center border border-[#2a2a2a] shrink-0">
+                    <AlertCircle size={24} className="text-[#666]" />
                   </div>
                 )}
 
                 {/* Content */}
                 <div className="flex-1 min-w-0 flex flex-col justify-center">
-                  <div className="flex items-start justify-between gap-2">
+                  <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0">
-                      <h4 className={`text-[13px] md:text-[14px] font-bold leading-tight truncate ${!notif.isRead ? 'text-white group-hover:text-red-400' : 'text-white/60'} transition-colors`}>
+                      <h3 className={`text-base ${!notif.isRead ? 'font-medium text-white' : 'text-[#aaa]'}`}>
                         {title}
-                      </h4>
-                      <p className="text-[10px] md:text-[11px] text-white/30 mt-1 leading-relaxed line-clamp-1">
+                      </h3>
+                      <p className="text-sm text-[#777] mt-1 line-clamp-2">
                         {message}
                       </p>
                     </div>
-                    {!notif.isRead && (
-                      <div className="shrink-0 w-2 h-2 bg-red-500 rounded-full mt-1.5 animate-pulse" />
-                    )}
-                  </div>
-                  
-                  <div className="flex items-center gap-3 mt-2">
-                    <span className="text-[8px] md:text-[9px] font-bold text-white/20 uppercase tracking-[0.15em]">{timeAgo(notif.createdAt)}</span>
-                    {notif.type === 'NEW_EPISODE' && (
-                      <span className="text-[8px] md:text-[9px] font-bold text-red-500/60 uppercase tracking-wider">New Episode</span>
-                    )}
-                    {notif.type === 'WATCHLIST_UPDATE' && (
-                      <span className="text-[8px] md:text-[9px] font-bold text-blue-500/60 uppercase tracking-wider">Watchlist</span>
-                    )}
+                    <div className="flex flex-col items-end gap-2">
+                      {!notif.isRead && (
+                        <div className="w-2 h-2 bg-[#e50914] rounded-full shrink-0" />
+                      )}
+                      <span className="text-xs text-[#666]">{timeAgo(notif.createdAt)}</span>
+                    </div>
                   </div>
                 </div>
-
-                {/* Hover Arrow */}
-                {notif.animeId && (
-                  <div className="shrink-0 self-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-1 group-hover:translate-x-0">
-                    <ExternalLink size={14} className="text-white/20" />
-                  </div>
-                )}
               </Link>
               );
             })}
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-24 bg-[#111] border border-white/15 rounded-2xl shadow-xl relative overflow-hidden max-w-3xl mx-auto">
-            <div className="relative w-20 h-20 mb-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10">
-              <Bell size={32} className="text-white/20" strokeWidth={1.5} />
-            </div>
-            <h2 className="text-xl font-black text-white mb-2 uppercase tracking-tight">Zero Noise</h2>
-            <p className="text-white/30 mb-8 text-[13px] max-w-xs text-center leading-relaxed">
-              You don't have any new notifications right now. We'll let you know when new episodes air!
-            </p>
-            <Link to="/browse" className="bg-white text-black font-black py-3 px-8 rounded-xl text-[11px] uppercase tracking-[0.2em] transition-all hover:scale-105">
-              Explore Anime
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+            <Bell size={48} className="text-[#444] mb-4" />
+            <h2 className="text-lg text-[#888] mb-2">No notifications</h2>
+            <p className="text-sm text-[#666] mb-6">We'll let you know when new episodes are available</p>
+            <Link to="/browse" className="text-sm text-white border border-[#333] px-4 py-2 rounded-md hover:bg-[#181818] transition-colors">
+              Browse anime
             </Link>
           </div>
         )}
