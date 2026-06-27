@@ -187,12 +187,12 @@ export default function PlayerToolbar({
               </button>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-1.5 sm:mr-auto sm:mr-20">
+            <div className="flex flex-wrap md:flex-nowrap items-center justify-center gap-0.5 md:gap-1 sm:mr-auto sm:mr-20">
               {[1, 2, 3, 4, 5].map((s) => (
                 <button
                   key={s}
                   onClick={() => setActiveServer(s)}
-                  className={`px-2 sm:px-4 py-1 sm:py-2 text-[9.5px] sm:text-[10px] font-bold uppercase tracking-wider rounded-sm border transition-all flex-shrink-0 ${activeServer === s
+                  className={`px-1.5 sm:px-3 py-0.5 sm:py-1.5 text-[8.5px] sm:text-[10px] font-bold uppercase tracking-wider rounded-sm border transition-all flex-shrink-0 ${activeServer === s
                     ? "bg-red-600 border-red-600 text-white shadow-[0_0_10px_rgba(220,38,38,0.3)]"
                     : "border-white/15 text-white/40 hover:text-white hover:border-white/15 bg-white/5"
                     }`}

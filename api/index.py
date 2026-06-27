@@ -1,5 +1,6 @@
 import json, os, time, re, queue, threading
 from dotenv import load_dotenv
+from urllib.parse import quote as url_quote
 
 # Load environment variables
 load_dotenv()
@@ -505,12 +506,13 @@ def api_anilist_proxy():
 
     log.info(f"AniList Proxy: 🌐 Fetching (Rem: {_anilist_status['remaining']})...")
     
+    import random  # We only need random here, requests is already imported at top
+    
     # Pre-emptive check: If we know we are blocked, don't even try
     if _anilist_status["is_blocked"] and time.time() < _anilist_status["reset"]:
         log.warning(f"AniList Proxy: 🛡️ Circuit Breaker Active (Reset in {int(_anilist_status['reset'] - time.time())}s)")
         use_fallback = True
     else:
-        import requests, random
         uas = [
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
@@ -590,7 +592,7 @@ def api_anilist_proxy():
             params = [f"limit=24", f"page={page_num}"]
             
             if search_term:
-                params.append(f"q={requests.utils.quote(search_term)}")
+                params.append(f"q={url_quote(search_term)}")
             
             if j_status:
                 params.append(f"status={j_status}")
