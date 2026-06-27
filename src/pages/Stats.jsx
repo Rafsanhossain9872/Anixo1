@@ -3,142 +3,108 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import { useAuth } from "../hooks/useAuth";
-import { User, Clock, Heart, Bell, Download, Settings as SettingsIcon, BarChart2, Tv, Film, Star, Zap, Trophy, TrendingUp } from "lucide-react";
+import { User, Clock, Heart, Bell, Download, Settings as SettingsIcon, BarChart2 } from "lucide-react";
 
 const ANILIST_API = "https://graphql.anilist.co";
 
-// --- Mini Bar Chart Component ---
-const BarChart = ({ data, color = "#ef4444" }) => {
-  if (!data || data.length === 0) return null;
-  const max = Math.max(...data.map(d => d.value), 1);
+// --- Progress Bar Component ---
+const ProgressBar = ({ label, value, max, color = "#e50914" }) => {
+  const percentage = Math.round((value / max) * 100);
   return (
-    <div className="flex items-end gap-1.5 md:gap-2 h-16 md:h-24 w-full">
-      {data.map((item, i) => (
-        <div key={i} className="flex flex-col items-center gap-1 md:gap-1.5 flex-1 min-w-0">
-          <div className="w-full flex items-end justify-center" style={{ height: "48px" }}>
-            <div
-              className="w-full rounded-t-md md:rounded-t-lg transition-all duration-700"
-              style={{
-                height: `${Math.max((item.value / max) * 100, 4)}%`,
-                background: `linear-gradient(to top, ${color}cc, ${color}55)`,
-                boxShadow: `0 0 8px ${color}33`
-              }}
-            />
-          </div>
-          <span className="text-[7px] md:text-[9px] text-white/30 truncate w-full text-center font-bold uppercase tracking-tight">{item.label}</span>
-        </div>
-      ))}
+    <div className="flex items-center gap-4">
+      <span className="text-sm text-[#888] w-32 truncate">{label}</span>
+      <div className="flex-1 h-2 bg-[#1a1a1a] rounded-full overflow-hidden">
+        <div 
+          className="h-full rounded-full transition-all duration-500"
+          style={{ width: `${percentage}%`, backgroundColor: color }}
+        />
+      </div>
+      <span className="text-sm text-white font-medium w-12 text-right">{value}</span>
     </div>
   );
 };
 
-// --- Donut Chart Component ---
-const DonutChart = ({ segments, size = 120 }) => {
-  const radius = 40;
+// --- Simple Donut Chart Component ---
+const SimpleDonut = ({ segments, size = 120 }) => {
+  const radius = 35;
   const circumference = 2 * Math.PI * radius;
   const total = segments.reduce((s, seg) => s + seg.value, 0) || 1;
-
-  // Pre-compute cumulative offsets BEFORE render (no mutation during render)
-  const segmentsWithOffset = segments.reduce((acc, seg) => {
-    const prevOffset = acc.length > 0 ? acc[acc.length - 1].nextOffset : 0;
+  
+  let offset = 0;
+  const processed = segments.map(seg => {
     const dash = (seg.value / total) * circumference;
-    acc.push({ ...seg, dash, gap: circumference - dash, offset: prevOffset, nextOffset: prevOffset + dash });
-    return acc;
-  }, []);
+    const res = { ...seg, dash, offset: -offset };
+    offset += dash;
+    return res;
+  });
 
   return (
     <svg width={size} height={size} viewBox="0 0 100 100" className="rotate-[-90deg]">
-      <circle cx="50" cy="50" r={radius} fill="none" stroke="#ffffff08" strokeWidth="18" />
-      {segmentsWithOffset.map((seg, i) => (
+      <circle cx="50" cy="50" r={radius} fill="none" stroke="#1a1a1a" strokeWidth="18" />
+      {processed.map((seg, i) => (
         <circle
           key={i}
           cx="50" cy="50" r={radius}
           fill="none"
           stroke={seg.color}
           strokeWidth="18"
-          strokeDasharray={`${seg.dash} ${seg.gap}`}
-          strokeDashoffset={-seg.offset}
+          strokeDasharray={`${seg.dash} ${circumference}`}
+          strokeDashoffset={seg.offset}
           strokeLinecap="butt"
-          style={{ filter: `drop-shadow(0 0 4px ${seg.color}66)` }}
         />
       ))}
     </svg>
   );
 };
 
-// --- Stat Card ---
-const StatCard = ({ icon, label, value, sub, color = "red" }) => {
-  const Icon = icon;
-  const colorMap = {
-    red: "text-red-500",
-    blue: "text-blue-500",
-    purple: "text-purple-500",
-    green: "text-green-500",
-    yellow: "text-yellow-500",
-  };
-  const textCls = colorMap[color] || colorMap.red;
-
-  return (
-    <div className="flex flex-col p-4 md:p-6 border border-white/15 rounded-xl bg-[#0a0a0a] hover:bg-[#111] transition-all relative overflow-hidden group">
-      <div className={`absolute top-0 left-0 w-full h-[2px] opacity-0 group-hover:opacity-100 transition-opacity bg-current ${textCls}`} />
-      <div className="flex items-center justify-between mb-4 md:mb-6">
-        <p className="text-[10px] md:text-[11px] font-bold text-white/50 uppercase tracking-[0.15em]">{label}</p>
-        <Icon size={16} className={`${textCls} opacity-50 group-hover:opacity-100 transition-opacity`} />
-      </div>
-      <div>
-        <p className="text-2xl md:text-3xl font-black text-white leading-none tracking-tight">{value}</p>
-        {sub && <p className="text-[9px] md:text-[10px] font-bold text-white/30 mt-1.5 uppercase tracking-widest">{sub}</p>}
-      </div>
-    </div>
-  );
-};
+// --- Stat Card Component ---
+const StatCard = ({ label, value, sub }) => (
+  <div className="bg-[#111] border border-[#2a2a2a] rounded-xl p-6">
+    <p className="text-xs text-[#888] uppercase tracking-wider mb-2">{label}</p>
+    <p className="text-3xl font-bold text-white mb-1">{value}</p>
+    {sub && <p className="text-xs text-[#666]">{sub}</p>}
+  </div>
+);
 
 const STATUS_COLORS = {
   Completed: "#22c55e",
-  Watching: "#ef4444",
+  Watching: "#e50914",
   Planning: "#3b82f6",
   Dropped: "#6b7280",
   "On-Hold": "#f59e0b",
   Paused: "#f59e0b",
 };
 
-const GENRE_COLORS = ["#ef4444","#f97316","#eab308","#22c55e","#06b6d4","#8b5cf6","#ec4899","#14b8a6","#f43f5e","#a855f7"];
+const GENRE_COLORS = ["#e50914","#f97316","#eab308","#22c55e","#06b6d4","#8b5cf6","#ec4899","#14b8a6"];
 
 export default function Stats() {
   const { user, globalWatchlist, globalProgress } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [animeDetails, setAnimeDetails] = useState({});
-  const [anilistStats, setAnilistStats] = useState(null); // raw AniList media list entries
+  const [anilistStats, setAnilistStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => { if (!user) navigate("/"); }, [user, navigate]);
 
-  // If AniList connected → fetch full AniList library (much more accurate stats)
-  // If not connected → fall back to local watchlist/progress + AniList detail lookup
+  // Fetch data
   useEffect(() => {
     const run = async () => {
       try {
-        // === PATH 1: AniList connected ===
+        // If AniList connected
         if (user?.anilist?.accessToken && user?.anilist?.username) {
           const query = `
             query ($userName: String) {
               MediaListCollection(userName: $userName, type: ANIME) {
                 lists {
-                  name
-                  status
                   entries {
                     score(format: POINT_10)
                     progress
                     status
                     media {
-                      id
-                      duration
-                      episodes
-                      format
-                      genres
-                      studios(isMain: true) { nodes { name } }
-                      title { english romaji }
+                      id duration episodes format genres
+                      coverImage { large }
+                      studios(isMain: true) { nodes { id name } }
                     }
                   }
                 }
@@ -154,53 +120,46 @@ export default function Stats() {
             body: JSON.stringify({ query, variables: { userName: user.anilist.username } })
           });
           const json = await res.json();
-          if (json.errors) {
-            console.error("AniList API Error:", json.errors);
-          }
           const lists = json.data?.MediaListCollection?.lists || [];
           const allEntries = lists.flatMap(l => l.entries || []);
           setAnilistStats(allEntries);
-          setLoading(false);
-          return;
-        }
+        } else {
+          // No AniList - fetch metadata for local IDs
+          const allIds = [...new Set([
+            ...(globalWatchlist || []).map(w => w.animeId),
+            ...(globalProgress || []).map(p => p.animeId)
+          ])].filter(Boolean).map(Number).filter(n => !isNaN(n));
 
-        // === PATH 2: No AniList — use local IDs to fetch metadata ===
-        const allIds = [...new Set([
-          ...(globalWatchlist || []).map(w => w.animeId),
-          ...(globalProgress || []).map(p => p.animeId)
-        ])].filter(Boolean).map(Number).filter(n => !isNaN(n));
-
-        if (allIds.length === 0) { setLoading(false); return; }
-
-        const fetchBatch = async (ids) => {
-          const query = `
-            query ($idIn: [Int]) {
-              Page(page: 1, perPage: 50) {
-                media(id_in: $idIn, type: ANIME) {
-                  id genres episodes duration format
-                  studios(isMain: true) { nodes { name } }
+          if (allIds.length > 0) {
+            const fetchBatch = async (ids) => {
+              const query = `
+              query ($idIn: [Int]) {
+                Page(page: 1, perPage: 50) {
+                  media(idIn: $idIn, type: ANIME) {
+                    id genres episodes duration format
+                    coverImage { large }
+                    studios(isMain: true) { nodes { id name } }
+                  }
                 }
               }
-            }
-          `;
-          const res = await fetch(ANILIST_API, {
-            method: "POST",
-            headers: { 
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ query, variables: { idIn: ids } })
-          });
-          const json = await res.json();
-          if (json.errors) console.error("AniList Fetch Error:", json.errors);
-          return json.data?.Page?.media || [];
-        };
+            `;
+              const res = await fetch(ANILIST_API, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ query, variables: { idIn: ids } })
+              });
+              const json = await res.json();
+              return json.data?.Page?.media || [];
+            };
 
-        const chunks = [];
-        for (let i = 0; i < allIds.length; i += 50) chunks.push(allIds.slice(i, i + 50));
-        const results = (await Promise.all(chunks.map(fetchBatch))).flat();
-        const map = {};
-        results.forEach(m => { map[String(m.id)] = m; });
-        setAnimeDetails(map);
+            const chunks = [];
+            for (let i = 0; i < allIds.length; i += 50) chunks.push(allIds.slice(i, i + 50));
+            const results = (await Promise.all(chunks.map(fetchBatch))).flat();
+            const map = {};
+            results.forEach(m => { map[String(m.id)] = m; });
+            setAnimeDetails(map);
+          }
+        }
       } catch (e) {
         console.error("Stats fetch error:", e);
       } finally {
@@ -210,25 +169,16 @@ export default function Stats() {
     run();
   }, [user, globalWatchlist, globalProgress]);
 
-
   // --- Compute Stats ---
   const isAnilistConnected = !!(user?.anilist?.accessToken && user?.anilist?.username);
   const watchlist = globalWatchlist || [];
   const progress = globalProgress || [];
-
-  // ── AniList path ──────────────────────────────────────────────────────────
   const alEntries = anilistStats || [];
 
   // Watch time
   const totalMinutes = isAnilistConnected
-    ? alEntries.reduce((sum, e) => {
-        const dur = e.media?.duration || 24;
-        return sum + (e.progress || 0) * dur;
-      }, 0)
-    : progress.reduce((sum, p) => {
-        const detail = animeDetails[String(p.animeId)];
-        return sum + (p.episode * (detail?.duration || 24));
-      }, 0);
+    ? alEntries.reduce((sum, e) => sum + (e.progress || 0) * (e.media?.duration || 24), 0)
+    : progress.reduce((sum, p) => sum + (p.episode * (animeDetails[String(p.animeId)]?.duration || 24)), 0);
   const totalHours = Math.floor(totalMinutes / 60);
   const totalDays = Math.floor(totalHours / 24);
 
@@ -246,7 +196,7 @@ export default function Stats() {
     ? (scoredEntries.reduce((s, e) => s + (isAnilistConnected ? e.score : e.score), 0) / scoredEntries.length).toFixed(1)
     : "—";
 
-  // Status breakdown for donut
+  // Status breakdown
   const STATUS_MAP_AL = { CURRENT: "Watching", PLANNING: "Planning", COMPLETED: "Completed", DROPPED: "Dropped", PAUSED: "On-Hold", REPEATING: "Rewatching" };
   const statusGroups = {};
   if (isAnilistConnected) {
@@ -267,37 +217,45 @@ export default function Stats() {
   // Genre breakdown
   const genreCount = {};
   if (isAnilistConnected) {
-    alEntries.forEach(e => {
-      e.media?.genres?.forEach(g => { genreCount[g] = (genreCount[g] || 0) + 1; });
-    });
+    alEntries.forEach(e => e.media?.genres?.forEach(g => genreCount[g] = (genreCount[g] || 0) + 1));
   } else {
     const allTrackedIds = [...new Set([...watchlist.map(w => w.animeId), ...progress.map(p => p.animeId)])];
-    allTrackedIds.forEach(id => {
-      animeDetails[String(id)]?.genres?.forEach(g => { genreCount[g] = (genreCount[g] || 0) + 1; });
-    });
+    allTrackedIds.forEach(id => animeDetails[String(id)]?.genres?.forEach(g => genreCount[g] = (genreCount[g] || 0) + 1));
   }
-  const topGenres = Object.entries(genreCount).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([label, value]) => ({ label, value }));
+  const topGenres = Object.entries(genreCount).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  const maxGenreValue = topGenres[0]?.[1] || 1;
 
   // Studio breakdown
-  const studioCount = {};
+  const studioData = {}; // { name: { count: number, cover: string|null } }
   if (isAnilistConnected) {
     alEntries.forEach(e => {
-      e.media?.studios?.nodes?.forEach(s => { studioCount[s.name] = (studioCount[s.name] || 0) + 1; });
+      const cover = e.media?.coverImage?.large;
+      e.media?.studios?.nodes?.forEach(s => {
+        if (!studioData[s.name]) {
+          studioData[s.name] = { count: 0, cover: cover || null };
+        }
+        studioData[s.name].count++;
+      });
     });
   } else {
     const allTrackedIds = [...new Set([...watchlist.map(w => w.animeId), ...progress.map(p => p.animeId)])];
     allTrackedIds.forEach(id => {
-      animeDetails[String(id)]?.studios?.nodes?.forEach(s => { studioCount[s.name] = (studioCount[s.name] || 0) + 1; });
+      const detail = animeDetails[String(id)];
+      const cover = detail?.coverImage?.large;
+      detail?.studios?.nodes?.forEach(s => {
+        if (!studioData[s.name]) {
+          studioData[s.name] = { count: 0, cover: cover || null };
+        }
+        studioData[s.name].count++;
+      });
     });
   }
-  const topStudios = Object.entries(studioCount).sort((a, b) => b[1] - a[1]).slice(0, 6);
+  const topStudios = Object.entries(studioData).sort((a, b) => b[1].count - a[1].count).slice(0, 6);
 
   // Format breakdown
   const formatCount = {};
   if (isAnilistConnected) {
-    alEntries.forEach(e => {
-      if (e.media?.format) formatCount[e.media.format] = (formatCount[e.media.format] || 0) + 1;
-    });
+    alEntries.forEach(e => { if (e.media?.format) formatCount[e.media.format] = (formatCount[e.media.format] || 0) + 1; });
   } else {
     const allTrackedIds = [...new Set([...watchlist.map(w => w.animeId), ...progress.map(p => p.animeId)])];
     allTrackedIds.forEach(id => {
@@ -305,8 +263,8 @@ export default function Stats() {
       if (fmt) formatCount[fmt] = (formatCount[fmt] || 0) + 1;
     });
   }
-  const topFormats = Object.entries(formatCount).sort((a, b) => b[1] - a[1]).slice(0, 6).map(([label, value]) => ({ label, value }));
-
+  const topFormats = Object.entries(formatCount).sort((a, b) => b[1] - a[1]).slice(0, 6);
+  const maxFormatValue = topFormats[0]?.[1] || 1;
 
   const navItems = [
     { id: "profile", label: "Profile", icon: User, path: "/profile" },
@@ -321,13 +279,13 @@ export default function Stats() {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen text-white flex flex-col font-sans selection:bg-red-500/30">
+    <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col">
       <Navbar />
 
       <div className="w-full pt-[80px] px-4 md:px-8 pb-16 max-w-[1200px] mx-auto flex-1">
 
         {/* Nav Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 md:gap-3 mb-10 w-full max-w-4xl mx-auto">
+        <div className="flex flex-wrap sm:flex-nowrap justify-center gap-1.5 sm:gap-2 md:gap-3 mb-10 w-full max-w-4xl mx-auto px-1 sm:px-0">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path;
             const Icon = item.icon;
@@ -335,13 +293,11 @@ export default function Stats() {
               <Link
                 key={item.id}
                 to={item.path}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 border ${
-                  isActive
-                  ? "bg-red-600 text-white border-red-600"
-                  : "bg-white/[0.02] border-white/15 text-white/30 hover:text-white hover:bg-white/[0.05]"
+                className={`flex items-center justify-center gap-2 px-2.5 sm:px-3 md:px-4 py-2 sm:py-2 rounded-xl transition-all duration-300 border shrink-0 ${
+                  isActive ? "bg-red-600 text-white border-red-600" : "bg-white/[0.02] border-white/15 text-white/30 hover:text-white hover:bg-white/[0.05]"
                 }`}
               >
-                <Icon size={16} strokeWidth={isActive ? 2.5 : 2} className="shrink-0" />
+                <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className="shrink-0 w-[18px] h-[18px] md:w-4 md:h-4" />
                 <span className="hidden md:block text-[12px] font-bold tracking-tight whitespace-nowrap">{item.label}</span>
               </Link>
             );
@@ -349,83 +305,70 @@ export default function Stats() {
         </div>
 
         {/* Header */}
-        <div className="flex items-center gap-2 md:gap-3 mb-5 md:mb-8 px-1 md:px-2">
-          <h2 className="text-base md:text-xl font-black tracking-tight uppercase">Watch Statistics</h2>
-          <span className="text-[8px] md:text-[10px] font-black bg-white/5 text-white/30 px-2 md:px-3 py-0.5 md:py-1 rounded-full border border-white/15 uppercase tracking-widest">Lifetime</span>
+        <div className="mb-8">
+          <h1 className="text-2xl font-medium mb-1">Watch Statistics</h1>
+          <p className="text-sm text-[#666]">Lifetime</p>
         </div>
 
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-32 gap-4">
-            <div className="w-10 h-10 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
-            <p className="text-white/30 text-sm font-bold uppercase tracking-widest animate-pulse">Crunching your data...</p>
+          <div className="flex flex-col items-center justify-center py-24">
+            <div className="w-10 h-10 border-2 border-[#333] border-t-red-600 rounded-full animate-spin mb-4" />
+            <p className="text-[#666]">Loading...</p>
           </div>
         ) : totalInLibrary === 0 ? (
-          <div className="flex flex-col items-center justify-center py-24 bg-white/[0.02] border border-white/15 rounded-2xl max-w-lg mx-auto">
-            <BarChart2 size={40} className="text-white/10 mb-4" />
-            <h3 className="text-lg font-black text-white/80 mb-2">No Data Yet</h3>
-            <p className="text-white/30 text-sm text-center max-w-xs">Start watching and bookmarking anime to see your stats here!</p>
-            <Link to="/browse" className="mt-6 bg-red-600 text-white font-black text-[11px] uppercase tracking-widest px-6 py-3 rounded-xl hover:bg-red-700 transition-all">Explore Anime</Link>
+          <div className="flex flex-col items-center justify-center py-24 bg-[#111] border border-[#2a2a2a] rounded-xl max-w-md mx-auto">
+            <BarChart2 size={40} className="text-[#444] mb-4" />
+            <h3 className="text-lg font-medium text-white mb-2">No Data Yet</h3>
+            <p className="text-sm text-[#666] text-center mb-6">Start watching and bookmarking anime to see your stats here!</p>
+            <Link to="/browse" className="px-6 py-2 bg-red-600 text-white rounded-md text-sm hover:bg-red-700 transition-colors">Explore Anime</Link>
           </div>
         ) : (
-          <div className="flex flex-col gap-3 md:gap-6">
+          <div className="flex flex-col gap-6">
 
             {/* Top Stats Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <StatCard
-                icon={Clock}
                 label="Watch Time"
                 value={totalDays > 0 ? `${totalDays}d ${totalHours % 24}h` : `${totalHours}h`}
-                sub={`${totalMinutes.toLocaleString()} Minutes`}
-                color="red"
+                sub={`${totalMinutes.toLocaleString()} minutes`}
               />
               <StatCard
-                icon={Trophy}
                 label="Completed"
                 value={completedCount}
-                sub={`${totalInLibrary} Total`}
-                color="green"
+                sub={`${totalInLibrary} total`}
               />
               <StatCard
-                icon={Star}
-                label="Avg Score"
+                label="Average Score"
                 value={avgScore}
-                sub={`${scoredEntries.length} Rated`}
-                color="yellow"
+                sub={`${scoredEntries.length} rated`}
               />
               <StatCard
-                icon={TrendingUp}
-                label="Episodes"
+                label="Episodes Watched"
                 value={progress.reduce((s, p) => s + p.episode, 0).toLocaleString()}
-                sub="Watched"
-                color="blue"
               />
             </div>
 
-            {/* Middle Section: Donut + Format */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
-
-              {/* Library Status Donut */}
-              <div className="border border-white/15 rounded-xl bg-[#0a0a0a] p-5 md:p-8">
-                <div className="flex items-center gap-2 mb-3 md:mb-5">
-                  <Tv size={13} className="text-red-500 md:!w-[15px] md:!h-[15px]" />
-                  <h3 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] text-white/60">Library Status</h3>
-                </div>
-                <div className="flex items-center gap-4 md:gap-6">
+            {/* Two Column Section */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Library Status */}
+              <div className="bg-[#111] border border-[#2a2a2a] rounded-xl p-6">
+                <h3 className="text-sm font-medium text-white mb-6">Library Status</h3>
+                <div className="flex items-center gap-8">
                   <div className="relative shrink-0">
-                    <DonutChart segments={statusSegments} size={90} />
+                    <SimpleDonut segments={statusSegments} size={120} />
                     <div className="absolute inset-0 flex flex-col items-center justify-center">
-                      <span className="text-base md:text-xl font-black text-white">{totalInLibrary}</span>
-                      <span className="text-[7px] md:text-[8px] text-white/30 uppercase tracking-widest font-bold">Total</span>
+                      <span className="text-2xl font-bold text-white">{totalInLibrary}</span>
+                      <span className="text-xs text-[#666]">Total</span>
                     </div>
                   </div>
-                  <div className="flex flex-col gap-1.5 md:gap-2 flex-1 min-w-0">
+                  <div className="flex flex-col gap-3 flex-1">
                     {statusSegments.map((seg, i) => (
-                      <div key={i} className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-1.5 md:gap-2 min-w-0">
-                          <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full shrink-0" style={{ background: seg.color }} />
-                          <span className="text-[10px] md:text-[11px] text-white/50 truncate font-medium">{seg.label}</span>
+                      <div key={i} className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <div className="w-3 h-3 rounded-full" style={{ backgroundColor: seg.color }} />
+                          <span className="text-sm text-[#888]">{seg.label}</span>
                         </div>
-                        <span className="text-[11px] md:text-[12px] font-black text-white shrink-0">{seg.value}</span>
+                        <span className="text-sm text-white font-medium">{seg.value}</span>
                       </div>
                     ))}
                   </div>
@@ -433,74 +376,72 @@ export default function Stats() {
               </div>
 
               {/* Format Breakdown */}
-              <div className="border border-white/15 rounded-xl bg-[#0a0a0a] p-5 md:p-8">
-                <div className="flex items-center gap-2 mb-3 md:mb-5">
-                  <Film size={13} className="text-purple-400 md:!w-[15px] md:!h-[15px]" />
-                  <h3 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] text-white/60">Format Breakdown</h3>
-                </div>
+              <div className="bg-[#111] border border-[#2a2a2a] rounded-xl p-6">
+                <h3 className="text-sm font-medium text-white mb-6">Formats</h3>
                 {topFormats.length > 0 ? (
-                  <BarChart data={topFormats} color="#a855f7" />
+                  <div className="flex flex-col gap-4">
+                    {topFormats.map(([label, value], i) => (
+                      <ProgressBar 
+                        key={i} 
+                        label={label} 
+                        value={value} 
+                        max={maxFormatValue}
+                        color={GENRE_COLORS[i % GENRE_COLORS.length]}
+                      />
+                    ))}
+                  </div>
                 ) : (
-                  <p className="text-white/20 text-xs md:text-sm text-center py-6 md:py-8">No format data yet</p>
+                  <p className="text-[#666] text-sm">No format data yet</p>
                 )}
               </div>
             </div>
 
-            {/* Genre Section */}
-            <div className="border border-white/15 rounded-xl bg-[#0a0a0a] p-5 md:p-8">
-              <div className="flex items-center gap-2 mb-3 md:mb-5">
-                <Zap size={13} className="text-yellow-400 md:!w-[15px] md:!h-[15px]" />
-                <h3 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] text-white/60">Top Genres</h3>
-              </div>
+            {/* Top Genres */}
+            <div className="bg-[#111] border border-[#2a2a2a] rounded-xl p-6">
+              <h3 className="text-sm font-medium text-white mb-6">Top Genres</h3>
               {topGenres.length > 0 ? (
-                <div className="flex flex-col gap-2 md:gap-3">
-                  {topGenres.map((g, i) => {
-                    const pct = Math.round((g.value / (topGenres[0]?.value || 1)) * 100);
-                    return (
-                      <div key={i} className="flex items-center gap-2 md:gap-4">
-                        <span className="text-[9px] md:text-[11px] text-white/50 w-20 md:w-28 shrink-0 font-bold truncate">{g.label}</span>
-                        <div className="flex-1 h-1 md:h-1.5 bg-white/5 overflow-hidden">
-                          <div
-                            className="h-full transition-all duration-700"
-                            style={{
-                              width: `${pct}%`,
-                              backgroundColor: GENRE_COLORS[i % GENRE_COLORS.length]
-                            }}
-                          />
-                        </div>
-                        <span className="text-[10px] md:text-[12px] font-black text-white w-6 md:w-8 text-right shrink-0">{g.value}</span>
-                      </div>
-                    );
-                  })}
+                <div className="flex flex-col gap-4">
+                  {topGenres.map(([label, value], i) => (
+                    <ProgressBar 
+                      key={i} 
+                      label={label} 
+                      value={value} 
+                      max={maxGenreValue}
+                      color={GENRE_COLORS[i % GENRE_COLORS.length]}
+                    />
+                  ))}
                 </div>
               ) : (
-                <p className="text-white/20 text-xs md:text-sm text-center py-6 md:py-8">No genre data yet — watch more anime!</p>
+                <p className="text-[#666] text-sm">No genre data yet</p>
               )}
             </div>
 
             {/* Top Studios */}
-            <div className="border border-white/15 rounded-xl bg-[#0a0a0a] p-5 md:p-8">
-              <div className="flex items-center gap-2 mb-3 md:mb-5">
-                <Trophy size={13} className="text-green-400 md:!w-[15px] md:!h-[15px]" />
-                <h3 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] text-white/60">Top Studios</h3>
-              </div>
+            <div className="bg-[#111] border border-[#2a2a2a] rounded-xl p-6">
+              <h3 className="text-sm font-medium text-white mb-6">Top Studios</h3>
               {topStudios.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
-                  {topStudios.map(([name, count], i) => (
-                    <div
-                      key={i}
-                      className="flex items-center gap-3 md:gap-4 p-2 md:p-3 hover:bg-[#111] border border-transparent hover:border-white/15 rounded-lg transition-all"
-                    >
-                      <span className="text-[11px] md:text-[13px] font-black text-white/20 w-4 md:w-5 text-right shrink-0">{i + 1}</span>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[12px] md:text-[14px] font-bold text-white truncate">{name}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {topStudios.map(([name, data], i) => (
+                    <div key={i} className="flex items-center gap-4 bg-[#0a0a0a] p-4 rounded-lg border border-[#2a2a2a]">
+                      <span className="text-lg font-bold text-[#666] w-8">{i + 1}</span>
+                      <div className="w-12 h-12 rounded-lg overflow-hidden bg-[#2a2a2a] flex-shrink-0">
+                        {data.cover ? (
+                          <img src={data.cover} alt={name} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-[#666] font-bold text-lg">
+                            {name.charAt(0)}
+                          </div>
+                        )}
                       </div>
-                      <span className="text-[10px] md:text-[11px] text-white/40 font-bold tracking-widest uppercase shrink-0">{count} anime</span>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-sm text-white font-medium block truncate">{name}</span>
+                        <span className="text-xs text-[#666]">{data.count} anime</span>
+                      </div>
                     </div>
                   ))}
                 </div>
               ) : (
-                <p className="text-white/20 text-xs md:text-sm text-center py-6 md:py-8">No studio data yet</p>
+                <p className="text-[#666] text-sm">No studio data yet</p>
               )}
             </div>
 
