@@ -2,7 +2,7 @@ import React from 'react';
 import { usePopunder } from '../../context/PopunderContext';
 import { useToast } from '../../context/ToastContext';
 import { useConfirmation } from '../../context/ConfirmationContext';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 
 export function PopunderControlButton() {
   const { isPopunderDisabled, timeLeft, disablePopunderForHour } = usePopunder();
@@ -17,7 +17,7 @@ export function PopunderControlButton() {
     }
     const confirmed = await showConfirmation(
       'Pause Ads',
-      'Are you sure you want to pause ads for 1 hour?',
+      'Are you sure you want to pause ads for 1 hour?'
     );
     if (confirmed) {
       disablePopunderForHour();

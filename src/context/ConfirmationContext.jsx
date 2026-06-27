@@ -3,27 +3,20 @@ import React, { createContext, useContext, useState, useCallback } from 'react';
 const ConfirmationContext = createContext();
 
 export function ConfirmationProvider({ children }) {
-  const [dialog, setDialog] = useState({
-    isOpen: false,
-    title: '',
-    message: '',
-    onConfirm: null,
-    onCancel: null,
-  });
+  const [dialog, setDialog] = useState(null);
 
-  const showConfirmation = useCallback((title, message, onConfirm) => {
+  const showConfirmation = useCallback((title, message) => {
     return new Promise((resolve) => {
       setDialog({
-        isOpen: true,
         title,
         message,
         onConfirm: () => {
+          setDialog(null);
           resolve(true);
-          setDialog({ isOpen: false, title: '', message: '', onConfirm: null, onCancel: null });
         },
         onCancel: () => {
+          setDialog(null);
           resolve(false);
-          setDialog({ isOpen: false, title: '', message: '', onConfirm: null, onCancel: null });
         },
       });
     });
@@ -32,7 +25,7 @@ export function ConfirmationProvider({ children }) {
   return (
     <ConfirmationContext.Provider value={{ showConfirmation }}>
       {children}
-      {dialog.isOpen && (
+      {dialog && (
         <div className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center bg-black/70">
           <div className="bg-[#0d0d0d] border-t border-white/10 sm:border rounded-t-2xl sm:rounded-lg p-6 w-full sm:max-w-sm">
             <h3 className="text-sm font-semibold text-white mb-2">{dialog.title}</h3>
