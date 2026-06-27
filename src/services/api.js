@@ -208,35 +208,55 @@ async function fetchFromAniList(query, variables = {}) {
       )
     );
 
-    const { data } = await smartRequest("post", "/api/anilist/proxy", {
-      data: {
-        query,
-        variables: cleanVariables
-      },
-      headers: { "Content-Type": "application/json" },
-      timeout: 15000,
-    });
+    const payload = { query, variables: cleanVariables };
+    const headers = { "Content-Type": "application/json", "Accept": "application/json" };
 
-    if (!data) throw new Error("No data received from proxy");
+    // 1. Try proxy first
+    try {
+      const { data } = await smartRequest("post", "/api/anilist/proxy", {
+        data: payload,
+        headers,
+        timeout: 10000,
+      });
 
-    // Log which source the proxy used (anilist or jikan fallback)
-    if (data.source) {
-      console.info(`[API] Data source: ${data.source}`);
+      if (data) {
+        if (data.source) console.info(`[API] Data source: ${data.source}`);
+        if (data.errors && Array.isArray(data.errors)) {
+          console.error("AniList GraphQL Errors:", data.errors);
+        } else {
+          const result = data.data?.Page || data.Page || data.data || data;
+          if (result && (result.media || result.Page || result.Media)) {
+            return result;
+          }
+        }
+      }
+    } catch (err) {
+      console.warn("[AniList] Proxy failed, trying direct...", err.message);
     }
 
-    // Check for GraphQL errors (but not the proxy's own "error" field for 4xx/5xx)
-    if (data.errors && Array.isArray(data.errors)) {
-      console.error("AniList GraphQL Errors:", data.errors);
-      return { media: [], pageInfo: { total: 0 } };
+    // 2. Fallback to direct AniList GraphQL
+    try {
+      const { data } = await axios.post("https://graphql.anilist.co", payload, {
+        headers,
+        timeout: 10000,
+      });
+
+      if (data) {
+        if (data.errors && Array.isArray(data.errors)) {
+          console.error("AniList GraphQL Errors:", data.errors);
+        } else {
+          const result = data.data?.Page || data.Page || data.data || data;
+          if (result && (result.media || result.Page || result.Media)) {
+            console.info("[AniList] ✓ Direct AniList succeeded");
+            return result;
+          }
+        }
+      }
+    } catch (err) {
+      console.warn("[AniList] Direct AniList failed:", err.message);
     }
 
-    // The proxy's api_response wrapper returns: { success: true, data: { Page: {...} }, source: "..." }
-    // Support both proxy-wrapped and direct AniList responses
-    const result = data.data?.Page || data.Page || data.data || data;
-    if (!result || (!result.media && !result.Page)) {
-      return result;
-    }
-    return result || { media: [], pageInfo: { total: 0 } };
+    return { media: [], pageInfo: { total: 0 } };
   } catch (err) {
     console.error("AniList Fetch Error:", err.message);
     return { media: [], pageInfo: { total: 0 } };
@@ -269,19 +289,43 @@ export async function getSchedule(startTimestamp, endTimestamp) {
   const cachedData = cache.get(cacheKey);
   if (cachedData) return cachedData;
 
-  try {
-    const { data } = await smartRequest("post", "/api/anilist/proxy", {
-      data: {
-        query: SCHEDULE_QUERY,
-        variables: {
-          page: 1,
-          airingAt_greater: startTimestamp,
-          airingAt_lesser: endTimestamp,
-        },
-      },
-      headers: { "Content-Type": "application/json" },
-    });
+  const variables = {
+    page: 1,
+    airingAt_greater: startTimestamp,
+    airingAt_lesser: endTimestamp,
+  };
+  const payload = { query: SCHEDULE_QUERY, variables };
+  const headers = { "Content-Type": "application/json", "Accept": "application/json" };
 
+  let data = null;
+
+  // 1. Try proxy
+  try {
+    const response = await smartRequest("post", "/api/anilist/proxy", {
+      data: payload,
+      headers,
+      timeout: 10000,
+    });
+    data = response.data;
+  } catch (err) {
+    console.warn("[Schedule] Proxy failed, trying direct AniList...", err.message);
+  }
+
+  // 2. Fallback to direct AniList
+  if (!data) {
+    try {
+      const response = await axios.post("https://graphql.anilist.co", payload, {
+        headers,
+        timeout: 10000,
+      });
+      data = response.data;
+      console.info("[Schedule] ✓ Direct AniList succeeded");
+    } catch (err) {
+      console.warn("[Schedule] Direct AniList failed:", err.message);
+    }
+  }
+
+  if (data) {
     if (data.errors) {
       console.error("AniList Schedule Errors:", data.errors);
       return [];
@@ -289,10 +333,9 @@ export async function getSchedule(startTimestamp, endTimestamp) {
     const scheduleData = data.data?.Page?.airingSchedules || [];
     if (scheduleData.length > 0) cache.set(cacheKey, scheduleData, CACHE_TTL.SCHEDULE);
     return scheduleData;
-  } catch (err) {
-    console.error("Schedule Fetch Error:", err);
-    return [];
   }
+
+  return [];
 }
 
 export const SEARCH_QUERY = `
@@ -731,8 +774,9 @@ export async function getAnimeDetails(id, isMal = false) {
   let finalId = id;
   let finalIsMal = isMal;
 
-
   const variables = finalIsMal ? { idMal: finalId } : { id: finalId };
+  const payload = { query: DETAIL_QUERY, variables };
+  const headers = { "Content-Type": "application/json", "Accept": "application/json" };
 
   if (!variables.id && !finalIsMal && !finalId) {
     console.error("[Watch] Aborting AniList query: No ID provided.");
@@ -740,16 +784,46 @@ export async function getAnimeDetails(id, isMal = false) {
   }
 
   try {
-    const { data } = await smartRequest("post", "/api/anilist/proxy", {
-      data: {
-        query: DETAIL_QUERY,
-        variables,
-      },
-      headers: { "Content-Type": "application/json" },
-    });
+    let data = null;
+
+    // 1. Try proxy first
+    try {
+      const response = await smartRequest("post", "/api/anilist/proxy", {
+        data: payload,
+        headers,
+        timeout: 10000,
+      });
+      data = response.data;
+    } catch (err) {
+      console.warn("[AnimeDetails] Proxy failed, trying direct AniList...", err.message);
+    }
+
+    // 2. Fallback to direct AniList
+    if (!data) {
+      try {
+        const response = await axios.post("https://graphql.anilist.co", payload, {
+          headers,
+          timeout: 10000,
+        });
+        data = response.data;
+        console.info("[AnimeDetails] ✓ Direct AniList succeeded");
+      } catch (err) {
+        console.warn("[AnimeDetails] Direct AniList failed:", err.message);
+      }
+    }
 
     if (!data) {
-      console.error("AniList Detail: No response from proxy");
+      console.error("AniList Detail: No response from any source");
+      // FALLBACK TO JIKAN if we have a MAL ID
+      if (finalIsMal) {
+        console.info(`[Fallback] Attempting Jikan fallback for MAL ID: ${finalId}`);
+        const jikanData = await getJikanAnimeDetails(finalId);
+        if (jikanData) {
+          const result = transformJikanToAnilist(jikanData);
+          cache.set(cacheKey, result, CACHE_TTL.DETAILS);
+          return result;
+        }
+      }
       return null;
     }
 
@@ -765,7 +839,11 @@ export async function getAnimeDetails(id, isMal = false) {
       if (finalIsMal) {
         console.info(`[Fallback] Attempting Jikan fallback for MAL ID: ${finalId}`);
         const jikanData = await getJikanAnimeDetails(finalId);
-        if (jikanData) return transformJikanToAnilist(jikanData);
+        if (jikanData) {
+          const result = transformJikanToAnilist(jikanData);
+          cache.set(cacheKey, result, CACHE_TTL.DETAILS);
+          return result;
+        }
       }
       return null;
     }
@@ -809,7 +887,11 @@ export async function getAnimeDetails(id, isMal = false) {
       try {
         console.info(`[Fallback] AniList Down. Attempting Jikan for MAL ID: ${finalId}`);
         const jikanData = await getJikanAnimeDetails(finalId);
-        if (jikanData) return transformJikanToAnilist(jikanData);
+        if (jikanData) {
+          const result = transformJikanToAnilist(jikanData);
+          cache.set(cacheKey, result, CACHE_TTL.DETAILS);
+          return result;
+        }
       } catch (fallbackErr) {
         console.error("[Fallback] Jikan fallback failed:", fallbackErr);
       }
@@ -1114,19 +1196,45 @@ const CHARACTER_QUERY = `
 
 export async function getCharacterDetails(id) {
   if (!id) return null;
+  const variables = { id: parseInt(id) };
+  const payload = { query: CHARACTER_QUERY, variables };
+  const headers = { "Content-Type": "application/json", "Accept": "application/json" };
+  let data = null;
+
+  // 1. Try proxy
   try {
-    const { data } = await smartRequest("post", "/api/anilist/proxy", {
-      data: {
-        query: CHARACTER_QUERY,
-        variables: { id: parseInt(id) },
-      },
-      headers: { "Content-Type": "application/json" },
+    const response = await smartRequest("post", "/api/anilist/proxy", {
+      data: payload,
+      headers,
+      timeout: 10000,
     });
-    return data.data?.Character || null;
+    data = response.data;
   } catch (err) {
-    console.error("getCharacterDetails Error:", err);
-    return null;
+    console.warn("[CharacterDetails] Proxy failed, trying direct AniList...", err.message);
   }
+
+  // 2. Fallback to direct AniList
+  if (!data) {
+    try {
+      const response = await axios.post("https://graphql.anilist.co", payload, {
+        headers,
+        timeout: 10000,
+      });
+      data = response.data;
+      console.info("[CharacterDetails] ✓ Direct AniList succeeded");
+    } catch (err) {
+      console.warn("[CharacterDetails] Direct AniList failed:", err.message);
+    }
+  }
+
+  if (data) {
+    if (data.errors) {
+      console.error("CharacterDetails Errors:", data.errors);
+      return null;
+    }
+    return data.data?.Character || null;
+  }
+  return null;
 }
 
 const STAFF_QUERY = `
@@ -1168,17 +1276,43 @@ const STAFF_QUERY = `
 
 export async function getStaffDetails(id) {
   if (!id) return null;
+  const variables = { id: parseInt(id) };
+  const payload = { query: STAFF_QUERY, variables };
+  const headers = { "Content-Type": "application/json", "Accept": "application/json" };
+  let data = null;
+
+  // 1. Try proxy
   try {
-    const { data } = await smartRequest("post", "/api/anilist/proxy", {
-      data: {
-        query: STAFF_QUERY,
-        variables: { id: parseInt(id) },
-      },
-      headers: { "Content-Type": "application/json" },
+    const response = await smartRequest("post", "/api/anilist/proxy", {
+      data: payload,
+      headers,
+      timeout: 10000,
     });
-    return data.data?.Staff || null;
+    data = response.data;
   } catch (err) {
-    console.error("getStaffDetails Error:", err);
-    return null;
+    console.warn("[StaffDetails] Proxy failed, trying direct AniList...", err.message);
   }
+
+  // 2. Fallback to direct AniList
+  if (!data) {
+    try {
+      const response = await axios.post("https://graphql.anilist.co", payload, {
+        headers,
+        timeout: 10000,
+      });
+      data = response.data;
+      console.info("[StaffDetails] ✓ Direct AniList succeeded");
+    } catch (err) {
+      console.warn("[StaffDetails] Direct AniList failed:", err.message);
+    }
+  }
+
+  if (data) {
+    if (data.errors) {
+      console.error("StaffDetails Errors:", data.errors);
+      return null;
+    }
+    return data.data?.Staff || null;
+  }
+  return null;
 }

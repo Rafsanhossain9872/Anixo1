@@ -5,11 +5,14 @@ const ConfirmationContext = createContext();
 export function ConfirmationProvider({ children }) {
   const [dialog, setDialog] = useState(null);
 
-  const showConfirmation = useCallback((title, message) => {
+  const showConfirmation = useCallback((title, message, options = {}) => {
     return new Promise((resolve) => {
       setDialog({
         title,
         message,
+        isSingleButton: options.isSingleButton || false,
+        confirmText: options.confirmText || 'Yes',
+        cancelText: options.cancelText || 'No',
         onConfirm: () => {
           setDialog(null);
           resolve(true);
@@ -31,17 +34,19 @@ export function ConfirmationProvider({ children }) {
             <h3 className="text-sm font-semibold text-white mb-2">{dialog.title}</h3>
             <p className="text-xs text-white/60 mb-6">{dialog.message}</p>
             <div className="flex gap-3 justify-end">
-              <button
-                onClick={dialog.onCancel}
-                className="px-5 py-2.5 text-xs font-medium text-white/70 hover:text-white transition-colors"
-              >
-                No
-              </button>
+              {!dialog.isSingleButton && (
+                <button
+                  onClick={dialog.onCancel}
+                  className="px-5 py-2.5 text-xs font-medium text-white/70 hover:text-white transition-colors"
+                >
+                  {dialog.cancelText}
+                </button>
+              )}
               <button
                 onClick={dialog.onConfirm}
                 className="px-5 py-2.5 text-xs font-medium bg-red-600 hover:bg-red-700 text-white rounded transition-colors"
               >
-                Yes
+                {dialog.confirmText}
               </button>
             </div>
           </div>
