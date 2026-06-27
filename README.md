@@ -46,6 +46,9 @@ The system is split into three core layers designed for maximum scalability and 
 
 ```text
 anixo/
+├── online-server/              # 🟢 Socket.IO Server (Online Users Count)
+│   ├── server.js               # Main Socket server
+│   └── package.json            # Dependencies
 ├── api/                        # 🚀 Unified Backend (Python & Node.js)
 │   ├── index.py                # 🐍 Python API (Jikan/AniList Proxy)
 │   ├── user.js                 # 🟢 Node.js Auth & Watchlist Gateway
@@ -73,7 +76,7 @@ anixo/
 │   │   └── TermsOfService.jsx  # Terms & Conditions
 │   ├── components/             # 🧱 UI Building Blocks
 │   │   ├── layout/             # Navbar, Footer, Sidebar
-│   │   ├── common/             # AnimeCard, VideoPlayer, Pagination
+│   │   ├── common/             # AnimeCard, VideoPlayer, Pagination, OnlineUsers
 │   │   ├── auth/               # Login & Registration Components
 │   │   ├── home/               # Featured Content & Carousels
 │   │   └── user/               # Profile & List Components
@@ -205,9 +208,27 @@ To ensure a premium and safe experience, AniXo implements:
 | Command | Description |
 | :--- | :--- |
 | `npm run dev` | Starts the Vite development server for the frontend. |
+| `npm run dev:backend` | Starts the backend core server. |
+| `npm run dev:online` | Starts the Socket.IO server for online users count. |
+| `npm run dev:all` | Starts all servers (frontend, backend, online users) at once. |
 | `npm run build` | Compiles the frontend for production deployment. |
 | `npm run lint` | Runs ESLint to check for code quality and style issues. |
 | `npm run preview` | Previews the production build locally. |
+
+## 🟢 Online Users Server
+
+This is a separate Socket.IO server that tracks real-time online users (registered and guests).
+
+**Setup:**
+```bash
+cd online-server
+npm install
+npm run dev  # Runs on port 7861 by default
+```
+
+**Environment Variables:**
+- `PORT`: Override the default port (optional, default 7861)
+- `VITE_ONLINE_SERVER_URL`: Set this in your main .env file to point to your online server (e.g., http://localhost:7861)
 
 ---
 

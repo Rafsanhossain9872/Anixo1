@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { MessageSquare, Heart, Info, Tv } from "lucide-react";
 import ContactModal from "../common/ContactModal";
 import { AdBanner728x90, AdBanner300x250 } from "../common/AdBanner";
+import OnlineUsers from "../common/OnlineUsers";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -198,7 +199,10 @@ export default function Footer() {
               <Link to="/nsfw" className="ml-2 text-white/10 hover:text-red-600 transition-colors">18+</Link>
             </span>
           </div>
-
+          
+          {/* Online Users */}
+          {location.pathname !== "/" && <OnlineUsers />}
+          
           <p className="text-[10px] md:text-[12px] text-white/40 text-center md:text-right max-w-lg italic select-none animate-[breath_4s_ease-in-out_infinite]">
             Disclaimer: AniXo does not store any files on its server. All contents are provided by non-affiliated third parties.
           </p>
