@@ -158,11 +158,6 @@ export default function PlayerToolbar({
             <p className="text-[9px] lg:text-[10px] text-white/40 font-bold uppercase tracking-[0.2em] mt-1">
               Switch servers if the current link is unstable.
             </p>
-            <div className="mt-2 space-y-1 flex flex-col items-center md:items-start">
-              <p className="text-[9px] lg:text-[10px] text-yellow-500/90 font-medium max-w-[280px] sm:max-w-[300px] leading-relaxed italic text-center md:text-left">
-                Note: If a wrong episode is playing, switch to another server.
-              </p>
-            </div>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-10">
