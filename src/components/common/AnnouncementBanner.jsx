@@ -1,13 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { X, ArrowRight, Crown } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
+import { backendApi } from '../../services/api';
 
 const AnnouncementBanner = () => {
   const { user } = useAuth();
   const [isVisible, setIsVisible] = useState(() => {
     return localStorage.getItem('dismissed_avatar_announcement') !== 'true';
   });
+  const [adminProfile, setAdminProfile] = useState(null);
+
+  useEffect(() => {
+    if (!isVisible) return;
+    const fetchAdmin = async () => {
+      try {
+        const res = await backendApi.get('/users/9b9046b5');
+        if (res.data.success) {
+          setAdminProfile(res.data.profile);
+        }
+      } catch (err) {
+        console.error("Failed to fetch admin profile:", err);
+      }
+    };
+    fetchAdmin();
+  }, [isVisible]);
 
   const handleDismiss = () => {
     localStorage.setItem('dismissed_avatar_announcement', 'true');
@@ -15,6 +32,9 @@ const AnnouncementBanner = () => {
   };
 
   if (!isVisible) return null;
+
+  const adminName = adminProfile?.displayName || adminProfile?.username || "ELfen+JEKOP";
+  const adminAvatar = adminProfile?.avatar || "/avatars/csm/img_1.jpg";
 
   return (
     <div className="w-full max-w-[1500px] mx-auto px-4 md:px-8 mb-6 mt-4 animate-in fade-in duration-300">
@@ -56,19 +76,32 @@ const AnnouncementBanner = () => {
         {/* Info & Avatar Showcase */}
         <div className="flex flex-col md:flex-row items-center gap-6 w-full lg:w-auto text-center md:text-left pl-2">
           
-          {/* Avatar Cards Row */}
-          <div className="flex items-center justify-center gap-2 shrink-0 select-none">
-            <div className="w-12 h-12 rounded-lg border border-zinc-800 overflow-hidden bg-zinc-900 shadow-md transition-all duration-300 hover:scale-110 hover:-rotate-3 hover:border-red-500 cursor-pointer">
-              <img src="/avatars/csm/img_1.jpg" alt="Chainsaw Man" className="w-full h-full object-cover" />
+          {/* Admin Avatar & Small Anime Previews */}
+          <div className="flex items-center gap-3 shrink-0 select-none">
+            {/* Admin DP */}
+            <div className="relative transition-all duration-300 hover:scale-105 hover:rotate-3">
+              <div className="w-14 h-14 rounded-full border-2 border-purple-500/80 overflow-hidden bg-zinc-900 shadow-md">
+                <img src={adminAvatar} alt={adminName} className="w-full h-full object-cover" />
+              </div>
+              <div className="absolute -bottom-1 -right-1 bg-[#121212] border border-zinc-800 rounded-full p-0.5 shadow-md flex items-center justify-center">
+                <Crown size={10} className="text-purple-400" />
+              </div>
             </div>
-            <div className="w-12 h-12 rounded-lg border border-zinc-800 overflow-hidden bg-zinc-900 shadow-md transition-all duration-300 hover:scale-110 hover:rotate-3 hover:border-red-500 cursor-pointer">
-              <img src="/avatars/bleach/img_1.jpg" alt="Bleach" className="w-full h-full object-cover" />
-            </div>
-            <div className="w-12 h-12 rounded-lg border border-zinc-800 overflow-hidden bg-zinc-900 shadow-md transition-all duration-300 hover:scale-110 hover:-rotate-3 hover:border-red-500 cursor-pointer">
-              <img src="/avatars/baruto/img_1.jpg" alt="Boruto" className="w-full h-full object-cover" />
-            </div>
-            <div className="w-12 h-12 rounded-lg border border-zinc-800 flex items-center justify-center bg-zinc-900/60 shadow-md font-bold text-xs text-zinc-500 transition-all duration-300 hover:scale-105 cursor-pointer hover:text-red-500">
-              +50
+
+            {/* Visual Arrow indicator */}
+            <span className="text-zinc-700 hidden sm:inline">➔</span>
+
+            {/* Miniature Anime Avatars */}
+            <div className="hidden sm:flex -space-x-2.5 items-center">
+              <div className="w-9 h-9 rounded-md border border-zinc-800 overflow-hidden bg-zinc-900 shadow-sm transition-transform hover:scale-105">
+                <img src="/avatars/csm/img_1.jpg" alt="CSM" className="w-full h-full object-cover" />
+              </div>
+              <div className="w-9 h-9 rounded-md border border-zinc-800 overflow-hidden bg-zinc-900 shadow-sm transition-transform hover:scale-105">
+                <img src="/avatars/bleach/img_1.jpg" alt="Bleach" className="w-full h-full object-cover" />
+              </div>
+              <div className="w-9 h-9 rounded-md border border-zinc-800 overflow-hidden bg-zinc-900 shadow-sm transition-transform hover:scale-105">
+                <img src="/avatars/baruto/img_1.jpg" alt="Boruto" className="w-full h-full object-cover" />
+              </div>
             </div>
           </div>
 
@@ -84,6 +117,9 @@ const AnnouncementBanner = () => {
               </span>
               <span className="bg-red-600/10 text-red-500 border border-red-500/20 px-2.5 py-0.5 rounded text-[10px] font-black tracking-widest uppercase">
                 New Feature
+              </span>
+              <span className="text-zinc-500 text-xs font-semibold">
+                By <span className="text-purple-400 font-bold hover:underline cursor-pointer">{adminName}</span>
               </span>
             </div>
             <h3 className="text-white font-bold text-lg leading-tight tracking-tight">
