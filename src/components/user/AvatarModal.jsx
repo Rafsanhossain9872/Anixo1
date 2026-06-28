@@ -2,31 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Check } from 'lucide-react';
 
+const getImages = (folder, count) => Array.from({length: count}, (_, i) => `/avatars/${folder}/img_${i + 1}.jpg`);
+
 const AVATAR_DATA = {
-  "Bleach": [
-    "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",
-    "https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka",
-    "https://api.dicebear.com/7.x/avataaars/svg?seed=Aiden",
-    "https://api.dicebear.com/7.x/avataaars/svg?seed=Ichi1",
-    "https://api.dicebear.com/7.x/avataaars/svg?seed=Ichi2"
-  ],
+  "Bleach": getImages('bleach', 23),
   "BleachChibi": [
     "https://api.dicebear.com/7.x/avataaars/svg?seed=Chibi1",
     "https://api.dicebear.com/7.x/avataaars/svg?seed=Chibi2",
     "https://api.dicebear.com/7.x/avataaars/svg?seed=Chibi3",
     "https://api.dicebear.com/7.x/avataaars/svg?seed=Chibi4"
   ],
-  "Boruto": [
-    "https://api.dicebear.com/7.x/avataaars/svg?seed=Boruto1",
-    "https://api.dicebear.com/7.x/avataaars/svg?seed=Boruto2",
-    "https://api.dicebear.com/7.x/avataaars/svg?seed=Boruto3"
-  ],
-  "ChainsawMan": [
-    "https://api.dicebear.com/7.x/avataaars/svg?seed=Caleb",
-    "https://api.dicebear.com/7.x/avataaars/svg?seed=Callie",
-    "https://api.dicebear.com/7.x/avataaars/svg?seed=Makima",
-    "https://api.dicebear.com/7.x/avataaars/svg?seed=Denji"
-  ],
+  "Boruto": getImages('baruto', 17),
+  "ChainsawMan": getImages('csm', 24),
   "DemonSlayer": [
     "https://api.dicebear.com/7.x/avataaars/svg?seed=Tanjiro",
     "https://api.dicebear.com/7.x/avataaars/svg?seed=Nezuko",
@@ -159,7 +146,7 @@ export default function AvatarModal({ isOpen, onClose, onSave, currentAvatar }) 
           </div>
 
           <div className="space-y-4">
-            <div className="grid grid-cols-5 sm:grid-cols-6 gap-3">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
               {filteredAvatars.map((url, index) => (
                 <div
                   key={index}
