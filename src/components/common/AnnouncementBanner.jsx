@@ -13,6 +13,12 @@ const AnnouncementBanner = () => {
 
   useEffect(() => {
     if (!isVisible) return;
+    
+    // If logged-in user is the admin, do not fetch from network
+    if (user && (user.profileId === '9b9046b5' || user.username === 'JEKOP' || user.role === 'admin')) {
+      return;
+    }
+
     const fetchAdmin = async () => {
       try {
         const res = await backendApi.get('/users/9b9046b5');
@@ -24,7 +30,7 @@ const AnnouncementBanner = () => {
       }
     };
     fetchAdmin();
-  }, [isVisible]);
+  }, [isVisible, user]);
 
   const handleDismiss = () => {
     localStorage.setItem('dismissed_avatar_announcement', 'true');
@@ -33,8 +39,10 @@ const AnnouncementBanner = () => {
 
   if (!isVisible) return null;
 
-  const adminName = adminProfile?.displayName || adminProfile?.username || "ELfen+JEKOP";
-  const adminAvatar = adminProfile?.avatar || "/avatars/csm/img_1.jpg";
+  const isAdminLoggedIn = user && (user.profileId === '9b9046b5' || user.username === 'JEKOP' || user.role === 'admin');
+  const activeProfile = isAdminLoggedIn ? user : adminProfile;
+  const adminName = activeProfile?.displayName || activeProfile?.username || "ELfen+JEKOP";
+  const adminAvatar = activeProfile?.avatar || "/avatars/csm/img_1.jpg";
 
   return (
     <div className="w-full max-w-[1500px] mx-auto px-4 md:px-8 mb-6 mt-4 animate-in fade-in duration-300">
