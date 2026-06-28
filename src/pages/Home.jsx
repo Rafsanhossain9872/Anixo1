@@ -17,6 +17,7 @@ import Hero from "../components/home/Hero";
 import AnimeRow from "../components/home/AnimeRow";
 import { useAuth } from "../hooks/useAuth";
 import ShareBanner from "../components/common/ShareBanner";
+import AnnouncementBanner from "../components/common/AnnouncementBanner";
 import { AdNativeBanner } from "../components/common/AdBanner";
 import { AdsterraSmartLinkBanner } from "../components/common/AdsterraSmartLink";
 import Pagination from "../components/common/Pagination";
@@ -154,6 +155,8 @@ export default function Home() {
         <Navbar />
         <h1 className="sr-only">Watch Free Anime Online with Sub & Dub in HD - AniXo</h1>
       <Hero data={trendingData?.media} isLoading={loadingTrending} />
+
+      <AnnouncementBanner />
 
       <ShareBanner />
 
