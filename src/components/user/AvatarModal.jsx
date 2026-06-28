@@ -129,9 +129,9 @@ export default function AvatarModal({ isOpen, onClose, onSave, currentAvatar }) 
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all duration-300 border ${activeCategory === cat
-                    ? 'bg-red-600 border-red-600 text-white shadow-lg shadow-red-600/30'
-                    : 'bg-white/1 border-white/10 text-white hover:bg-white/30'
+                  className={`text-[13px] font-medium transition-colors px-2 py-1 ${activeCategory === cat
+                    ? 'text-red-500'
+                    : 'text-white/50 hover:text-white'
                     }`}
                 >
                   #{cat}
