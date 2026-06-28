@@ -93,6 +93,19 @@ const cache = {
 };
 
 
+// Helper to filter out adult and Rx (Hentai) rated anime from media lists
+function cleanMediaList(media) {
+  if (!media || !Array.isArray(media)) return [];
+  return media.filter(anime => {
+    if (!anime) return false;
+    const isAdult = anime.isAdult === true;
+    const isRxRating = typeof anime.rating === 'string' && anime.rating.includes("Rx");
+    const isRxAgeRating = typeof anime.ageRating === 'string' && anime.ageRating.includes("Rx");
+    const hasHentaiGenre = Array.isArray(anime.genres) && anime.genres.some(g => typeof g === 'string' && g.toLowerCase() === 'hentai');
+    return !isAdult && !isRxRating && !isRxAgeRating && !hasHentaiGenre;
+  });
+}
+
 // Mapper to convert Jikan data to AniList-like structure used by the UI
 function mapJikanToAnilist(j) {
   if (!j) return null;
@@ -130,7 +143,7 @@ async function fetchFromJikan(endpoint, params = {}) {
     const { data } = await axios.get(`${JIKAN_BASE_URL}${endpoint}${query ? `?${query}` : ""}`);
 
     return {
-      media: data.data?.map(mapJikanToAnilist) || [],
+      media: cleanMediaList(data.data?.map(mapJikanToAnilist) || []),
       pageInfo: {
         hasNextPage: data.pagination?.has_next_page || false,
         lastPage: data.pagination?.last_visible_page || 1,
@@ -224,9 +237,16 @@ async function fetchFromAniList(query, variables = {}) {
         if (data.errors && Array.isArray(data.errors)) {
           console.error("AniList GraphQL Errors:", data.errors);
         } else {
-          const result = data.data?.Page || data.Page || data.data || data;
-          if (result && (result.media || result.Page || result.Media)) {
-            return result;
+          let result = data.data?.Page || data.Page || data.data || data;
+          if (result) {
+            if (Array.isArray(result.media)) {
+              result.media = cleanMediaList(result.media);
+            } else if (result.Page && Array.isArray(result.Page.media)) {
+              result.Page.media = cleanMediaList(result.Page.media);
+            }
+            if (result.media || result.Page || result.Media) {
+              return result;
+            }
           }
         }
       }
@@ -245,10 +265,17 @@ async function fetchFromAniList(query, variables = {}) {
         if (data.errors && Array.isArray(data.errors)) {
           console.error("AniList GraphQL Errors:", data.errors);
         } else {
-          const result = data.data?.Page || data.Page || data.data || data;
-          if (result && (result.media || result.Page || result.Media)) {
-            console.info("[AniList] ✓ Direct AniList succeeded");
-            return result;
+          let result = data.data?.Page || data.Page || data.data || data;
+          if (result) {
+            if (Array.isArray(result.media)) {
+              result.media = cleanMediaList(result.media);
+            } else if (result.Page && Array.isArray(result.Page.media)) {
+              result.Page.media = cleanMediaList(result.Page.media);
+            }
+            if (result.media || result.Page || result.Media) {
+              console.info("[AniList] ✓ Direct AniList succeeded");
+              return result;
+            }
           }
         }
       }
@@ -452,7 +479,7 @@ export async function getBrowseAnime(variables) {
     const page = data?.data?.Page || data?.Page;
     if (page?.media?.length > 0) {
       console.info("[Browse] ✓ Local proxy succeeded (AniList)");
-      const result = { media: page.media, pageInfo: page.pageInfo };
+      const result = { media: cleanMediaList(page.media), pageInfo: page.pageInfo };
       cache.set(`browse_${varKey}`, result, CACHE_TTL.BROWSE);
       return result;
     }
@@ -466,7 +493,7 @@ export async function getBrowseAnime(variables) {
     const page = data?.data?.Page;
     if (page?.media?.length > 0) {
       console.info("[Browse] ✓ Direct AniList succeeded");
-      const result = { media: page.media, pageInfo: page.pageInfo };
+      const result = { media: cleanMediaList(page.media), pageInfo: page.pageInfo };
       cache.set(`browse_${varKey}`, result, CACHE_TTL.BROWSE);
       return result;
     }
@@ -478,8 +505,9 @@ export async function getBrowseAnime(variables) {
   try {
     const proxyRes = await fetchFromAniList(BROWSE_QUERY, variables);
     if (proxyRes?.media?.length > 0) {
-      cache.set(`browse_${varKey}`, proxyRes, CACHE_TTL.BROWSE);
-      return proxyRes;
+      const result = { media: cleanMediaList(proxyRes.media), pageInfo: proxyRes.pageInfo };
+      cache.set(`browse_${varKey}`, result, CACHE_TTL.BROWSE);
+      return result;
     }
   } catch (err) {
     console.warn("[Browse] HF proxy failed:", err.message);
@@ -491,7 +519,7 @@ export async function getBrowseAnime(variables) {
     try {
       const directRes = await getBrowseAnimeJikanDirect(variables);
       if (directRes?.media?.length > 0) {
-        const finalRes = { ...directRes, isJikanFallback: true };
+        const finalRes = { ...directRes, media: cleanMediaList(directRes.media), isJikanFallback: true };
         cache.set(`browse_${varKey}`, finalRes, CACHE_TTL.BROWSE);
         return finalRes;
       }
@@ -975,6 +1003,7 @@ function mapJikanBrowseItem(item) {
     averageScore: item.score ? item.score * 10 : null,
     status: item.status === "Currently Airing" ? "RELEASING" : "FINISHED",
     rating: item.rating ? item.rating.split(' - ')[0].trim() : null,
+    isAdult: item.rating?.includes("Rx") || false,
   };
 }
 
@@ -1030,7 +1059,7 @@ function parseJikanResponse(data) {
 
   const pagination = data?.pagination || {};
   return {
-    media: uniqueItems.map(mapJikanBrowseItem),
+    media: cleanMediaList(uniqueItems.map(mapJikanBrowseItem)),
     pageInfo: {
       total: pagination?.items?.total || uniqueItems.length,
       currentPage: pagination?.current_page || 1,
