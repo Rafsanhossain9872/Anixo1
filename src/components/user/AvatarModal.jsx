@@ -6,12 +6,7 @@ const getImages = (folder, count) => Array.from({length: count}, (_, i) => `/ava
 
 const AVATAR_DATA = {
   "Bleach": getImages('bleach', 23),
-  "BleachChibi": [
-    "https://api.dicebear.com/7.x/avataaars/svg?seed=Chibi1",
-    "https://api.dicebear.com/7.x/avataaars/svg?seed=Chibi2",
-    "https://api.dicebear.com/7.x/avataaars/svg?seed=Chibi3",
-    "https://api.dicebear.com/7.x/avataaars/svg?seed=Chibi4"
-  ],
+
   "Boruto": getImages('baruto', 17),
   "ChainsawMan": getImages('csm', 24),
   "DemonSlayer": [

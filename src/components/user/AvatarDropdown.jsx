@@ -24,7 +24,7 @@ export default function AvatarDropdown() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center w-[34px] h-[34px] rounded-full bg-red-600 text-white font-bold tracking-wider text-sm overflow-hidden hover:ring-2 hover:ring-white/20 transition-all shadow-[0_0_15px_rgba(220,38,38,0.3)] ml-1 cursor-pointer"
+        className="flex items-center justify-center w-[34px] h-[34px] rounded-full bg-[#1a1a1a] text-white font-bold tracking-wider text-sm overflow-hidden border-[1.5px] border-white/20 hover:border-white/60 transition-all ml-1 cursor-pointer"
       >
         <img 
           src={user.avatar || `https://ui-avatars.com/api/?name=${user.username || 'U'}&background=random&color=fff`} 
