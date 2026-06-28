@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Zap, X, ArrowRight, RefreshCw } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -34,20 +34,7 @@ export default function Home() {
 
   // Pagination States
   const [seasonPage, setSeasonPage] = useState(1);
-  const [showAnnouncement, setShowAnnouncement] = useState(false);
 
-  useEffect(() => {
-    const hasSeen = localStorage.getItem('announcement_sync_v1');
-    if (!hasSeen) {
-      const timer = setTimeout(() => setShowAnnouncement(true), 2000);
-      return () => clearTimeout(timer);
-    }
-  }, []);
-
-  const closeAnnouncement = () => {
-    localStorage.setItem('announcement_sync_v1', 'true');
-    setShowAnnouncement(false);
-  };
 
   // Helper to scroll to top of section when page changes
   const scrollToSection = (id) => {
@@ -245,47 +232,7 @@ export default function Home() {
       <Footer />
       </div>
 
-      {/* Feature Announcement Modal */}
-      {showAnnouncement && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center px-4 overflow-hidden">
-          <div 
-            className="absolute inset-0 bg-black/80 backdrop-blur-md animate-in fade-in duration-500"
-            onClick={closeAnnouncement}
-          />
-          <div className="relative bg-[#0d0d0d] border border-white/15 rounded-3xl p-8 max-w-[360px] w-full shadow-2xl text-center">
-            {/* AniList Logo Icon */}
-            <div className="w-16 h-16 bg-[#02A9FF]/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-[#02A9FF]/20">
-              <img 
-                src="https://anilist.co/img/icons/icon.svg" 
-                alt="AniList" 
-                className="w-10 h-10" 
-              />
-            </div>
 
-            <h2 className="text-xl font-bold text-white mb-3">{t('home.syncAnilistLibrary')}</h2>
-            <p className="text-white/40 text-[13px] mb-8 leading-relaxed">
-              {t('home.importProgress')}
-            </p>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col gap-3">
-              <Link 
-                to={!user ? "/home?login=true" : (user?.anilist?.username ? "/watching" : "/settings")} 
-                onClick={closeAnnouncement}
-                className="w-full bg-[#02A9FF] hover:bg-[#0095e0] text-white font-bold py-3.5 rounded-xl text-[12px] transition-all active:scale-95 flex items-center justify-center gap-2"
-              >
-                {!user ? t('home.signInToSync') : (user?.anilist?.username ? t('home.goToSync') : t('home.connectAnilist'))} <ArrowRight size={14} />
-              </Link>
-              <button 
-                onClick={closeAnnouncement}
-                className="w-full text-white/30 hover:text-white font-bold py-2 text-[11px] transition-all"
-              >
-                {t('home.maybeLater')}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
