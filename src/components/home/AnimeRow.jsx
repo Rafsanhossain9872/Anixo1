@@ -4,7 +4,8 @@ import AnimeCard from "../common/AnimeCard";
 import SkeletonCard from "../common/SkeletonCard";
 import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
 
-export default function AnimeRow({ title, data, isLoading, limit = 6, tabs = [], activeTab = "", onTabChange, onRemove, isScrollable = false, viewAllLink = "", CardComponent = AnimeCard }) {
+export default function AnimeRow({ title, data, isLoading, limit = 6, tabs = [], activeTab = "", onTabChange, onRemove, isScrollable = false, viewAllLink = "", CardComponent = AnimeCard, headerAction }) {
+  const Card = CardComponent;
   const hasData = data && data.length > 0;
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -47,6 +48,7 @@ export default function AnimeRow({ title, data, isLoading, limit = 6, tabs = [],
             <h2 className="text-xl md:text-2xl font-bold text-white uppercase leading-none tracking-tighter text-center md:text-left">
               {title}
             </h2>
+            {headerAction}
           </div>
 
           {/* Categories / Tabs (Responsive Alignment) */}
@@ -158,7 +160,7 @@ export default function AnimeRow({ title, data, isLoading, limit = 6, tabs = [],
                 ? 'w-[160px] md:w-[200px]' 
                 : (i >= 20 ? 'hidden sm:block' : 'block')
               }`}>
-                <CardComponent anime={anime} />
+                <Card anime={anime} />
                 {onRemove && (
                   <button
                     onClick={(e) => {

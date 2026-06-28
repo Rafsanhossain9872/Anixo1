@@ -69,64 +69,38 @@ const AnnouncementBanner = () => {
         }
       `}</style>
       <div className="relative overflow-hidden bg-[#121212] border border-zinc-800 rounded-xl p-5 flex flex-col lg:flex-row items-center justify-between gap-6 transition-all duration-300 animate-banner-shake-glow hover:border-red-500/20">
-        
+
         {/* Left Accent Bar */}
         <div className="absolute left-0 top-0 bottom-0 w-[4px] bg-red-600"></div>
 
         {/* Info & Avatar Showcase */}
-        <div className="flex flex-col md:flex-row items-center gap-6 w-full lg:w-auto text-center md:text-left pl-2">
-          
-          {/* Admin Avatar & Small Anime Previews */}
-          <div className="flex items-center gap-3 shrink-0 select-none">
-            {/* Admin DP */}
-            <div className="relative transition-all duration-300 hover:scale-105 hover:rotate-3">
-              <div className="w-14 h-14 rounded-full border-2 border-purple-500/80 overflow-hidden bg-zinc-900 shadow-md">
-                <img src={adminAvatar} alt={adminName} className="w-full h-full object-cover" />
-              </div>
-              <div className="absolute -bottom-1 -right-1 bg-[#121212] border border-zinc-800 rounded-full p-0.5 shadow-md flex items-center justify-center">
-                <Crown size={10} className="text-purple-400" />
-              </div>
+        <div className="flex flex-col md:flex-row items-center gap-5 w-full lg:w-auto text-center md:text-left pl-2">
+
+          {/* Admin DP */}
+          <div className="relative shrink-0 select-none transition-all duration-300 hover:scale-105">
+            <div className="w-13 h-13 rounded-full border-2 border-purple-500/80 overflow-hidden bg-zinc-900 shadow-md">
+              <img src={adminAvatar} alt={adminName} className="w-full h-full object-cover" />
             </div>
-
-            {/* Visual Arrow indicator */}
-            <span className="text-zinc-700 hidden sm:inline">➔</span>
-
-            {/* Miniature Anime Avatars */}
-            <div className="hidden sm:flex -space-x-2.5 items-center">
-              <div className="w-9 h-9 rounded-md border border-zinc-800 overflow-hidden bg-zinc-900 shadow-sm transition-transform hover:scale-105">
-                <img src="/avatars/csm/img_1.jpg" alt="CSM" className="w-full h-full object-cover" />
-              </div>
-              <div className="w-9 h-9 rounded-md border border-zinc-800 overflow-hidden bg-zinc-900 shadow-sm transition-transform hover:scale-105">
-                <img src="/avatars/bleach/img_1.jpg" alt="Bleach" className="w-full h-full object-cover" />
-              </div>
-              <div className="w-9 h-9 rounded-md border border-zinc-800 overflow-hidden bg-zinc-900 shadow-sm transition-transform hover:scale-105">
-                <img src="/avatars/baruto/img_1.jpg" alt="Boruto" className="w-full h-full object-cover" />
-              </div>
+            <div className="absolute -bottom-1 -right-1 bg-[#121212] border border-zinc-800 rounded-full p-0.5 shadow-md flex items-center justify-center">
+              <Crown size={9} className="text-purple-400" />
             </div>
           </div>
 
           <div className="flex-1">
-            <div className="flex items-center justify-center md:justify-start gap-2 mb-1.5 flex-wrap">
-              <span className="relative flex h-2 w-2 mr-0.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-              </span>
-              <span className="bg-purple-600/10 text-purple-400 border border-purple-500/20 px-2.5 py-0.5 rounded text-[10px] font-black tracking-widest uppercase flex items-center gap-1.5 shadow-sm">
-                <Crown size={12} className="text-purple-400 animate-pulse" />
+            <div className="flex items-center justify-center md:justify-start gap-2 mb-1 flex-wrap">
+              <span className="bg-purple-600/10 text-purple-400 border border-purple-500/20 px-2 py-0.5 rounded text-[9px] font-bold tracking-widest uppercase flex items-center gap-1">
+                <Crown size={10} className="text-purple-400 animate-pulse" />
                 Admin Update
               </span>
-              <span className="bg-red-600/10 text-red-500 border border-red-500/20 px-2.5 py-0.5 rounded text-[10px] font-black tracking-widest uppercase">
-                New Feature
-              </span>
               <span className="text-zinc-500 text-xs font-semibold">
-                By <span className="text-purple-400 font-bold hover:underline cursor-pointer">{adminName}</span>
+                By <span className="text-zinc-300 font-bold">{adminName}</span>
               </span>
             </div>
-            <h3 className="text-white font-bold text-lg leading-tight tracking-tight">
+            <h3 className="text-white font-bold text-[17px] leading-tight tracking-tight">
               Profile Avatars are now live!
             </h3>
-            <p className="text-zinc-400 text-sm mt-1 max-w-[650px] leading-relaxed">
-              Hey guys! I've added the option to customize your profile with custom avatars. I've only uploaded a few starter packs (Chainsaw Man, Bleach, Boruto, etc.) for now, but I will be adding many more categories soon! Head over to your profile settings to choose yours.
+            <p className="text-zinc-400 text-[13.5px] mt-0.5 max-w-[620px] leading-relaxed">
+              I've added custom avatars (Chainsaw Man, Bleach, Boruto, and more) to customize your profile! More packs are coming soon. Go set yours in profile settings!
             </p>
           </div>
         </div>
@@ -140,7 +114,7 @@ const AnnouncementBanner = () => {
             <span>{user ? "Choose Avatar" : "Login to Choose"}</span>
             <ArrowRight size={14} />
           </Link>
-          
+
           <button
             onClick={handleDismiss}
             aria-label="Dismiss announcement"

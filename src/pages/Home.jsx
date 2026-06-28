@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Zap, X, ArrowRight, RefreshCw } from "lucide-react";
+import { Zap, X, ArrowRight, RefreshCw, Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
@@ -35,6 +35,17 @@ export default function Home() {
 
   // Pagination States
   const [seasonPage, setSeasonPage] = useState(1);
+
+  // Toggle Continue Watching
+  const [showContinueWatching, setShowContinueWatching] = useState(() => {
+    return localStorage.getItem("show_continue_watching") !== "false";
+  });
+
+  const toggleContinueWatching = () => {
+    const nextVal = !showContinueWatching;
+    setShowContinueWatching(nextVal);
+    localStorage.setItem("show_continue_watching", String(nextVal));
+  };
 
 
   // Helper to scroll to top of section when page changes
@@ -163,25 +174,56 @@ export default function Home() {
       {/* Continue Watching */}
       {globalProgress && globalProgress.length > 0 && (
         <div id="continue-watching" className="pt-8 md:pt-6">
-          <AnimeRow
-            title={t('continueWatching.title').toUpperCase()}
-            data={globalProgress.map(p => ({
-              id: p.animeId,
-              animeId: p.animeId,
-              anilistId: p.anilistId,
-              title: { english: p.title },
-              coverImage: { large: p.coverImage },
-              episode: p.episode,
-              currentTime: p.currentTime,
-              duration: p.duration,
-              isProgress: true
-            }))}
-            isLoading={false}
-            isScrollable={true}
-            onRemove={user ? handleRemoveProgress : undefined}
-            viewAllLink="/watching"
-            CardComponent={ProgressAnimeCard}
-          />
+          {showContinueWatching ? (
+            <AnimeRow
+              title={t('continueWatching.title').toUpperCase()}
+              data={globalProgress.map(p => ({
+                id: p.animeId,
+                animeId: p.animeId,
+                anilistId: p.anilistId,
+                title: { english: p.title },
+                coverImage: { large: p.coverImage },
+                episode: p.episode,
+                currentTime: p.currentTime,
+                duration: p.duration,
+                isProgress: true
+              }))}
+              isLoading={false}
+              isScrollable={true}
+              onRemove={user ? handleRemoveProgress : undefined}
+              viewAllLink="/watching"
+              CardComponent={ProgressAnimeCard}
+              headerAction={
+                <button
+                  onClick={toggleContinueWatching}
+                  className="p-1 hover:bg-white/10 rounded transition-all text-white/40 hover:text-white cursor-pointer flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider"
+                  title="Hide Section"
+                >
+                  <Eye size={15} />
+                  <span className="hidden sm:inline">On</span>
+                </button>
+              }
+            />
+          ) : (
+            <section className="mt-8 max-w-[1720px] mx-auto px-2 md:px-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-[3.5px] h-6 bg-white/20 rounded-full" />
+                  <h2 className="text-xl md:text-2xl font-bold text-white/30 uppercase leading-none tracking-tighter">
+                    {t('continueWatching.title').toUpperCase()}
+                  </h2>
+                  <button
+                    onClick={toggleContinueWatching}
+                    className="p-1 hover:bg-white/10 rounded transition-all text-white/35 hover:text-white cursor-pointer flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider"
+                    title="Show Section"
+                  >
+                    <EyeOff size={15} />
+                    <span className="hidden sm:inline">Off</span>
+                  </button>
+                </div>
+              </div>
+            </section>
+          )}
         </div>
       )}
 
