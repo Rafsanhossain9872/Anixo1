@@ -1,11 +1,17 @@
 import { Server } from 'socket.io';
 import http from 'http';
 import cors from 'cors';
+import express from 'express';
 
 const PORT = process.env.PORT || 7861;
 
+// Create Express app for HTTP endpoints
+const app = express();
+app.use(cors());
+app.use(express.json());
+
 // Create HTTP server
-const server = http.createServer();
+const server = http.createServer(app);
 
 // Setup Socket.io
 const io = new Server(server, {
@@ -87,6 +93,57 @@ function broadcastCounts() {
     socket.emit('online-count', getCountsForUser(isAdmin));
   });
 }
+
+// HTTP endpoint to update user profile (called by backend core)
+app.post('/update-user', (req, res) => {
+  try {
+    const { username, displayName, avatar, profileId } = req.body;
+    
+    if (!username) {
+      return res.status(400).json({ success: false, message: 'Username is required' });
+    }
+
+    let updated = false;
+
+    // Update in registered users
+    for (const [socketId, userData] of onlineUsers.registered.entries()) {
+      if (userData.username === username) {
+        onlineUsers.registered.set(socketId, {
+          ...userData,
+          displayName: displayName || userData.displayName,
+          avatar: avatar || userData.avatar,
+          profileId: profileId || userData.profileId
+        });
+        updated = true;
+      }
+    }
+
+    // Update in admins
+    for (const [socketId, userData] of onlineUsers.admins.entries()) {
+      if (userData.username === username) {
+        onlineUsers.admins.set(socketId, {
+          ...userData,
+          displayName: displayName || userData.displayName,
+          avatar: avatar || userData.avatar,
+          profileId: profileId || userData.profileId
+        });
+        updated = true;
+      }
+    }
+
+    if (updated) {
+      // Broadcast updated user list to everyone
+      io.emit('user-updated', { username, displayName, avatar, profileId });
+      broadcastCounts();
+      res.json({ success: true, message: 'User updated successfully' });
+    } else {
+      res.status(404).json({ success: false, message: 'User not found online' });
+    }
+  } catch (error) {
+    console.error('UPDATE USER ERROR:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
 
 io.on('connection', (socket) => {
   console.log(`New user connected: ${socket.id}`);

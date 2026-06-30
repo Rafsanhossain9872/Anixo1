@@ -8,6 +8,19 @@ import crypto from 'crypto';
 import process from 'node:process';
 import sendEmail from '../utils/sendEmail.js';
 
+// Helper function to update user in online server
+const updateUserInOnlineServer = async (userData) => {
+  try {
+    const onlineServerUrl = process.env.ONLINE_SERVER_URL || 'http://localhost:7861';
+    await axios.post(`${onlineServerUrl}/update-user`, userData, {
+      timeout: 5000 // Don't wait too long for online server
+    });
+  } catch (error) {
+    // Non-blocking error: just log it, don't fail the main request
+    console.error('Failed to update user in online server:', error.message);
+  }
+};
+
 
 
 // Generate JWT Token
@@ -231,6 +244,14 @@ export const updateMe = async (req, res) => {
         console.error("Failed to sync profile updates to other collections:", updateErr);
       }
     }
+
+    // Update user in online server (non-blocking)
+    updateUserInOnlineServer({
+      username: user.username,
+      displayName: user.displayName,
+      avatar: user.avatar,
+      profileId: user.profileId
+    });
 
     res.json({
       success: true,
@@ -561,21 +582,32 @@ export const anilistCallback = async (req, res) => {
       }
     });
 
-    if (oldUser && newAvatar && newAvatar !== oldUser.avatar) {
+    // Get updated user data
+    const updatedUser = await User.findById(userId);
+    
+    if (oldUser && (newAvatar || updatedUser.displayName)) {
       try {
         await mongoose.connection.db.collection('realtimecomments').updateMany(
           { 'user.username': oldUser.username },
-          { $set: { 'user.avatar': newAvatar } }
+          { $set: { 'user.avatar': newAvatar || oldUser.avatar, 'user.displayName': updatedUser.displayName || oldUser.displayName } }
         );
         await mongoose.connection.db.collection('realtimecomments').updateMany(
           { 'replies.user.username': oldUser.username },
-          { $set: { 'replies.$[elem].user.avatar': newAvatar } },
+          { $set: { 'replies.$[elem].user.avatar': newAvatar || oldUser.avatar, 'replies.$[elem].user.displayName': updatedUser.displayName || oldUser.displayName } },
           { arrayFilters: [{ 'elem.user.username': oldUser.username }] }
         );
       } catch (err) {
         console.error("Failed to sync comments avatar on AniList connect:", err);
       }
     }
+
+    // Update user in online server (non-blocking)
+    updateUserInOnlineServer({
+      username: updatedUser.username,
+      displayName: updatedUser.displayName,
+      avatar: newAvatar || updatedUser.avatar,
+      profileId: updatedUser.profileId
+    });
 
     // 4. Redirect back to frontend
     res.redirect(`${frontendUrl}/settings?success=anilist_connected`);

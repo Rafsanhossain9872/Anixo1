@@ -110,8 +110,8 @@ export default function Profile() {
       setIsSaving(true);
       const res = await updateMe({ avatar: newAvatarUrl });
       if (res.success) {
+        updateUser(res.user);
         triggerAuthToast(t('profile.avatarUpdated'));
-        window.location.reload(); 
       }
     } catch (error) {
       alert(error?.response?.data?.message || t('profile.avatarUpdateFailed'));

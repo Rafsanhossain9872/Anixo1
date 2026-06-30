@@ -55,6 +55,26 @@ export default function Admin() {
       setOnlineStats(stats);
     });
 
+    socket.on('user-updated', (updatedUser) => {
+      setOnlineStats(prevStats => {
+        const updatedUsers = prevStats.users.map(user => {
+          if (user.username === updatedUser.username) {
+            return {
+              ...user,
+              displayName: updatedUser.displayName || user.displayName,
+              avatar: updatedUser.avatar || user.avatar,
+              profileId: updatedUser.profileId || user.profileId
+            };
+          }
+          return user;
+        });
+        return {
+          ...prevStats,
+          users: updatedUsers
+        };
+      });
+    });
+
     return () => {
       socket.disconnect();
     };
