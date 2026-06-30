@@ -88,65 +88,65 @@ const OnlineUsers = () => {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-[#111] border-t sm:border border-white/10 rounded-t-2xl sm:rounded-2xl p-4 sm:p-6 max-w-2xl w-full max-h-[85vh] sm:max-h-[90vh] overflow-y-auto relative">
-            {/* Close button - larger on mobile */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-[#111] border border-white/10 rounded-2xl p-4 max-w-2xl w-full max-h-[80vh] overflow-y-auto relative">
+            {/* Close button */}
             <button 
               onClick={() => setIsModalOpen(false)} 
-              className="absolute top-4 right-4 text-white/70 hover:text-white transition"
+              className="absolute top-3 right-3 text-white/50 hover:text-white transition"
             >
-              <X size={24} />
+              <X size={18} />
             </button>
             
-            <h2 className="text-xl font-bold text-white mb-5 flex items-center gap-2">
-              <Users size={22} className="text-red-500" />
+            <h2 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+              <Users size={20} className="text-red-500" />
               Online Users
             </h2>
 
-            <div className="space-y-3">
-              {/* Count cards - slightly bigger on mobile */}
-              <div className="flex items-center justify-between p-4 bg-[#0a0a0a] rounded-lg border border-white/10">
-                <div className="flex items-center gap-3">
-                  <Users size={20} className="text-green-400" />
-                  <span className="text-sm sm:text-base text-white/70">Total Online</span>
+            <div className="space-y-2">
+              {/* Count cards - compact */}
+              <div className="flex items-center justify-between p-2.5 bg-[#0a0a0a] rounded-lg border border-white/10">
+                <div className="flex items-center gap-2">
+                  <Users size={14} className="text-green-400" />
+                  <span className="text-xs text-white/70">Total</span>
                 </div>
-                <span className="text-2xl font-bold text-white">{onlineStats.total}</span>
+                <span className="text-lg font-bold text-white">{onlineStats.total}</span>
               </div>
 
-              <div className="flex items-center justify-between p-4 bg-[#0a0a0a] rounded-lg border border-white/10">
-                <div className="flex items-center gap-3">
-                  <User size={20} className="text-red-400" />
-                  <span className="text-sm sm:text-base text-white/70">Registered</span>
+              <div className="flex items-center justify-between p-2.5 bg-[#0a0a0a] rounded-lg border border-white/10">
+                <div className="flex items-center gap-2">
+                  <User size={14} className="text-red-400" />
+                  <span className="text-xs text-white/70">Registered</span>
                 </div>
-                <span className="text-2xl font-bold text-white">{onlineStats.registered}</span>
+                <span className="text-lg font-bold text-white">{onlineStats.registered}</span>
               </div>
 
-              <div className="flex items-center justify-between p-4 bg-[#0a0a0a] rounded-lg border border-white/10">
-                <div className="flex items-center gap-3">
-                  <User size={20} className="text-white/50" />
-                  <span className="text-sm sm:text-base text-white/70">Guests</span>
+              <div className="flex items-center justify-between p-2.5 bg-[#0a0a0a] rounded-lg border border-white/10">
+                <div className="flex items-center gap-2">
+                  <User size={14} className="text-white/50" />
+                  <span className="text-xs text-white/70">Guests</span>
                 </div>
-                <span className="text-2xl font-bold text-white">{onlineStats.guests}</span>
+                <span className="text-lg font-bold text-white">{onlineStats.guests}</span>
               </div>
 
               {/* Registered Users Online (visible to everyone) */}
               {onlineStats.users?.length > 0 ? (
-                <div className="mt-4 space-y-4">
-                  <h3 className="text-base sm:text-lg font-medium text-white flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse" />
+                <div className="mt-3 space-y-3">
+                  <h3 className="text-xs font-medium text-white flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse" />
                     Registered Users Online ({onlineStats.users.length})
                   </h3>
                   {/* 1 column on mobile, 2 on desktop */}
-                  <div className="max-h-[50vh] sm:max-h-80 overflow-y-auto space-y-3 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
+                  <div className="max-h-[50vh] overflow-y-auto space-y-2 md:grid md:grid-cols-2 md:gap-2 md:space-y-0">
                     {onlineStats.users.map((onlineUser, index) => (
                       <Link
                         key={index}
                         to={`/user/${onlineUser.profileId || onlineUser.username}`}
                         onClick={() => setIsModalOpen(false)}
-                        className="flex items-center gap-3 p-4 rounded-lg bg-[#0a0a0a] border border-[#2a2a2a] transition-all hover:bg-[#151515] hover:border-white/20 cursor-pointer active:scale-[0.98]"
+                        className="flex items-center gap-2 p-2.5 rounded-lg bg-[#0a0a0a] border border-[#2a2a2a] transition-all hover:bg-[#151515] hover:border-white/20 cursor-pointer"
                       >
-                        {/* Larger avatar on mobile */}
-                        <div className="w-12 h-12 rounded-full overflow-hidden bg-[#2a2a2a] flex-shrink-0">
+                        {/* Compact avatar */}
+                        <div className="w-8 h-8 rounded-full overflow-hidden bg-[#2a2a2a] flex-shrink-0">
                           {onlineUser.avatar ? (
                             <img
                               src={onlineUser.avatar}
@@ -154,40 +154,40 @@ const OnlineUsers = () => {
                               className="w-full h-full object-cover"
                             />
                           ) : (
-                            <div className="w-full h-full flex items-center justify-center text-white/60 font-bold text-xl">
+                            <div className="w-full h-full flex items-center justify-center text-white/60 font-bold text-sm">
                               {(onlineUser.displayName || onlineUser.username)[0].toUpperCase()}
                             </div>
                           )}
                         </div>
 
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <h3 className="text-base font-medium text-white truncate">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <h3 className="text-xs font-medium text-white truncate">
                               {onlineUser.displayName || onlineUser.username}
                             </h3>
                             {onlineUser.isAdmin && (
-                              <div className="flex items-center gap-1 text-purple-500">
-                                <Crown size={12} />
-                                <span className="text-[10px] uppercase font-bold">Admin</span>
+                              <div className="flex items-center gap-0.5 text-purple-500">
+                                <Crown size={8} />
+                                <span className="text-[8px] uppercase font-bold">Admin</span>
                               </div>
                             )}
                           </div>
-                          <p className="text-sm text-white/40 truncate">
+                          <p className="text-[10px] text-white/40 truncate">
                             @{onlineUser.username}
                           </p>
                         </div>
 
-                        <div className="flex items-center gap-2">
-                          <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
-                          <span className="text-xs text-white/40">Online</span>
+                        <div className="flex items-center gap-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                          <span className="text-[10px] text-white/40 hidden sm:inline">Online</span>
                         </div>
                       </Link>
                     ))}
                   </div>
                 </div>
               ) : (
-                <div className="mt-6 text-center py-12">
-                  <p className="text-white/40 text-sm sm:text-base">No registered users online right now</p>
+                <div className="mt-4 text-center py-8">
+                  <p className="text-white/40 text-xs">No registered users online right now</p>
                 </div>
               )}
             </div>
