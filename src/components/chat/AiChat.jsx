@@ -183,14 +183,6 @@ const AiChat = () => {
     scrollToBottom();
   }, [messages, isLoading]);
 
-  // Set initial position when chat opens
-  useEffect(() => {
-    if (isOpen && !isExpanded && chatWindowRef.current) {
-      const rect = chatWindowRef.current.getBoundingClientRect();
-      setPosition({ x: rect.left, y: rect.top });
-    }
-  }, [isOpen, isExpanded]);
-
   // Drag handlers
   const handleMouseDown = (e) => {
     if (isExpanded) return;
@@ -215,39 +207,20 @@ const AiChat = () => {
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      if (!isDragging || !chatWindowRef.current) return;
-      
-      const rect = chatWindowRef.current.getBoundingClientRect();
-      const maxX = window.innerWidth - rect.width;
-      const maxY = window.innerHeight - rect.height;
-      
-      let newX = e.clientX - dragOffset.x;
-      let newY = e.clientY - dragOffset.y;
-      
-      // Boundary checks
-      newX = Math.max(0, Math.min(newX, maxX));
-      newY = Math.max(0, Math.min(newY, maxY));
-      
-      setPosition({ x: newX, y: newY });
+      if (!isDragging) return;
+      setPosition({
+        x: e.clientX - dragOffset.x,
+        y: e.clientY - dragOffset.y
+      });
     };
 
     const handleTouchMove = (e) => {
-      if (!isDragging || !chatWindowRef.current) return;
-      e.preventDefault();
-      
+      if (!isDragging) return;
       const touch = e.touches[0];
-      const rect = chatWindowRef.current.getBoundingClientRect();
-      const maxX = window.innerWidth - rect.width;
-      const maxY = window.innerHeight - rect.height;
-      
-      let newX = touch.clientX - dragOffset.x;
-      let newY = touch.clientY - dragOffset.y;
-      
-      // Boundary checks
-      newX = Math.max(0, Math.min(newX, maxX));
-      newY = Math.max(0, Math.min(newY, maxY));
-      
-      setPosition({ x: newX, y: newY });
+      setPosition({
+        x: touch.clientX - dragOffset.x,
+        y: touch.clientY - dragOffset.y
+      });
     };
 
     const handleMouseUp = () => {
