@@ -93,10 +93,23 @@ export const login = async (req, res) => {
 
 
     // Check for user email
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email });
 
     if (user && (await user.matchPassword(password))) {
       user.lastActive = Date.now();
+      
+      // Generate profileId if it's missing
+      if (!user.profileId) {
+        let generatedId;
+        let isUnique = false;
+        while (!isUnique) {
+          generatedId = crypto.randomBytes(4).toString('hex');
+          const existing = await User.findOne({ profileId: generatedId });
+          isUnique = !existing;
+        }
+        user.profileId = generatedId;
+      }
+      
       await user.save();
 
       res.json({
@@ -126,10 +139,23 @@ export const login = async (req, res) => {
 // @desc    Get current user profile
 export const getMe = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    let user = await User.findById(req.user.id).select('-password');
     if (!user) {
       res.status(404);
       throw new Error('User not found');
+    }
+
+    // Generate profileId if it's missing
+    if (!user.profileId) {
+      let generatedId;
+      let isUnique = false;
+      while (!isUnique) {
+        generatedId = crypto.randomBytes(4).toString('hex');
+        const existing = await User.findOne({ profileId: generatedId });
+        isUnique = !existing;
+      }
+      user.profileId = generatedId;
+      await user.save();
     }
 
     res.json({

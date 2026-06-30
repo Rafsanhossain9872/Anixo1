@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -80,6 +81,18 @@ const userSchema = new mongoose.Schema({
 
 // Hash password before saving
 userSchema.pre('save', async function(next) {
+  // Generate profileId if it's missing
+  if (!this.profileId) {
+    let generatedId;
+    let isUnique = false;
+    while (!isUnique) {
+      generatedId = crypto.randomBytes(4).toString('hex');
+      const existing = await mongoose.models.User.findOne({ profileId: generatedId });
+      isUnique = !existing;
+    }
+    this.profileId = generatedId;
+  }
+  
   if (!this.isModified('password')) {
     return next();
   }
