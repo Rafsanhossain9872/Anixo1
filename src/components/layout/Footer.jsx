@@ -24,7 +24,7 @@ export default function Footer() {
     {
       title: "Community",
       links: [
-        { name: "Discord", path: "https://discord.com", icon: MessageSquare },
+        { name: "Discord", path: "https://discord.com/users/@seiji0x", icon: MessageSquare },
         { name: "Reddit", path: "https://reddit.com", icon: Heart },
       ],
     },
