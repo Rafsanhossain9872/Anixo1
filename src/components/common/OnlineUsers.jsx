@@ -11,6 +11,35 @@ const OnlineUsers = () => {
   const { user } = useAuth();
   const socketRef = useRef(null);
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+    const scrollY = window.scrollY;
+    
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.position = 'fixed';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+    }
+    
+    return () => {
+      document.body.style.overflow = originalBodyOverflow;
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      
+      if (isModalOpen) {
+        window.scrollTo(0, scrollY);
+      }
+    };
+  }, [isModalOpen]);
+
   useEffect(() => {
     // Connect to online server
     const socket = io(import.meta.env.VITE_ONLINE_SERVER_URL || 'http://localhost:7861');
@@ -89,7 +118,7 @@ const OnlineUsers = () => {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-[#111] border border-white/10 rounded-2xl p-4 max-w-2xl w-full max-h-[80vh] overflow-y-auto relative">
+          <div className="bg-[#111] border border-white/10 rounded-2xl p-4 max-w-2xl w-full max-h-[80vh] overflow-y-auto relative overscroll-behavior-contain">
             {/* Close button */}
             <button 
               onClick={() => setIsModalOpen(false)} 
