@@ -52,6 +52,7 @@ export const getPublicProfile = async (req, res) => {
         profileId: user.profileId,
         displayName: user.displayName,
         avatar: user.avatar,
+        role: user.role,
         createdAt: user.createdAt,
         anilistConnected: !!(user.anilist && user.anilist.id),
         banUntil: user.banUntil,

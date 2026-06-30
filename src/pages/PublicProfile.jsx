@@ -4,7 +4,7 @@ import { backendApi } from "../services/api";
 import axios from "axios";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
-import { User, Calendar, PlayCircle, Clock, Heart, Eye, Tv, MessageCircle, Ban } from "lucide-react";
+import { User, Calendar, PlayCircle, Clock, Heart, Eye, Tv, MessageCircle, Ban, Crown, Shield } from "lucide-react";
 
 export default function PublicProfile() {
   const { profileId } = useParams();
@@ -156,24 +156,36 @@ export default function PublicProfile() {
 
         {/* Profile Info */}
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 relative -mt-12 sm:-mt-16 md:-mt-20 z-10">
-          <div className="flex flex-col items-center md:flex-row md:items-end gap-3 sm:gap-5 pb-4 sm:pb-6 border-b border-white/15">
+          <div className="flex flex-col items-center gap-3 sm:gap-5 pb-4 sm:pb-6 border-b border-white/15">
             {/* Avatar */}
-            <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-full border-[3px] sm:border-4 border-[#0a0a0a] overflow-hidden bg-neutral-800 shrink-0 shadow-2xl ring-2 ring-white/10">
-              <img 
-                src={profile.avatar || `https://ui-avatars.com/api/?name=${profile.username}&background=random`} 
-                alt={profile.username} 
-                className="w-full h-full object-cover" 
-              />
+            <div className="relative">
+              <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 rounded-full border-[3px] sm:border-4 border-[#0a0a0a] overflow-hidden bg-neutral-800 shrink-0 shadow-2xl ring-2 ring-white/10">
+                <img 
+                  src={profile.avatar || `https://ui-avatars.com/api/?name=${profile.username}&background=random`} 
+                  alt={profile.username} 
+                  className="w-full h-full object-cover" 
+                />
+              </div>
+              {/* Crown for Admin/Mod */}
+              {(profile.role === 'admin' || profile.role === 'moderator') && (
+                <div className={`absolute -top-1 -right-1 p-1 rounded-full shadow-lg ${
+                  profile.role === 'admin' ? 'bg-purple-600' : 'bg-red-600'
+                } border-2 border-[#0a0a0a]`}>
+                  {profile.role === 'admin' ? (
+                    <Crown size={14} fill="currentColor" />
+                  ) : (
+                    <Shield size={14} fill="currentColor" />
+                  )}
+                </div>
+              )}
             </div>
             
             {/* Name & Meta */}
-            <div className="flex-1 text-center md:text-left mb-1 md:mb-3">
+            <div className="flex-1 text-center mb-1 md:mb-3">
               <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black tracking-tight text-white mb-0.5 sm:mb-1 flex items-center flex-wrap gap-2">
                 {profile.displayName || profile.profileId || profile.username}
                 {profile.profileId === 'c34e7bbb' && (
-                  <>
-                    <span className="px-2 py-0.5 bg-rose-600 text-white text-[10px] md:text-[12px] font-black uppercase tracking-wider rounded border border-rose-500/50 shadow-[0_0_10px_rgba(225,29,72,0.5)] leading-none mt-1">RANDI KA BACCHA</span>
-                  </>
+                  <span className="px-2 py-0.5 bg-rose-600 text-white text-[10px] md:text-[12px] font-black uppercase tracking-wider rounded border border-rose-500/50 shadow-[0_0_10px_rgba(225,29,72,0.5)] leading-none mt-1">RANDI KA BACCHA</span>
                 )}
               </h1>
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 sm:gap-3 text-white/50 text-[11px] sm:text-xs font-medium">

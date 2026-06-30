@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import Navbar from "../components/layout/Navbar";
 import { useAuth } from "../hooks/useAuth";
 import { updateMe } from "../services/authService";
-import { User, Clock, Heart, Bell, Download, Settings, Key, CheckCircle, Pencil, Eye, EyeOff, BarChart2, Shield, Ban } from "lucide-react";
+import { User, Clock, Heart, Bell, Download, Settings, Key, CheckCircle, Pencil, Eye, EyeOff, BarChart2, Shield, Ban, Crown } from "lucide-react";
 import AvatarModal from "../components/user/AvatarModal";
 import { updateMetaTags } from "../utils/seo";
 
@@ -203,9 +203,23 @@ export default function Profile() {
                   >
                     <Pencil size={12} strokeWidth={3} />
                   </button>
+                  {/* Crown for Admin/Mod */}
+                  {(user.role === 'admin' || user.role === 'moderator') && (
+                    <div className={`absolute -top-1 -left-1 p-1 rounded-full shadow-lg ${
+                      user.role === 'admin' ? 'bg-purple-600' : 'bg-red-600'
+                    } border-2 border-[#111]`}>
+                      {user.role === 'admin' ? (
+                        <Crown size={14} fill="currentColor" />
+                      ) : (
+                        <Shield size={14} fill="currentColor" />
+                      )}
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-col items-center">
-                  <h2 className="text-lg font-medium tracking-tight">{user.profileId || user.username}</h2>
+                  <h2 className="text-lg font-medium tracking-tight">
+                    {user.profileId || user.username}
+                  </h2>
                   <span className="text-[9px] text-white/40 uppercase tracking-[0.2em]">{t('profile.verifiedUser')}</span>
                   {user.createdAt && (
                     <span className="text-[8px] text-white/30 uppercase tracking-widest mt-1">
