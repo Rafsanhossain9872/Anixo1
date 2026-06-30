@@ -201,7 +201,7 @@ const ReplyInputBox = ({ user, replyText, setReplyText, onSubmit, onCancel, plac
 
     return (
         <div className="reply-box mt-3 flex gap-3 animate-in slide-in-from-top-2 duration-200">
-        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden shrink-0 border-2 border-indigo-500/30 bg-white/5 relative z-10">
+        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden shrink-0 border border-indigo-500/30 bg-white/5 relative z-10">
             <img src={user?.avatar || `https://ui-avatars.com/api/?name=${user?.username || 'U'}&background=random`} alt="Avatar" className="w-full h-full object-cover" />
         </div>
         <div className="flex-1">
@@ -694,7 +694,7 @@ export default function CommentSection({ animeId, episode }) {
                             )}
                             
                             <div className="flex gap-3 group/reply animate-in fade-in duration-300 relative z-10">
-                            <div className={`w-8 h-8 rounded-full overflow-hidden shrink-0 relative z-10 border-2 ${reply.isDeleted || reply.bannedByRole ? 'border-white/10 bg-white/5' : reply.user?.role === 'admin' ? 'border-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]' : reply.user?.role === 'moderator' ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]' : 'border-yellow-500'}`}>
+                            <div className={`w-10 h-10 rounded-full overflow-hidden shrink-0 relative z-10 border ${reply.isDeleted || reply.bannedByRole ? 'border-white/10 bg-white/5' : reply.user?.role === 'admin' ? 'border-purple-500' : reply.user?.role === 'moderator' ? 'border-red-500' : 'border-yellow-500'}`}>
                                 {reply.isDeleted || reply.bannedByRole ? (
                                     <div className="w-full h-full bg-white/5 flex items-center justify-center text-white/20 text-xs">?</div>
                                 ) : (
@@ -910,7 +910,7 @@ export default function CommentSection({ animeId, episode }) {
             {/* Input Box */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-10">
                 <div className="flex items-center gap-2 sm:block">
-                    <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full overflow-hidden shrink-0 border-2 border-yellow-500 relative group">
+                    <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full overflow-hidden shrink-0 border border-yellow-500 relative group">
                         <img 
                             src={user?.avatar || `https://ui-avatars.com/api/?name=${user?.username || 'U'}&background=random`} 
                             alt="Avatar" 
@@ -1025,7 +1025,7 @@ export default function CommentSection({ animeId, episode }) {
                 ) : (
                     sortedComments.slice(0, visibleCount).map(comment => (
                         <div id={`comment-${comment._id}`} key={comment._id} className="flex gap-3 sm:gap-4 group animate-in slide-in-from-bottom-2 duration-300 transition-colors duration-500 rounded-sm">
-                            <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden shrink-0 border-2 ${comment.isDeleted || comment.bannedByRole ? 'border-white/10 bg-white/5' : comment.user?.role === 'admin' ? 'border-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]' : comment.user?.role === 'moderator' ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]' : 'border-yellow-500'}`}>
+                            <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden shrink-0 border ${comment.isDeleted || comment.bannedByRole ? 'border-white/10 bg-white/5' : comment.user?.role === 'admin' ? 'border-purple-500' : comment.user?.role === 'moderator' ? 'border-red-500' : 'border-yellow-500'}`}>
                                 {comment.isDeleted || comment.bannedByRole ? (
                                     <div className="w-full h-full bg-white/5 flex items-center justify-center text-white/20 text-sm">?</div>
                                 ) : (
