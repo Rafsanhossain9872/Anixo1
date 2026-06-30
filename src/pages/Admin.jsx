@@ -22,8 +22,8 @@ export default function Admin() {
     { id: "notifications", label: "Notifications", icon: Bell, path: "/notifications" },
     { id: "stats", label: "Stats", icon: BarChart2, path: "/stats" },
     { id: "import", label: "Import/Export", icon: Download, path: "/import" },
-    { id: "settings", label: "Settings", icon: Settings, path: "/settings" },
-    { id: "admin", label: "Admin", icon: Users, path: "/admin" }
+    { id: "admin", label: "Admin", icon: Users, path: "/admin" },
+    { id: "settings", label: "Settings", icon: Settings, path: "/settings" }
   ];
 
   // Connect to online server to get detailed user list
