@@ -124,10 +124,10 @@ export default function Admin() {
               <div className="space-y-4 md:grid md:grid-cols-2 md:gap-4 md:space-y-0">
                 {onlineStats.users.map((user, index) => (
                   <Link
-                    key={index}
-                    to={user.profileId ? `/user/${user.profileId}` : '#'}
-                    className={`flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-lg bg-[#0a0a0a] border border-[#2a2a2a] transition-all ${user.profileId ? 'hover:bg-[#151515] hover:border-white/20 cursor-pointer' : ''}`}
-                  >
+                        key={index}
+                        to={`/user/${user.profileId || user.username}`}
+                        className={`flex items-center gap-3 md:gap-4 p-3 md:p-4 rounded-lg bg-[#0a0a0a] border border-[#2a2a2a] transition-all hover:bg-[#151515] hover:border-white/20 cursor-pointer`}
+                    >
                     <div className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden bg-[#2a2a2a] flex-shrink-0">
                       {user.avatar ? (
                         <img
