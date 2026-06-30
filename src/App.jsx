@@ -6,7 +6,6 @@ import ScrollToTop from "./components/common/ScrollToTop";
 import PageLoader from "./components/common/PageLoader";
 import AiChat from "./components/chat/AiChat";
 import AdLoader from "./components/common/AdLoader";
-import { PopunderProvider } from "./context/PopunderContext";
 import { ToastProvider } from "./context/ToastContext";
 import { ConfirmationProvider } from "./context/ConfirmationContext";
 
@@ -118,15 +117,13 @@ function AppRoutes() {
 export default function App() {
   return (
     <Router>
-      <PopunderProvider>
-        <ConfirmationProvider>
-          <ToastProvider>
-            <ScrollToTop />
-            <PageLoader />
-            <AppRoutes />
-          </ToastProvider>
-        </ConfirmationProvider>
-      </PopunderProvider>
+      <ConfirmationProvider>
+        <ToastProvider>
+          <ScrollToTop />
+          <PageLoader />
+          <AppRoutes />
+        </ToastProvider>
+      </ConfirmationProvider>
     </Router>
   );
 }

@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { usePopunder } from '../../context/PopunderContext';
 
 /**
  * Dynamically loads/unloads global ad scripts (AdSense + Popunder)
@@ -8,7 +7,6 @@ import { usePopunder } from '../../context/PopunderContext';
  */
 export default function AdLoader() {
   const location = useLocation();
-  const { isPopunderDisabled } = usePopunder();
 
   useEffect(() => {
     // Don't load AdSense on portal page, but allow popunder
@@ -28,8 +26,8 @@ export default function AdLoader() {
       }
     }
 
-    // Load Popunder if not disabled by user and not already loaded
-    if (!document.getElementById('popunder-global') && !isPopunderDisabled) {
+    // Load Popunder if not already loaded
+    if (!document.getElementById('popunder-global')) {
       const popunder = document.createElement('script');
       popunder.id = 'popunder-global';
       const hostname = window.location.hostname;
@@ -40,13 +38,7 @@ export default function AdLoader() {
       }
       document.body.appendChild(popunder);
     }
-
-    // Remove popunder if it was loaded but user disabled it
-    if (isPopunderDisabled) {
-      const popunderScript = document.getElementById('popunder-global');
-      if (popunderScript) popunderScript.remove();
-    }
-  }, [location.pathname, isPopunderDisabled]);
+  }, [location.pathname]);
 
   return null;
 }

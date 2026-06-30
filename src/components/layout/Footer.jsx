@@ -4,7 +4,6 @@ import { MessageSquare, Heart, Info, Tv } from "lucide-react";
 import ContactModal from "../common/ContactModal";
 import { AdBanner728x90, AdBanner300x250 } from "../common/AdBanner";
 import OnlineUsers from "../common/OnlineUsers";
-import { PopunderControlButton } from "../common/PopunderControlButton";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -201,10 +200,9 @@ export default function Footer() {
             <Link to="/nsfw" className="ml-2 text-white/10 hover:text-red-600 transition-colors">18+</Link>
           </div>
           
-          {/* Online Users & Popunder Control */}
+          {/* Online Users */}
           {location.pathname !== "/" && (
             <div className="flex items-center gap-2 sm:gap-3 flex-wrap justify-center">
-              <PopunderControlButton />
               <OnlineUsers />
             </div>
           )}
